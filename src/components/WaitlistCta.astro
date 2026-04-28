@@ -119,6 +119,9 @@ const { waitlistUrl } = Astro.props;
           <p id="form-success" class="mt-5 hidden rounded-md border border-[#C9A44A]/40 bg-[#C9A44A]/10 p-4 text-sm text-zinc-100">
             Thanks. You are in. We will contact you soon with next steps.
           </p>
+          <p id="form-error" class="mt-5 hidden rounded-md border border-red-400/40 bg-red-500/10 p-4 text-sm text-zinc-100">
+            Could not save your lead right now. Please try again.
+          </p>
         </form>
       </div>
     </div>
@@ -133,6 +136,7 @@ const { waitlistUrl } = Astro.props;
     const nextBtn = form.querySelector("#next-btn");
     const submitBtn = form.querySelector("#submit-btn");
     const successMsg = form.querySelector("#form-success");
+    const errorMsg = form.querySelector("#form-error");
     let currentStep = 0;
 
     const updateStep = () => {
@@ -164,10 +168,27 @@ const { waitlistUrl } = Astro.props;
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       if (!validateCurrentStep()) return;
-      successMsg?.classList.remove("hidden");
-      form.reset();
-      currentStep = 0;
-      updateStep();
+      errorMsg?.classList.add("hidden");
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+
+      fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Request failed");
+          successMsg?.classList.remove("hidden");
+          form.reset();
+          currentStep = 0;
+          updateStep();
+        })
+        .catch(() => {
+          errorMsg?.classList.remove("hidden");
+        });
     });
 
     updateStep();
