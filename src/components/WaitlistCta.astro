@@ -1,10 +1,9 @@
 ---
 interface Props {
   waitlistUrl: string;
-  formUrl: string;
 }
 
-const { waitlistUrl, formUrl } = Astro.props;
+const { waitlistUrl } = Astro.props;
 ---
 
 <section class="py-20 sm:py-24">
@@ -25,14 +24,152 @@ const { waitlistUrl, formUrl } = Astro.props;
           Join the waitlist
         </a>
       </div>
-      <div class="mt-10 overflow-hidden rounded-md border border-white/10">
-        <iframe
-          src={formUrl}
-          title="Growth Room Waitlist"
-          loading="lazy"
-          class="h-[500px] w-full bg-black"
-        ></iframe>
+      <div class="mt-10 rounded-md border border-white/10 bg-black/40 p-5 sm:p-7">
+        <p class="text-sm font-semibold uppercase tracking-[0.15em] text-[#C9A44A]">Waitlist form</p>
+        <form id="waitlist-form" class="mt-6">
+          <div class="space-y-6" data-step="1">
+            <p class="text-sm text-zinc-400">Step 1 of 3</p>
+            <div>
+              <label for="fullName" class="mb-2 block text-sm text-zinc-200">Full name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                required
+                class="w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-white outline-none ring-[#C9A44A] placeholder:text-zinc-500 focus:ring-2"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label for="email" class="mb-2 block text-sm text-zinc-200">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                class="w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-white outline-none ring-[#C9A44A] placeholder:text-zinc-500 focus:ring-2"
+                placeholder="you@company.com"
+              />
+            </div>
+          </div>
+
+          <div class="hidden space-y-6" data-step="2">
+            <p class="text-sm text-zinc-400">Step 2 of 3</p>
+            <div>
+              <label for="channels" class="mb-2 block text-sm text-zinc-200">Main paid channels</label>
+              <input
+                id="channels"
+                name="channels"
+                required
+                class="w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-white outline-none ring-[#C9A44A] placeholder:text-zinc-500 focus:ring-2"
+                placeholder="Meta, Google, TikTok..."
+              />
+            </div>
+            <div>
+              <label for="monthlySpend" class="mb-2 block text-sm text-zinc-200">Monthly ad spend (€)</label>
+              <input
+                id="monthlySpend"
+                name="monthlySpend"
+                type="number"
+                min="1"
+                required
+                class="w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-white outline-none ring-[#C9A44A] placeholder:text-zinc-500 focus:ring-2"
+                placeholder="5000"
+              />
+            </div>
+          </div>
+
+          <div class="hidden space-y-6" data-step="3">
+            <p class="text-sm text-zinc-400">Step 3 of 3</p>
+            <div>
+              <label for="biggestBlocker" class="mb-2 block text-sm text-zinc-200">Biggest current blocker</label>
+              <textarea
+                id="biggestBlocker"
+                name="biggestBlocker"
+                rows="4"
+                required
+                class="w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-white outline-none ring-[#C9A44A] placeholder:text-zinc-500 focus:ring-2"
+                placeholder="What is costing you the most right now?"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <button
+              id="back-btn"
+              type="button"
+              class="hidden rounded-md border border-white/15 px-6 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-white/5"
+            >
+              Back
+            </button>
+            <button
+              id="next-btn"
+              type="button"
+              class="rounded-md bg-[#C9A44A] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#d9b65f]"
+            >
+              Continue
+            </button>
+            <button
+              id="submit-btn"
+              type="submit"
+              class="hidden rounded-md bg-[#C9A44A] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#d9b65f]"
+            >
+              Join the waitlist
+            </button>
+          </div>
+          <p id="form-success" class="mt-5 hidden rounded-md border border-[#C9A44A]/40 bg-[#C9A44A]/10 p-4 text-sm text-zinc-100">
+            Thanks. You are in. We will contact you soon with next steps.
+          </p>
+        </form>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.querySelector("#waitlist-form");
+  if (form) {
+    const steps = Array.from(form.querySelectorAll("[data-step]"));
+    const backBtn = form.querySelector("#back-btn");
+    const nextBtn = form.querySelector("#next-btn");
+    const submitBtn = form.querySelector("#submit-btn");
+    const successMsg = form.querySelector("#form-success");
+    let currentStep = 0;
+
+    const updateStep = () => {
+      steps.forEach((step, index) => {
+        step.classList.toggle("hidden", index !== currentStep);
+      });
+      backBtn?.classList.toggle("hidden", currentStep === 0);
+      nextBtn?.classList.toggle("hidden", currentStep === steps.length - 1);
+      submitBtn?.classList.toggle("hidden", currentStep !== steps.length - 1);
+    };
+
+    const validateCurrentStep = () => {
+      const active = steps[currentStep];
+      const fields = Array.from(active.querySelectorAll("input, textarea, select"));
+      return fields.every((field) => field.reportValidity());
+    };
+
+    nextBtn?.addEventListener("click", () => {
+      if (!validateCurrentStep()) return;
+      if (currentStep < steps.length - 1) currentStep += 1;
+      updateStep();
+    });
+
+    backBtn?.addEventListener("click", () => {
+      if (currentStep > 0) currentStep -= 1;
+      updateStep();
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!validateCurrentStep()) return;
+      successMsg?.classList.remove("hidden");
+      form.reset();
+      currentStep = 0;
+      updateStep();
+    });
+
+    updateStep();
+  }
+</script>

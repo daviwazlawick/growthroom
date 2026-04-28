@@ -9,8 +9,6 @@ import HowItWorks from '../components/HowItWorks.astro';
 import WaitlistCta from '../components/WaitlistCta.astro';
 
 const waitlistUrl = "#waitlist";
-const formUrl =
-	"https://tally.so/embed/3x5zQ0?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
 ---
 
 <Layout
@@ -24,6 +22,6 @@ const formUrl =
 	<Benefits />
 	<HowItWorks />
 	<div id="waitlist">
-		<WaitlistCta waitlistUrl={waitlistUrl} formUrl={formUrl} />
+		<WaitlistCta waitlistUrl={waitlistUrl} />
 	</div>
 </Layout>
