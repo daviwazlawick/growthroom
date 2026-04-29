@@ -41,6 +41,10 @@
   // ── Consent ────────────────────────────────────────────────────────
   function getMarketingConsent() {
     try {
+      if (typeof window.getGrowthroomConsentState === 'function') {
+        var state = window.getGrowthroomConsentState();
+        return !!(state && state.marketing);
+      }
       if (window.UC_UI && typeof window.UC_UI.getServicesBaseInfo === 'function') {
         var services = window.UC_UI.getServicesBaseInfo() || [];
         for (var i = 0; i < services.length; i++) {

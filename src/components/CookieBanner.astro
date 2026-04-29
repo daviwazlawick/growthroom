@@ -13,6 +13,7 @@
       <button
         id="cookie-reject"
         type="button"
+        onclick="window.growthroomCookieReject && window.growthroomCookieReject()"
         class="rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:bg-white/5"
       >
         Reject optional
@@ -20,6 +21,7 @@
       <button
         id="cookie-customize"
         type="button"
+        onclick="window.growthroomCookieCustomize && window.growthroomCookieCustomize()"
         class="rounded-lg border border-[#C9A44A]/35 px-4 py-2 text-sm font-semibold text-[#C9A44A] transition hover:bg-[#C9A44A]/10"
       >
         Customize
@@ -27,6 +29,7 @@
       <button
         id="cookie-accept"
         type="button"
+        onclick="window.growthroomCookieAccept && window.growthroomCookieAccept()"
         class="btn-gold !px-5 !py-2 !text-sm"
       >
         Accept all
@@ -85,68 +88,113 @@
       };
 
       const updateConsentMode = (analytics, marketing) => {
-        if (typeof window.gtag === "function") {
-          window.gtag("consent", "update", {
-            analytics_storage: analytics ? "granted" : "denied",
-            ad_storage: marketing ? "granted" : "denied",
-            ad_user_data: marketing ? "granted" : "denied",
-            ad_personalization: marketing ? "granted" : "denied",
-          });
-        }
+        if (typeof window.gtag !== "function") return;
+        window.gtag("consent", "update", {
+          analytics_storage: analytics ? "granted" : "denied",
+          ad_storage: marketing ? "granted" : "denied",
+          ad_user_data: marketing ? "granted" : "denied",
+          ad_personalization: marketing ? "granted" : "denied",
+        });
       };
 
-      const openCustomize = () => {
-        setChoiceCookie("customized");
-        hide();
-        setTimeout(() => {
-          if (typeof window.openPrivacySettings === "function") {
-            window.openPrivacySettings();
-          }
-        }, 0);
+      const applyStateFromHelper = () => {
+        if (typeof window.getGrowthroomConsentState !== "function") return false;
+        const state = window.getGrowthroomConsentState();
+        updateConsentMode(!!state.analytics, !!state.marketing);
+        return true;
       };
 
       const tryUcAcceptAll = () => {
-        const uc = window.UC_UI;
-        if (!uc) return false;
-        if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
-        if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
-        return false;
+        try {
+          const uc = window.UC_UI;
+          if (!uc) return false;
+          if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
+          if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
+          return false;
+        } catch (_) {
+          return false;
+        }
       };
 
       const tryUcRejectOptional = () => {
-        const uc = window.UC_UI;
-        if (!uc) return false;
-        if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
-        if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
-        if (typeof uc.denyAllConsents === "function") { uc.denyAllConsents(); return true; }
-        return false;
+        try {
+          const uc = window.UC_UI;
+          if (!uc) return false;
+          if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
+          if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
+          if (typeof uc.denyAllConsents === "function") { uc.denyAllConsents(); return true; }
+          return false;
+        } catch (_) {
+          return false;
+        }
       };
+
+      let awaitingCustomizeChoice = false;
+
+      const openCustomize = () => {
+        // Hide custom layer first so Usercentrics layer can receive clicks.
+        hide();
+        awaitingCustomizeChoice = true;
+        if (typeof window.openPrivacySettings === "function") {
+          window.openPrivacySettings();
+          return;
+        }
+        // Fallback: no CMP layer available, keep behavior deterministic.
+        awaitingCustomizeChoice = false;
+        setChoiceCookie("rejected");
+        updateConsentMode(false, false);
+      };
+
+      const onAccept = () => {
+        // Close first for immediate UX feedback.
+        const handledByUc = tryUcAcceptAll();
+        if (!handledByUc) {
+          updateConsentMode(true, true);
+        } else {
+          applyStateFromHelper();
+        }
+        setChoiceCookie("accepted");
+        hide();
+      };
+
+      const onReject = () => {
+        const handledByUc = tryUcRejectOptional();
+        if (!handledByUc) {
+          updateConsentMode(false, false);
+        } else {
+          applyStateFromHelper();
+        }
+        setChoiceCookie("rejected");
+        hide();
+      };
+
+      const onCustomize = () => openCustomize();
+
+      // Global handlers ensure immediate response even if listener binding fails.
+      window.growthroomCookieAccept = onAccept;
+      window.growthroomCookieReject = onReject;
+      window.growthroomCookieCustomize = onCustomize;
 
       const accept = document.getElementById("cookie-accept");
       const reject = document.getElementById("cookie-reject");
       const customize = document.getElementById("cookie-customize");
-
-      accept?.addEventListener("click", () => {
-        // UX first: close immediately on click.
-        hide();
-        const handledByUc = tryUcAcceptAll();
-        if (!handledByUc) updateConsentMode(true, true);
-        setChoiceCookie("accepted");
-      });
-
-      reject?.addEventListener("click", () => {
-        // UX first: close immediately on click.
-        hide();
-        const handledByUc = tryUcRejectOptional();
-        if (!handledByUc) updateConsentMode(false, false);
-        setChoiceCookie("rejected");
-      });
-
-      customize?.addEventListener("click", openCustomize);
+      accept?.addEventListener("click", onAccept);
+      reject?.addEventListener("click", onReject);
+      customize?.addEventListener("click", onCustomize);
 
       window.addEventListener("UC_CONSENT", () => {
+        // Only persist/close from Customize flow after explicit user action.
+        if (!awaitingCustomizeChoice) return;
+        awaitingCustomizeChoice = false;
+        applyStateFromHelper();
         setChoiceCookie("customized");
         hide();
+      });
+
+      window.addEventListener("growthroom:consent-updated", () => {
+        if (readChoiceCookie()) {
+          hide();
+        }
       });
 
       // Start safe on every load/HMR.

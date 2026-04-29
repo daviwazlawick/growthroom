@@ -90,6 +90,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
                 ad_user_data: toGranted(state.marketing),
                 ad_personalization: toGranted(state.marketing),
               });
+              window.dispatchEvent(new CustomEvent('growthroom:consent-updated', { detail: state }));
             }
 
             function registerHooks() {
@@ -104,6 +105,8 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
             } else {
               registerHooks();
             }
+
+            window.getGrowthroomConsentState = readConsentState;
 
             window.openPrivacySettings = function () {
               try {
