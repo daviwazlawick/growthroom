@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:deploy": "astro build && pm2 restart growthroom",
     "preview": "astro preview",
     "astro": "astro"
   },
