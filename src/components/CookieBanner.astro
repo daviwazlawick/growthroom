@@ -81,10 +81,10 @@
       return "";
     };
 
-    const updateConsentMode = (analytics: boolean, marketing: boolean) => {
+    const updateConsentMode = (analytics, marketing) => {
       try {
-        if (typeof (window as any).gtag === "function") {
-          (window as any).gtag("consent", "update", {
+        if (typeof window.gtag === "function") {
+          window.gtag("consent", "update", {
             analytics_storage: analytics ? "granted" : "denied",
             ad_storage: marketing ? "granted" : "denied",
             ad_user_data: marketing ? "granted" : "denied",
@@ -96,14 +96,14 @@
 
     const openCustomize = () => {
       try {
-        if (typeof (window as any).openPrivacySettings === "function") {
-          (window as any).openPrivacySettings();
+        if (typeof window.openPrivacySettings === "function") {
+          window.openPrivacySettings();
         }
       } catch (_) {}
     };
 
     const tryUcAcceptAll = () => {
-      const uc = (window as any).UC_UI;
+      const uc = window.UC_UI;
       if (!uc) return false;
       if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
       if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
@@ -111,7 +111,7 @@
     };
 
     const tryUcRejectOptional = () => {
-      const uc = (window as any).UC_UI;
+      const uc = window.UC_UI;
       if (!uc) return false;
       if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
       if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
@@ -141,6 +141,10 @@
       customize?.addEventListener("click", openCustomize);
     };
 
+    // Always start from an unlocked state (avoids stale lock on HMR/local dev).
+    unlockScroll();
+    banner.classList.add("hidden");
+
     bindActions();
 
     window.addEventListener("UC_CONSENT", () => {
@@ -150,5 +154,19 @@
 
     if (readChoiceCookie()) hide();
     else show();
+
+    // Failsafe: never keep page locked if banner is not visible.
+    requestAnimationFrame(() => {
+      const isHidden = banner.classList.contains("hidden");
+      const isVisible = !!(banner.offsetParent || banner.getClientRects().length);
+      if (isHidden || !isVisible) unlockScroll();
+    });
+
+    // Extra guard for localhost/dev hot reload race conditions.
+    setTimeout(() => {
+      const isHidden = banner.classList.contains("hidden");
+      const isVisible = !!(banner.offsetParent || banner.getClientRects().length);
+      if (isHidden || !isVisible) unlockScroll();
+    }, 250);
   })();
 </script>
