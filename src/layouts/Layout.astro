@@ -124,18 +124,47 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
       </>
     )}
 
-    <!-- 4º: GTM -->
+    <!-- 4º: GTM loader (only after consent) -->
     <script is:inline define:vars={{ GTM_ID }}>
-      (function(w,d,s,l,i){
-        w[l]=w[l]||[];
-        w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-        var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),
-            dl=l!='dataLayer'?'&l='+l:'';
-        j.async=true;
-        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-        f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer',GTM_ID);
+      (function () {
+        function debug(message, data, hypothesisId, runId) {
+          fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',location:'Layout.astro:gtmLoader',message:message,data:data,timestamp:Date.now(),hypothesisId:hypothesisId,runId:runId})}).catch(()=>{});
+        }
+
+        function loadGtmOnce() {
+          if (!GTM_ID || window.__growthroomGtmLoaded) return;
+          window.__growthroomGtmLoaded = true;
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = document.getElementsByTagName('script')[0];
+          var j = document.createElement('script');
+          var dl = 'dataLayer' !== 'dataLayer' ? '&l=dataLayer' : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID + dl;
+          f.parentNode.insertBefore(j, f);
+          debug('GTM loaded', { gtmId: GTM_ID }, 'H8', 'post-fix');
+        }
+
+        function shouldLoadByCookie() {
+          return document.cookie.indexOf('growthroom_cookie_choice_v1=accepted') !== -1 ||
+            document.cookie.indexOf('growthroom_cookie_choice_v1=customized') !== -1;
+        }
+
+        if (shouldLoadByCookie()) {
+          loadGtmOnce();
+        } else {
+          debug('GTM blocked by cookie gate', { cookie: document.cookie }, 'H8', 'post-fix');
+        }
+
+        window.addEventListener('growthroom:consent-updated', function (e) {
+          var detail = e && e.detail ? e.detail : {};
+          if (detail.analytics || detail.marketing) {
+            loadGtmOnce();
+          } else {
+            debug('Consent update kept GTM blocked', detail, 'H8', 'post-fix');
+          }
+        });
+      })();
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -150,17 +179,6 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     <title>{title}</title>
   </head>
   <body class="antialiased">
-    <!-- GTM noscript (imediatamente após <body>) -->
-    {GTM_ID && (
-      <noscript>
-        <iframe
-          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-          height="0" width="0"
-          style="display:none;visibility:hidden"
-        ></iframe>
-      </noscript>
-    )}
-
     <slot />
     <CookieBanner />
   </body>
