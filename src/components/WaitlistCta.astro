@@ -24,24 +24,24 @@ const iconCheck = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13
       <!-- Urgency chip -->
       <div class="relative inline-flex items-center gap-2 rounded-full border border-[#C9A44A]/35 bg-[#C9A44A]/10 px-4 py-1.5">
         <span class="h-1.5 w-1.5 rounded-full bg-[#C9A44A] animate-pulse"></span>
-        <span class="section-label">Spots are strictly limited</span>
+        <span class="section-label">Only 200 early-access spots</span>
       </div>
 
       <!-- Headline -->
       <h2 class="relative mt-6 text-4xl font-black leading-[1.05] text-white sm:text-5xl lg:text-6xl">
-        Stop figuring<br class="sm:hidden" /> it out alone.
+        Get early access<br class="sm:hidden" /> before doors open.
       </h2>
       <p class="relative mt-5 max-w-xl text-lg text-[#C9A44A]/70 leading-relaxed">
-        If you're already spending on paid traffic and want consistent,
-        expert-level direction every week — this is for you.
+        Join the waitlist now. Start with a free 15-minute expert intro call and
+        pay nothing until you are matched to a specific Growth Room.
       </p>
 
       <!-- Reassurance bullets -->
       <div class="relative mt-6 flex flex-wrap gap-x-6 gap-y-2">
         {[
-          "No minimum commitment",
-          "Weekly expert access",
-          "Real-account sessions",
+          "Free 15-min intro call",
+          "No cost before matching",
+          "Scheduling link after signup",
         ].map((item) => (
           <div class="flex items-center gap-2 text-sm text-[#C9A44A]/60">
             <span class="text-[#C9A44A]"><Fragment set:html={iconCheck} /></span>
@@ -53,15 +53,17 @@ const iconCheck = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13
       <!-- CTA button -->
       <div class="relative mt-9">
         <a href="#waitlist-form-section" class="btn-gold !text-base !px-10 !py-4 !rounded-xl">
-          Join the waitlist now →
+          Reserve Your Spot →
         </a>
+        <p class="mt-3 text-sm text-zinc-400">Takes 10 seconds. No spam.</p>
       </div>
     </div>
 
     <!-- Form section -->
     <div id="waitlist-form-section" class="reveal mt-8 rounded-2xl border border-[#C9A44A]/20 bg-white/4 p-8 backdrop-blur-sm sm:p-10">
       <p class="section-label">Waitlist application</p>
-      <p class="mt-2 text-sm text-[#C9A44A]/50">Takes 60 seconds. We'll reach out with next steps.</p>
+      <p class="mt-2 text-sm text-[#C9A44A]/50">Takes 60 seconds. We'll send your free intro-call scheduling link right after registration.</p>
+      <p class="mt-2 text-sm text-zinc-400">No payment required before Growth Room matching.</p>
 
       <form id="waitlist-form" class="mt-8">
         <!-- Step 1 -->
@@ -134,7 +136,7 @@ const iconCheck = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13
             Continue →
           </button>
           <button id="submit-btn" type="submit" class="hidden btn-gold !py-3 !px-8 !text-sm">
-            Join the waitlist →
+            Get Early Access →
           </button>
         </div>
 

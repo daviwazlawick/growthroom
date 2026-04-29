@@ -20,35 +20,35 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
         <!-- Chip -->
         <div class="reveal premium-chip inline-flex items-center gap-2.5 rounded-full px-4 py-2">
           <span class="h-1.5 w-1.5 rounded-full bg-[#C9A44A] shrink-0"></span>
-          <span class="section-label">Growth Room · Weekly Mastermind</span>
+          <span class="section-label">Growth Room · Early Access</span>
         </div>
 
         <!-- Headline -->
         <h1 class="reveal d1 mt-7 text-[2.75rem] font-black leading-[1.03] sm:text-[3.5rem] lg:text-[3.75rem]">
-          Weekly Expert Access.<br />
-          <span class="text-[#C9A44A]">Without the<br class="hidden sm:block" /> 6-figure price tag.</span>
+          Scale paid traffic profitably in 30 days.<br />
+          <span class="text-[#C9A44A]">For founders already spending on ads.</span>
         </h1>
 
         <p class="reveal d2 mt-6 max-w-lg text-[1.1rem] leading-relaxed text-zinc-300">
-          Stop wasting ad spend. Fix what's already broken.<br class="hidden sm:block" />
-          Scale what works — with elite guidance every single week.
+          Join the private waitlist before the next cohort opens.
+          Start with a free 15-min expert intro and pay nothing until you're matched to a specific Growth Room.
         </p>
 
         <!-- CTAs -->
         <div class="reveal d3 mt-10 flex flex-wrap items-center gap-4">
           <a href={waitlistUrl} class="btn-gold">
-            Join the waitlist →
+            Reserve Your Spot →
           </a>
-          <p class="text-sm text-zinc-500">For operators spending on paid traffic</p>
+          <p class="text-sm text-zinc-500">Takes 10 seconds. No spam.</p>
         </div>
 
         <!-- Feature pills -->
         <div class="reveal d4 mt-10 flex flex-wrap gap-2">
           {[
-            { label: "Weekly Sessions" },
-            { label: "Real Accounts" },
-            { label: "Expert Answers" },
-            { label: "Better Results" },
+            { label: "Limited Seats" },
+            { label: "Free Expert Intro" },
+            { label: "No Cost Until Match" },
+            { label: "Weekly Live Reviews" },
           ].map(({ label }) => (
             <span class="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1.5 text-xs font-semibold tracking-wide text-zinc-300">
               {label}
@@ -79,14 +79,14 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
 
           <!-- Floating stat badge -->
           <div class="absolute -bottom-5 -left-4 sm:-left-8 glass-card rounded-xl px-4 py-3 shadow-2xl border border-[#C9A44A]/25">
-            <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">vs traditional consulting</p>
-            <p class="mt-0.5 text-lg font-black text-[#C9A44A]">Save $150K+/year</p>
+            <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Early access capacity</p>
+            <p class="mt-0.5 text-lg font-black text-[#C9A44A]">Only 200 spots</p>
           </div>
 
           <!-- Top badge -->
           <div class="absolute -top-4 -right-3 sm:-right-5 glass-card rounded-xl px-4 py-3 shadow-xl border border-white/12">
-            <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Avg member ROAS</p>
-            <p class="mt-0.5 text-lg font-black text-white">4.2x <span class="text-emerald-400 text-sm font-semibold">↑45%</span></p>
+            <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Waitlist momentum</p>
+            <p class="mt-0.5 text-lg font-black text-white">847 joined <span class="text-emerald-400 text-sm font-semibold">this cycle</span></p>
           </div>
         </div>
       </div>
@@ -97,9 +97,9 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
     <div class="reveal d5 mt-20 divider-gold"></div>
     <div class="reveal mt-8 grid grid-cols-3 gap-4 sm:gap-8 text-center">
       {[
-        { value: "$150K+", label: "Saved vs. private consulting" },
-        { value: "4.2x",   label: "Average ROAS improvement" },
-        { value: "100%",   label: "Live, real-account sessions" },
+        { value: "200", label: "Early access spots available" },
+        { value: "15 min",   label: "Free intro with an expert" },
+        { value: "€0",   label: "Cost before Growth Room match" },
       ].map(({ value, label }) => (
         <div class="flex flex-col items-center gap-1">
           <span class="text-2xl font-black text-[#C9A44A] sm:text-3xl">{value}</span>

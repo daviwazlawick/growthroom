@@ -9,6 +9,7 @@ import HowItWorks from '../components/HowItWorks.astro';
 import ValueStack from '../components/ValueStack.astro';
 import Benefits from '../components/Benefits.astro';
 import SocialProof from '../components/SocialProof.astro';
+import Faq from '../components/Faq.astro';
 import WaitlistCta from '../components/WaitlistCta.astro';
 import Footer from '../components/Footer.astro';
 
@@ -16,18 +17,19 @@ const waitlistUrl = "#waitlist-form-section";
 ---
 
 <Layout
-  title="Growth Room | Weekly Expert Access Without the 6-Figure Price Tag"
-  description="A private weekly mastermind where entrepreneurs fix real ad problems live, every week. Expert guidance at a fraction of traditional consulting costs."
+  title="Growth Room | Reserve Your Early Access Spot"
+  description="Scale paid traffic profitably with weekly expert guidance. Start with a free 15-min intro and no cost until Growth Room matching."
 >
   <Navbar waitlistUrl={waitlistUrl} />
   <Hero waitlistUrl={waitlistUrl} />
   <Problem waitlistUrl={waitlistUrl} />
-  <Comparison waitlistUrl={waitlistUrl} />
   <Solution waitlistUrl={waitlistUrl} />
-  <HowItWorks waitlistUrl={waitlistUrl} />
   <ValueStack waitlistUrl={waitlistUrl} />
   <Benefits waitlistUrl={waitlistUrl} />
+  <HowItWorks waitlistUrl={waitlistUrl} />
+  <Comparison waitlistUrl={waitlistUrl} />
   <SocialProof waitlistUrl={waitlistUrl} />
+  <Faq waitlistUrl={waitlistUrl} />
   <div id="waitlist">
     <WaitlistCta waitlistUrl={waitlistUrl} />
   </div>

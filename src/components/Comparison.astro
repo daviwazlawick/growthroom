@@ -5,7 +5,7 @@ interface Props {
 const { waitlistUrl } = Astro.props;
 
 const traditional = [
-  "Very high cost — $150K+/year",
+  "Very high cost — €150K+/year",
   "Limited availability from consultants",
   "One perspective, one lens",
   "Slow progress, delayed feedback",
@@ -38,6 +38,7 @@ const iconGrowth = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="2
         The smarter alternative to<br class="hidden sm:block" />
         <span class="text-[#C9A44A]">six-figure consulting.</span>
       </h2>
+      <p class="mt-4 text-zinc-400">First 200 waitlist members are prioritized for early-access matching.</p>
     </div>
 
     <!-- Comparison table -->
@@ -46,7 +47,7 @@ const iconGrowth = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="2
       <!-- Traditional consulting -->
       <div class="glass-card rounded-2xl p-7">
         <p class="section-label text-zinc-500">Traditional Consulting</p>
-        <p class="mt-3 text-4xl font-black text-white">$150K<span class="text-2xl text-zinc-400">+/yr</span></p>
+        <p class="mt-3 text-4xl font-black text-white">€150K<span class="text-2xl text-zinc-400">+/yr</span></p>
         <div class="mt-6 divider-gold opacity-30"></div>
         <ul class="mt-6 space-y-3.5">
           {traditional.map((item) => (
@@ -102,11 +103,11 @@ const iconGrowth = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="2
 
     <div class="reveal mt-10 text-center">
       <a href={waitlistUrl} class="btn-gold">
-        Join the waitlist →
+        Reserve Your Spot →
       </a>
       <p class="mt-3 text-sm text-zinc-500">
-        First Meet the Professional on a free 15 minutes meeting.<br />
-        Scheduling link shared after waitlist registration.
+        Free 15-min expert intro after waitlist registration.<br />
+        No cost until you're matched to a specific Growth Room.
       </p>
     </div>
 
