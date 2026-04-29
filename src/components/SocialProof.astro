@@ -1,4 +1,9 @@
 ---
+interface Props {
+  waitlistUrl: string;
+}
+const { waitlistUrl } = Astro.props;
+
 const metrics = [
   { value: "$245,600", label: "Revenue tracked live in session", delta: "+32%", color: "text-emerald-400" },
   { value: "3,842",    label: "Conversions recovered",          delta: "+28%", color: "text-emerald-400" },
@@ -69,6 +74,16 @@ const quotes = [
           </div>
         </div>
       ))}
+    </div>
+
+    <div class="reveal mt-10 text-center">
+      <a href={waitlistUrl} class="btn-gold">
+        Join the waitlist →
+      </a>
+      <p class="mt-3 text-sm text-zinc-500">
+        First Meet the Professional on a free 15 minutes meeting.<br />
+        Scheduling link shared after waitlist registration.
+      </p>
     </div>
 
   </div>

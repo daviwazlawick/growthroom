@@ -1,4 +1,9 @@
 ---
+interface Props {
+  waitlistUrl: string;
+}
+const { waitlistUrl } = Astro.props;
+
 const problems = [
   {
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
@@ -61,6 +66,16 @@ const problems = [
         "The worst part isn't losing money on bad ads — it's not knowing
         <span class="text-gray-900 font-semibold not-italic">why</span> they're bad,
         and what to do about it next week."
+      </p>
+    </div>
+
+    <div class="reveal mt-10">
+      <a href={waitlistUrl} class="btn-gold">
+        Join the waitlist →
+      </a>
+      <p class="mt-3 text-sm text-gray-500">
+        First Meet the Professional on a free 15 minutes meeting.<br />
+        Scheduling link shared after waitlist registration.
       </p>
     </div>
 
