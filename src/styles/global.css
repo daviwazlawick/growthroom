@@ -151,3 +151,9 @@ h1, h2, h3 {
 .reveal.d3 { animation-delay: 0.24s; }
 .reveal.d4 { animation-delay: 0.32s; }
 .reveal.d5 { animation-delay: 0.40s; }
+
+/* Hide Usercentrics default layer while custom cookie modal is open */
+html.cookie-modal-open #usercentrics-root,
+body.cookie-modal-open #usercentrics-root {
+  display: none !important;
+}

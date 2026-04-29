@@ -1,4 +1,4 @@
-<section id="cookie-banner" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 px-4 backdrop-blur-sm">
+<section id="cookie-banner" class="fixed inset-0 z-[2147483647] flex items-center justify-center bg-black/75 px-4 backdrop-blur-sm">
   <div class="w-full max-w-xl rounded-2xl border border-[#C9A44A]/30 bg-black/90 p-6 shadow-[0_24px_64px_rgba(0,0,0,0.55)] sm:p-7">
     <p class="section-label">Privacy & Cookies</p>
     <h3 class="mt-2 text-xl font-bold text-white">
@@ -37,52 +37,54 @@
 
 <script>
   (function () {
-    const banner = document.getElementById("cookie-banner");
-    if (!banner) return;
+    try {
+      const banner = document.getElementById("cookie-banner");
+      if (!banner) return;
 
-    const CONSENT_COOKIE = "growthroom_cookie_choice_v1";
-    const CONSENT_MAX_AGE_DAYS = 180;
+      const CONSENT_COOKIE = "growthroom_cookie_choice_v1";
+      const CONSENT_MAX_AGE_DAYS = 180;
 
-    const lockScroll = () => {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    };
+      const isBannerVisible = () =>
+        !banner.classList.contains("hidden") &&
+        !!(banner.offsetParent || banner.getClientRects().length);
 
-    const unlockScroll = () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
+      const show = () => {
+        banner.style.position = "fixed";
+        banner.style.inset = "0";
+        banner.style.display = "flex";
+        banner.style.alignItems = "center";
+        banner.style.justifyContent = "center";
+        banner.style.zIndex = "2147483647";
+        banner.classList.remove("hidden");
+        document.documentElement.classList.add("cookie-modal-open");
+        document.body.classList.add("cookie-modal-open");
+      };
 
-    const show = () => {
-      banner.classList.remove("hidden");
-      lockScroll();
-    };
+      const hide = () => {
+        banner.classList.add("hidden");
+        document.documentElement.classList.remove("cookie-modal-open");
+        document.body.classList.remove("cookie-modal-open");
+      };
 
-    const hide = () => {
-      banner.classList.add("hidden");
-      unlockScroll();
-    };
+      const setChoiceCookie = (choice) => {
+        const maxAge = CONSENT_MAX_AGE_DAYS * 24 * 60 * 60;
+        const secure = window.location.protocol === "https:" ? "; Secure" : "";
+        document.cookie =
+          `${CONSENT_COOKIE}=${encodeURIComponent(choice)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
+      };
 
-    const setChoiceCookie = (choice) => {
-      const maxAge = CONSENT_MAX_AGE_DAYS * 24 * 60 * 60;
-      const secure = window.location.protocol === "https:" ? "; Secure" : "";
-      document.cookie =
-        `${CONSENT_COOKIE}=${encodeURIComponent(choice)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
-    };
-
-    const readChoiceCookie = () => {
-      const prefix = `${CONSENT_COOKIE}=`;
-      const parts = document.cookie.split(";").map((part) => part.trim());
-      for (const part of parts) {
-        if (part.startsWith(prefix)) {
-          return decodeURIComponent(part.slice(prefix.length));
+      const readChoiceCookie = () => {
+        const prefix = `${CONSENT_COOKIE}=`;
+        const parts = document.cookie.split(";").map((part) => part.trim());
+        for (const part of parts) {
+          if (part.startsWith(prefix)) {
+            return decodeURIComponent(part.slice(prefix.length));
+          }
         }
-      }
-      return "";
-    };
+        return "";
+      };
 
-    const updateConsentMode = (analytics, marketing) => {
-      try {
+      const updateConsentMode = (analytics, marketing) => {
         if (typeof window.gtag === "function") {
           window.gtag("consent", "update", {
             analytics_storage: analytics ? "granted" : "denied",
@@ -91,82 +93,89 @@
             ad_personalization: marketing ? "granted" : "denied",
           });
         }
-      } catch (_) {}
-    };
+      };
 
-    const openCustomize = () => {
-      try {
-        if (typeof window.openPrivacySettings === "function") {
-          window.openPrivacySettings();
-        }
-      } catch (_) {}
-    };
+      const openCustomize = () => {
+        setChoiceCookie("customized");
+        hide();
+        setTimeout(() => {
+          if (typeof window.openPrivacySettings === "function") {
+            window.openPrivacySettings();
+          }
+        }, 0);
+      };
 
-    const tryUcAcceptAll = () => {
-      const uc = window.UC_UI;
-      if (!uc) return false;
-      if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
-      if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
-      return false;
-    };
+      const tryUcAcceptAll = () => {
+        const uc = window.UC_UI;
+        if (!uc) return false;
+        if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
+        if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
+        return false;
+      };
 
-    const tryUcRejectOptional = () => {
-      const uc = window.UC_UI;
-      if (!uc) return false;
-      if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
-      if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
-      if (typeof uc.denyAllConsents === "function") { uc.denyAllConsents(); return true; }
-      return false;
-    };
+      const tryUcRejectOptional = () => {
+        const uc = window.UC_UI;
+        if (!uc) return false;
+        if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
+        if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
+        if (typeof uc.denyAllConsents === "function") { uc.denyAllConsents(); return true; }
+        return false;
+      };
 
-    const bindActions = () => {
       const accept = document.getElementById("cookie-accept");
       const reject = document.getElementById("cookie-reject");
       const customize = document.getElementById("cookie-customize");
 
       accept?.addEventListener("click", () => {
+        // UX first: close immediately on click.
+        hide();
         const handledByUc = tryUcAcceptAll();
         if (!handledByUc) updateConsentMode(true, true);
         setChoiceCookie("accepted");
-        hide();
       });
 
       reject?.addEventListener("click", () => {
+        // UX first: close immediately on click.
+        hide();
         const handledByUc = tryUcRejectOptional();
         if (!handledByUc) updateConsentMode(false, false);
         setChoiceCookie("rejected");
-        hide();
       });
 
       customize?.addEventListener("click", openCustomize);
-    };
 
-    // Always start from an unlocked state (avoids stale lock on HMR/local dev).
-    unlockScroll();
-    banner.classList.add("hidden");
+      window.addEventListener("UC_CONSENT", () => {
+        setChoiceCookie("customized");
+        hide();
+      });
 
-    bindActions();
+      // Start safe on every load/HMR.
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      banner.classList.add("hidden");
 
-    window.addEventListener("UC_CONSENT", () => {
-      setChoiceCookie("customized");
-      hide();
-    });
+      if (readChoiceCookie()) {
+        hide();
+      } else {
+        show();
+      }
 
-    if (readChoiceCookie()) hide();
-    else show();
-
-    // Failsafe: never keep page locked if banner is not visible.
-    requestAnimationFrame(() => {
-      const isHidden = banner.classList.contains("hidden");
-      const isVisible = !!(banner.offsetParent || banner.getClientRects().length);
-      if (isHidden || !isVisible) unlockScroll();
-    });
-
-    // Extra guard for localhost/dev hot reload race conditions.
-    setTimeout(() => {
-      const isHidden = banner.classList.contains("hidden");
-      const isVisible = !!(banner.offsetParent || banner.getClientRects().length);
-      if (isHidden || !isVisible) unlockScroll();
-    }, 250);
+      // Permanent guard: if something touches overflow, release it.
+      const guard = () => {
+        if (!isBannerVisible()) {
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
+        }
+      };
+      requestAnimationFrame(guard);
+      setTimeout(guard, 200);
+      setTimeout(guard, 800);
+      window.addEventListener("resize", guard);
+      document.addEventListener("visibilitychange", guard);
+    } catch (_) {
+      // Hard fail-safe: never trap user without scroll.
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
   })();
 </script>
