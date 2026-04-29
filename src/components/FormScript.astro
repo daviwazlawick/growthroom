@@ -39,9 +39,22 @@
   }
 
   // ── Consent ────────────────────────────────────────────────────────
-  // TODO: integrar Usercentrics quando for implementado.
   function getMarketingConsent() {
-    // if (window.UC_UI && window.UC_UI.getServicesBaseInfo) { ... }
+    try {
+      if (window.UC_UI && typeof window.UC_UI.getServicesBaseInfo === 'function') {
+        var services = window.UC_UI.getServicesBaseInfo() || [];
+        for (var i = 0; i < services.length; i++) {
+          var svc = services[i];
+          var name = (svc.name || '').toLowerCase();
+          var category = (svc.categorySlug || svc.category || '').toLowerCase();
+          var granted = !!(svc.consent && svc.consent.status);
+          if (!granted) continue;
+          if (category.indexOf('marketing') !== -1 || name.indexOf('facebook') !== -1 || name.indexOf('ads') !== -1) {
+            return true;
+          }
+        }
+      }
+    } catch (_) {}
     return false;
   }
 

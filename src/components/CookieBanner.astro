@@ -1,0 +1,154 @@
+<section id="cookie-banner" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 px-4 backdrop-blur-sm">
+  <div class="w-full max-w-xl rounded-2xl border border-[#C9A44A]/30 bg-black/90 p-6 shadow-[0_24px_64px_rgba(0,0,0,0.55)] sm:p-7">
+    <p class="section-label">Privacy & Cookies</p>
+    <h3 class="mt-2 text-xl font-bold text-white">
+      Your data, your choice.
+    </h3>
+    <p class="mt-2 text-sm leading-relaxed text-zinc-300">
+      We use necessary cookies to run the site and optional analytics/marketing cookies only with your consent.
+      You can accept, reject, or customize your preferences at any time.
+    </p>
+
+    <div class="mt-5 flex flex-wrap gap-2">
+      <button
+        id="cookie-reject"
+        type="button"
+        class="rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:bg-white/5"
+      >
+        Reject optional
+      </button>
+      <button
+        id="cookie-customize"
+        type="button"
+        class="rounded-lg border border-[#C9A44A]/35 px-4 py-2 text-sm font-semibold text-[#C9A44A] transition hover:bg-[#C9A44A]/10"
+      >
+        Customize
+      </button>
+      <button
+        id="cookie-accept"
+        type="button"
+        class="btn-gold !px-5 !py-2 !text-sm"
+      >
+        Accept all
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const banner = document.getElementById("cookie-banner");
+    if (!banner) return;
+
+    const CONSENT_COOKIE = "growthroom_cookie_choice_v1";
+    const CONSENT_MAX_AGE_DAYS = 180;
+
+    const lockScroll = () => {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    };
+
+    const unlockScroll = () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+
+    const show = () => {
+      banner.classList.remove("hidden");
+      lockScroll();
+    };
+
+    const hide = () => {
+      banner.classList.add("hidden");
+      unlockScroll();
+    };
+
+    const setChoiceCookie = (choice) => {
+      const maxAge = CONSENT_MAX_AGE_DAYS * 24 * 60 * 60;
+      const secure = window.location.protocol === "https:" ? "; Secure" : "";
+      document.cookie =
+        `${CONSENT_COOKIE}=${encodeURIComponent(choice)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
+    };
+
+    const readChoiceCookie = () => {
+      const prefix = `${CONSENT_COOKIE}=`;
+      const parts = document.cookie.split(";").map((part) => part.trim());
+      for (const part of parts) {
+        if (part.startsWith(prefix)) {
+          return decodeURIComponent(part.slice(prefix.length));
+        }
+      }
+      return "";
+    };
+
+    const updateConsentMode = (analytics: boolean, marketing: boolean) => {
+      try {
+        if (typeof (window as any).gtag === "function") {
+          (window as any).gtag("consent", "update", {
+            analytics_storage: analytics ? "granted" : "denied",
+            ad_storage: marketing ? "granted" : "denied",
+            ad_user_data: marketing ? "granted" : "denied",
+            ad_personalization: marketing ? "granted" : "denied",
+          });
+        }
+      } catch (_) {}
+    };
+
+    const openCustomize = () => {
+      try {
+        if (typeof (window as any).openPrivacySettings === "function") {
+          (window as any).openPrivacySettings();
+        }
+      } catch (_) {}
+    };
+
+    const tryUcAcceptAll = () => {
+      const uc = (window as any).UC_UI;
+      if (!uc) return false;
+      if (typeof uc.acceptAllServices === "function") { uc.acceptAllServices(); return true; }
+      if (typeof uc.acceptAllConsents === "function") { uc.acceptAllConsents(); return true; }
+      return false;
+    };
+
+    const tryUcRejectOptional = () => {
+      const uc = (window as any).UC_UI;
+      if (!uc) return false;
+      if (typeof uc.denyAllServices === "function") { uc.denyAllServices(); return true; }
+      if (typeof uc.rejectAllConsents === "function") { uc.rejectAllConsents(); return true; }
+      if (typeof uc.denyAllConsents === "function") { uc.denyAllConsents(); return true; }
+      return false;
+    };
+
+    const bindActions = () => {
+      const accept = document.getElementById("cookie-accept");
+      const reject = document.getElementById("cookie-reject");
+      const customize = document.getElementById("cookie-customize");
+
+      accept?.addEventListener("click", () => {
+        const handledByUc = tryUcAcceptAll();
+        if (!handledByUc) updateConsentMode(true, true);
+        setChoiceCookie("accepted");
+        hide();
+      });
+
+      reject?.addEventListener("click", () => {
+        const handledByUc = tryUcRejectOptional();
+        if (!handledByUc) updateConsentMode(false, false);
+        setChoiceCookie("rejected");
+        hide();
+      });
+
+      customize?.addEventListener("click", openCustomize);
+    };
+
+    bindActions();
+
+    window.addEventListener("UC_CONSENT", () => {
+      setChoiceCookie("customized");
+      hide();
+    });
+
+    if (readChoiceCookie()) hide();
+    else show();
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import MetaEventId from "../components/MetaEventId.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 
 interface Props {
   title?: string;
@@ -12,7 +13,8 @@ const {
   description = "Weekly mastermind for entrepreneurs running paid ads who want consistent results.",
 } = Astro.props;
 
-const GTM_ID = "GTM-TD9BJC9F";
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID || "GTM-TD9BJC9F";
+const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID || "";
 ---
 
 <!doctype html>
@@ -24,7 +26,102 @@ const GTM_ID = "GTM-TD9BJC9F";
     <!-- 1º: event_id gerado ANTES de qualquer tag de marketing -->
     <MetaEventId />
 
-    <!-- 2º: GTM -->
+    <!-- 2º: Consent Mode v2 default (strict prior blocking) -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      window.gtag = window.gtag || gtag;
+
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        functionality_storage: 'granted',
+        security_storage: 'granted',
+        wait_for_update: 1500
+      });
+    </script>
+
+    <!-- 3º: Usercentrics CMP loader + bridge to Consent Mode v2 -->
+    {USERCENTRICS_SETTINGS_ID && (
+      <>
+        <script
+          id="usercentrics-cmp"
+          async
+          src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+          data-settings-id={USERCENTRICS_SETTINGS_ID}
+        ></script>
+        <script is:inline>
+          (function () {
+            function toGranted(value) {
+              return value ? 'granted' : 'denied';
+            }
+
+            function readConsentState() {
+              var analytics = false;
+              var marketing = false;
+              try {
+                if (window.UC_UI && typeof window.UC_UI.getServicesBaseInfo === 'function') {
+                  var services = window.UC_UI.getServicesBaseInfo() || [];
+                  for (var i = 0; i < services.length; i++) {
+                    var svc = services[i];
+                    var name = (svc.name || '').toLowerCase();
+                    var category = (svc.categorySlug || svc.category || '').toLowerCase();
+                    var granted = !!(svc.consent && svc.consent.status);
+                    if (!granted) continue;
+                    if (category.indexOf('marketing') !== -1 || name.indexOf('facebook') !== -1 || name.indexOf('ads') !== -1) {
+                      marketing = true;
+                    }
+                    if (category.indexOf('analytics') !== -1 || name.indexOf('analytics') !== -1 || name.indexOf('google analytics') !== -1) {
+                      analytics = true;
+                    }
+                  }
+                }
+              } catch (_) {}
+              return { analytics: analytics, marketing: marketing };
+            }
+
+            function applyConsentModeV2() {
+              var state = readConsentState();
+              window.gtag('consent', 'update', {
+                analytics_storage: toGranted(state.analytics),
+                ad_storage: toGranted(state.marketing),
+                ad_user_data: toGranted(state.marketing),
+                ad_personalization: toGranted(state.marketing),
+              });
+            }
+
+            function registerHooks() {
+              applyConsentModeV2();
+              window.addEventListener('UC_UI_INITIALIZED', applyConsentModeV2);
+              window.addEventListener('UC_UI_VIEW_CHANGED', applyConsentModeV2);
+              window.addEventListener('UC_CONSENT', applyConsentModeV2);
+            }
+
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', registerHooks);
+            } else {
+              registerHooks();
+            }
+
+            window.openPrivacySettings = function () {
+              try {
+                if (window.UC_UI && typeof window.UC_UI.showSecondLayer === 'function') {
+                  window.UC_UI.showSecondLayer();
+                  return;
+                }
+                if (window.UC_UI && typeof window.UC_UI.showFirstLayer === 'function') {
+                  window.UC_UI.showFirstLayer();
+                }
+              } catch (_) {}
+            };
+          })();
+        </script>
+      </>
+    )}
+
+    <!-- 4º: GTM -->
     <script is:inline define:vars={{ GTM_ID }}>
       (function(w,d,s,l,i){
         w[l]=w[l]||[];
@@ -51,15 +148,18 @@ const GTM_ID = "GTM-TD9BJC9F";
   </head>
   <body class="antialiased">
     <!-- GTM noscript (imediatamente após <body>) -->
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-        height="0" width="0"
-        style="display:none;visibility:hidden"
-      ></iframe>
-    </noscript>
+    {GTM_ID && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+          height="0" width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
 
     <slot />
+    <CookieBanner />
   </body>
 </html>
 

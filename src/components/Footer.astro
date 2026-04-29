@@ -43,7 +43,17 @@ const year = new Date().getFullYear();
     <div class="mt-12 divider-gold"></div>
     <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-600">
       <p>© {year} Growth Room. All rights reserved.</p>
-      <p>Weekly Mastermind · Real Accounts · Expert Help</p>
+      <div class="flex items-center gap-3">
+        <button
+          type="button"
+          class="text-zinc-500 hover:text-white transition"
+          onclick="window.openPrivacySettings && window.openPrivacySettings()"
+        >
+          Privacy settings
+        </button>
+        <span>·</span>
+        <p>Weekly Mastermind · Real Accounts · Expert Help</p>
+      </div>
     </div>
 
   </div>
