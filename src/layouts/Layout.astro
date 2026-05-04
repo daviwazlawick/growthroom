@@ -151,6 +151,12 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
         }
 
         if (shouldLoadByCookie()) {
+          gtag('consent', 'update', {
+            analytics_storage: 'granted',
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+          });
           loadGtmOnce();
         } else {
           debug('GTM blocked by cookie gate', { cookie: document.cookie }, 'H8', 'post-fix');
