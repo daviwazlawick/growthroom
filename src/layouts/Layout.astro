@@ -26,6 +26,13 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     <!-- 1º: event_id gerado ANTES de qualquer tag de marketing -->
     <MetaEventId />
 
+    <!-- Block registerProtocolHandler: prevents browser "Access other apps" prompt from GTM tags -->
+    <script is:inline>
+      if (typeof navigator !== 'undefined' && 'registerProtocolHandler' in navigator) {
+        navigator.registerProtocolHandler = function () {};
+      }
+    </script>
+
     <!-- 2º: Consent Mode v2 default (strict prior blocking) -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];

@@ -6,7 +6,7 @@ const { waitlistUrl } = Astro.props;
 const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
 ---
 
-<section class="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden border-b border-white/8">
+<section class="relative min-h-screen flex items-center pt-28 lg:pt-14 pb-20 overflow-hidden border-b border-white/8">
   <!-- Decorative grid lines -->
   <div class="pointer-events-none absolute inset-0 opacity-[0.025]"
        style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 64px 64px;">
@@ -80,13 +80,13 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
           <!-- Floating stat badge -->
           <div class="absolute -bottom-5 -left-4 sm:-left-8 glass-card rounded-xl px-4 py-3 shadow-2xl border border-[#C9A44A]/25">
             <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Early access capacity</p>
-            <p class="mt-0.5 text-lg font-black text-[#C9A44A]">Only 200 spots</p>
+            <p class="mt-0.5 text-lg font-black">Only <span id="spots-badge" class="text-red-500">50</span> spots</p>
           </div>
 
           <!-- Top badge -->
           <div class="absolute -top-4 -right-3 sm:-right-5 glass-card rounded-xl px-4 py-3 shadow-xl border border-white/12">
             <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Waitlist momentum</p>
-            <p class="mt-0.5 text-lg font-black text-white">32 joined <span class="text-emerald-400 text-sm font-semibold">this cycle</span></p>
+            <p class="mt-0.5 text-lg font-black text-white"><span id="joined-count" class="text-emerald-400">0</span> joined <span class="text-emerald-400 text-sm font-semibold">this cycle</span></p>
           </div>
         </div>
       </div>
@@ -97,15 +97,84 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
     <div class="reveal d5 mt-20 divider-gold"></div>
     <div class="reveal mt-8 grid grid-cols-3 gap-4 sm:gap-8 text-center">
       {[
-        { value: "200", label: "Early access spots available" },
+        { value: "spots-stat", label: "Early access spots available" },
         { value: "15 min",   label: "Free intro with an expert" },
         { value: "€0",   label: "Cost before Growth Room match" },
       ].map(({ value, label }) => (
         <div class="flex flex-col items-center gap-1">
-          <span class="text-2xl font-black text-[#C9A44A] sm:text-3xl">{value}</span>
+          {value === "spots-stat"
+            ? <span id="spots-stat" class="text-2xl font-black text-red-500 sm:text-3xl">50</span>
+            : <span class="text-2xl font-black text-[#C9A44A] sm:text-3xl">{value}</span>
+          }
           <span class="text-xs text-zinc-500 sm:text-sm">{label}</span>
         </div>
       ))}
     </div>
+
+    <!-- Bottom CTA -->
+    <div class="reveal mt-10 flex flex-col items-center gap-3">
+      <a href={waitlistUrl} class="btn-gold text-base px-8 py-3">
+        Get Now Your Free Call →
+      </a>
+    </div>
   </div>
 </section>
+
+<script>
+  function animateSpots() {
+    const els = [document.getElementById('spots-badge'), document.getElementById('spots-stat')];
+    const start = 50;
+    const end = 18;
+    const duration = 2200; // ms
+    const startTime = performance.now();
+
+    function easeOut(t: number) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function tick(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOut(progress);
+      const current = Math.round(start - eased * (start - end));
+
+      els.forEach(el => { if (el) el.textContent = String(current); });
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function animateJoined() {
+    const el = document.getElementById('joined-count');
+    if (!el) return;
+    const end = 32;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(eased * end));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    el.textContent = '0';
+    requestAnimationFrame(tick);
+  }
+
+  function startLoop() {
+    animateSpots();
+    animateJoined();
+    setInterval(() => { animateSpots(); animateJoined(); }, 15000);
+  }
+
+  if (document.readyState === 'complete') {
+    startLoop();
+  } else {
+    window.addEventListener('load', startLoop);
+  }
+</script>
