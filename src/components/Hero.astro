@@ -151,6 +151,7 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
   function animateJoined() {
     const el = document.getElementById('joined-count');
     if (!el) return;
+    const target = el;
     const end = 32;
     const duration = 1800;
     const startTime = performance.now();
@@ -158,11 +159,11 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
     function tick(now: number) {
       const progress = Math.min((now - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = String(Math.round(eased * end));
+      target.textContent = String(Math.round(eased * end));
       if (progress < 1) requestAnimationFrame(tick);
     }
 
-    el.textContent = '0';
+    target.textContent = '0';
     requestAnimationFrame(tick);
   }
 

@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = "Growth Room | Weekly Expert Access",
-  description = "Weekly mastermind for entrepreneurs running paid ads who want consistent results.",
+  title = "Growth Room | Learn how to run profitable ads without an agency",
+  description = "Affordable weekly coaching for founders and operators who want better ad performance without agency retainers.",
 } = Astro.props;
 
 const GTM_ID = import.meta.env.PUBLIC_GTM_ID || "GTM-TD9BJC9F";
@@ -189,6 +189,14 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/img/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/img/logo.png" />
     <title>{title}</title>
   </head>
   <body class="antialiased">
