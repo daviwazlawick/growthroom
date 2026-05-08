@@ -1,0 +1,156 @@
+---
+const brands = [
+  { name: "Seiko",              slug: "seiko",              domain: "seikowatches.com"     },
+  { name: "Pulsar Watches",     slug: "pulsar-watches",     domain: "pulsarwatchesusa.com" },
+  { name: "Gymondo",            slug: "gymondo",            domain: "gymondo.com"           },
+  { name: "Vaha",               slug: "vaha",               domain: "vaha.com"              },
+  { name: "Bioniq",             slug: "bioniq",             domain: "bioniq.com"            },
+  { name: "Shape Republic",     slug: "shape-republic",     domain: "shape-republic.com"    },
+  { name: "ICTjob",             slug: "ictjob",             domain: "ictjob.be"             },
+  { name: "Frontier Car Group", slug: "frontier-car-group", domain: "frontiercargroup.com"  },
+  { name: "Workmotion",         slug: "workmotion",         domain: "workmotion.com"        },
+  { name: "Pixformance",        slug: "pixformance",        domain: "pixformance.com"       },
+  { name: "Valuecase",          slug: "valuecase",          domain: "valuecase.com"         },
+  { name: "Knowunity",          slug: "knowunity",          domain: "knowunity.com"         },
+];
+---
+
+<section class="logo-scroll-section">
+  <p class="scroll-label">Trusted by growth-focused brands</p>
+
+  <div class="track-wrapper" aria-label="Client logos">
+    <div class="track">
+      {[...brands, ...brands].map(({ name, slug, domain }) => (
+        <div class="brand-item">
+          <img
+            src={`/logos/${slug}.png`}
+            data-clearbit={`https://logo.clearbit.com/${domain}`}
+            alt={name}
+            width="120"
+            height="40"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="brand-fallback" style="display:none">{name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('.brand-item img').forEach(img => {
+    function tryNext() {
+      const clearbit = img.dataset.clearbit;
+      if (clearbit && img.src !== clearbit) {
+        img.src = clearbit;
+        img.onerror = showFallback;
+      } else {
+        showFallback();
+      }
+    }
+    function showFallback() {
+      img.style.display = 'none';
+      const fb = img.nextElementSibling as HTMLElement;
+      if (fb) fb.style.display = 'block';
+    }
+    img.onerror = tryNext;
+  });
+</script>
+
+<style>
+  .logo-scroll-section {
+    padding: 40px 0 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+
+  .scroll-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 28px;
+    font-family: "Inter", sans-serif;
+  }
+
+  .track-wrapper {
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 7%,
+      black 93%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 7%,
+      black 93%,
+      transparent 100%
+    );
+  }
+
+  .track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+
+  .track:hover {
+    animation-play-state: paused;
+  }
+
+  .brand-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 44px;
+    flex-shrink: 0;
+    height: 48px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .brand-item:last-child {
+    border-right: none;
+  }
+
+  .brand-item img {
+    max-height: 32px;
+    max-width: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1) brightness(0) invert(1);
+    opacity: 0.65;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+
+  .brand-item:hover img {
+    opacity: 0.85;
+    filter: grayscale(0.2) brightness(1.1);
+  }
+
+  .brand-fallback {
+    font-family: "Montserrat", "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.55);
+    white-space: nowrap;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; }
+  }
+</style>
