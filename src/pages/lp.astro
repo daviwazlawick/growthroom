@@ -359,6 +359,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     .field.invalid input,.field.invalid textarea{border-color:var(--danger)}
     .field.invalid .err{display:block}
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:540px){.row-2{grid-template-columns:1fr}}
     .chips{display:flex;flex-wrap:wrap;gap:10px}
     .chip{padding:10px 16px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;color:var(--fg-2);cursor:pointer;transition:all .2s;background:var(--bg-1)}
     .chip:hover{border-color:var(--fg-3);color:var(--fg)}
