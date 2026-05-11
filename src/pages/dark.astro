@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import LogoScroll from '../components/LogoScroll.astro';
+import Problem from '../components/Problem.astro';
+import Comparison from '../components/Comparison.astro';
+import Solution from '../components/Solution.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import ValueStack from '../components/ValueStack.astro';
+import Benefits from '../components/Benefits.astro';
+import SocialProof from '../components/SocialProof.astro';
+import Faq from '../components/Faq.astro';
+import WaitlistCta from '../components/WaitlistCta.astro';
+import Footer from '../components/Footer.astro';
+
+const waitlistUrl = "#waitlist-form-section";
+---
+
+<Layout
+  title="Growth Room | Learn to run profitable ads with weekly coaching"
+  description="Weekly mastermind for anyone learning to advertise online profitably. Join founders and operators in a private community with real account reviews and expert guidance. No agencies, no fluff."
+>
+  <Navbar waitlistUrl={waitlistUrl} />
+  <Hero waitlistUrl={waitlistUrl} />
+  <LogoScroll />
+  <Problem waitlistUrl={waitlistUrl} />
+  <Solution waitlistUrl={waitlistUrl} />
+  <ValueStack waitlistUrl={waitlistUrl} />
+  <Benefits waitlistUrl={waitlistUrl} />
+  <HowItWorks waitlistUrl={waitlistUrl} />
+  <Comparison waitlistUrl={waitlistUrl} />
+  <SocialProof waitlistUrl={waitlistUrl} />
+  <Faq waitlistUrl={waitlistUrl} />
+  <div id="waitlist">
+    <WaitlistCta waitlistUrl={waitlistUrl} />
+  </div>
+  <Footer />
+</Layout>
