@@ -1,41 +1,8 @@
 ---
-const brands = [
-  { name: "Seiko",              slug: "seiko",              domain: "seikowatches.com"     },
-  { name: "Pulsar Watches",     slug: "pulsar-watches",     domain: "pulsarwatchesusa.com" },
-  { name: "Gymondo",            slug: "gymondo",            domain: "gymondo.com"           },
-  { name: "Vaha",               slug: "vaha",               domain: "vaha.com"              },
-  { name: "Bioniq",             slug: "bioniq",             domain: "bioniq.com"            },
-  { name: "Shape Republic",     slug: "shape-republic",     domain: "shape-republic.com"    },
-  { name: "ICTjob",             slug: "ictjob",             domain: "ictjob.be"             },
-  { name: "Frontier Car Group", slug: "frontier-car-group", domain: "frontiercargroup.com"  },
-  { name: "Workmotion",         slug: "workmotion",         domain: "workmotion.com"        },
-  { name: "Pixformance",        slug: "pixformance",        domain: "pixformance.com"       },
-  { name: "Valuecase",          slug: "valuecase",          domain: "valuecase.com"         },
-  { name: "Knowunity",          slug: "knowunity",          domain: "knowunity.com"         },
-];
 ---
 
 <section class="logo-scroll-section">
-  <p class="scroll-label">Trusted by growth-focused brands</p>
-
-  <div class="track-wrapper" aria-label="Client logos">
-    <div class="track">
-      {[...brands, ...brands].map(({ name, slug, domain }) => (
-        <div class="brand-item">
-          <img
-            src={`/logos/${slug}.png`}
-            data-clearbit={`https://logo.clearbit.com/${domain}`}
-            alt={name}
-            width="120"
-            height="40"
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="brand-fallback" style="display:none">{name}</span>
-        </div>
-      ))}
-    </div>
-  </div>
+  <p class="scroll-label">Trusted by people selling online across e-commerce, digital products, services and apps.</p>
 </section>
 
 <script>

@@ -25,12 +25,12 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
 
         <!-- Headline -->
         <h1 class="reveal d1 mt-7 text-[2.75rem] font-black leading-[1.03] sm:text-[3.5rem] lg:text-[3.75rem]">
-          Learn to run profitable ads with weekly coaching.<br />
-          <span class="text-[#C9A44A]">For anyone selling online.</span>
+          50 people get in.<br />
+          <span class="text-[#C9A44A]">Everyone else figures it out alone.</span>
         </h1>
 
         <p class="reveal d2 mt-6 max-w-lg text-[1.1rem] leading-relaxed text-zinc-300">
-          A weekly private mastermind for founders and operators learning to advertise on Meta, Google and TikTok together. Real account reviews. Expert guidance. No fluff, no curriculum, no recycled playbooks.
+          Growth Room is a private weekly mastermind where people who sell online bring their real ad accounts and leave with real answers. No courses. No recycled playbooks. Just live sessions with experts who've seen it all.
         </p>
 
         <!-- CTAs -->
@@ -38,7 +38,7 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
           <a href={waitlistUrl} class="btn-gold">
             Reserve Your Spot →
           </a>
-          <p class="text-sm text-zinc-500">Takes 10 seconds. No spam.</p>
+          <p class="text-sm text-zinc-500">Next intake: limited to 50 seats · Free 15-min expert call after signup · No payment before matching</p>
         </div>
 
         <!-- Feature pills -->
@@ -85,7 +85,7 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
           <!-- Top badge -->
           <div class="absolute -top-4 -right-3 sm:-right-5 glass-card rounded-xl px-4 py-3 shadow-xl border border-white/12">
             <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">Waitlist momentum</p>
-            <p class="mt-0.5 text-lg font-black text-white"><span id="joined-count" class="text-emerald-400">0</span> joined <span class="text-emerald-400 text-sm font-semibold">this cycle</span></p>
+            <p class="mt-0.5 text-lg font-black text-white"><span id="joined-count" class="text-emerald-400">32</span> joined <span class="text-emerald-400 text-sm font-semibold">this cycle</span></p>
           </div>
         </div>
       </div>
@@ -147,29 +147,9 @@ const heroImg = "/img/ChatGPT%20Image%20Apr%2024,%202026,%2011_34_26%20AM.png";
     requestAnimationFrame(tick);
   }
 
-  function animateJoined() {
-    const el = document.getElementById('joined-count');
-    if (!el) return;
-    const target = el;
-    const end = 32;
-    const duration = 1800;
-    const startTime = performance.now();
-
-    function tick(now: number) {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      target.textContent = String(Math.round(eased * end));
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-
-    target.textContent = '0';
-    requestAnimationFrame(tick);
-  }
-
   function startLoop() {
     animateSpots();
-    animateJoined();
-    setInterval(() => { animateSpots(); animateJoined(); }, 15000);
+    setInterval(() => { animateSpots(); }, 15000);
   }
 
   if (document.readyState === 'complete') {
