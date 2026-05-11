@@ -134,10 +134,6 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     <!-- 4º: GTM loader (only after consent) -->
     <script is:inline define:vars={{ GTM_ID }}>
       (function () {
-        function debug(message, data, hypothesisId, runId) {
-          fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',location:'Layout.astro:gtmLoader',message:message,data:data,timestamp:Date.now(),hypothesisId:hypothesisId,runId:runId})}).catch(()=>{});
-        }
-
         function loadGtmOnce() {
           if (!GTM_ID || window.__growthroomGtmLoaded) return;
           window.__growthroomGtmLoaded = true;
@@ -149,7 +145,6 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
           j.async = true;
           j.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID + dl;
           f.parentNode.insertBefore(j, f);
-          debug('GTM loaded', { gtmId: GTM_ID }, 'H8', 'post-fix');
         }
 
         function shouldLoadByCookie() {
@@ -165,16 +160,12 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
             ad_personalization: 'granted',
           });
           loadGtmOnce();
-        } else {
-          debug('GTM blocked by cookie gate', { cookie: document.cookie }, 'H8', 'post-fix');
         }
 
         window.addEventListener('growthroom:consent-updated', function (e) {
           var detail = e && e.detail ? e.detail : {};
           if (detail.analytics || detail.marketing) {
             loadGtmOnce();
-          } else {
-            debug('Consent update kept GTM blocked', detail, 'H8', 'post-fix');
           }
         });
       })();
