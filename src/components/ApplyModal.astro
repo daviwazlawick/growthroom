@@ -430,7 +430,7 @@
       <div>
         <div class="am-eyebrow">
           <span class="am-eyebrow-dot"></span>
-          Application · Cohort 04
+          <span id="am-eyebrow-text">Application</span>
         </div>
         <h3 class="am-title" id="am-title">What stage are you at?</h3>
       </div>
@@ -593,7 +593,7 @@
       <!-- Success -->
       <div class="am-success" id="am-success">
         <div class="am-success-check">✓</div>
-        <p class="am-success-meta">Application received · Cohort 04</p>
+        <p class="am-success-meta" id="am-success-meta">Application received</p>
         <h3 id="am-success-name">You're in the queue.</h3>
         <p>An expert will review your account brief and get back within 48 hours — with either a room match or a candid "not yet, here's why."</p>
         <p class="am-success-email">Confirmation sent to <span id="am-success-email">—</span></p>
@@ -642,6 +642,8 @@
   // ── Open / Close ──────────────────────────────────────────────
   window.openApplyModal = function (product) {
     selectedProduct = product || '';
+    var eyebrow = document.getElementById('am-eyebrow-text');
+    if (eyebrow) eyebrow.textContent = selectedProduct ? 'Application · ' + selectedProduct : 'Application';
     resetForm();
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -825,13 +827,15 @@
       });
       if (!res.ok) throw new Error('api_error');
 
-      form.querySelectorAll('.am-pane').forEach(function (p) { p.classList.remove('active'); });
-      success.classList.add('show');
-      foot.style.display = 'none';
-      title.textContent = 'Welcome to Cohort 04';
-      document.getElementById('am-success-email').textContent = email || '—';
-      document.getElementById('am-success-name').textContent = 'You’re in the queue, ' + firstName + '.';
-      modal.querySelectorAll('.am-pstep').forEach(function (p) { p.classList.add('done'); p.classList.remove('active'); });
+      form.querySelectorAll(‘.am-pane’).forEach(function (p) { p.classList.remove(‘active’); });
+      success.classList.add(‘show’);
+      foot.style.display = ‘none’;
+      title.textContent = selectedProduct ? ‘You\’re in — ‘ + selectedProduct : ‘You\’re in!’;
+      var successMeta = document.getElementById(‘am-success-meta’);
+      if (successMeta) successMeta.textContent = selectedProduct ? ‘Application received · ‘ + selectedProduct : ‘Application received’;
+      document.getElementById(‘am-success-email’).textContent = email || ‘—‘;
+      document.getElementById(‘am-success-name’).textContent = ‘You’re in the queue, ‘ + firstName + ‘.’;
+      modal.querySelectorAll(‘.am-pstep’).forEach(function (p) { p.classList.add(‘done’); p.classList.remove(‘active’); });
     } catch (e) {
       nextBtn.disabled = false;
       nextBtn.innerHTML = 'Submit application <span style="transition:transform .2s;display:inline-block">→</span>';
