@@ -112,11 +112,98 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="/img/logo.png" />
   <meta name="description" content="Growth Room pricing — pick the format that fits: group of 10, group of 5, or 1-on-1. One session per week, 60 minutes." />
+  <link rel="canonical" href="https://growthroom.co/pricing" />
   <meta property="og:title" content="Pricing — Growth Room" />
-  <meta property="og:description" content="Weekly paid ads coaching. Group of 10 · Group of 5 · 1-on-1. Simple." />
+  <meta property="og:description" content="Weekly paid ads coaching. Group of 10 · Group of 5 · 1-on-1. From €69/session." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/img/logo.png" />
+  <meta property="og:url" content="https://growthroom.co/pricing" />
+  <meta property="og:image" content="https://growthroom.co/img/logo.png" />
+  <meta property="og:site_name" content="Growth Room" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pricing — Growth Room" />
+  <meta name="twitter:description" content="Weekly paid ads coaching. Group of 10 · Group of 5 · 1-on-1. From €69/session." />
+  <meta name="twitter:image" content="https://growthroom.co/img/logo.png" />
   <title>Pricing — Growth Room</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Growth Room",
+        "url": "https://growthroom.co",
+        "logo": "https://growthroom.co/img/logo.png",
+        "email": "hello@growthroom.co",
+        "sameAs": ["https://instagram.com/thegrowthroomhq"]
+      },
+      {
+        "@type": "Service",
+        "name": "Growth Room — Weekly Paid Ads Coaching",
+        "serviceType": "Paid Advertising Coaching",
+        "description": "Weekly 60-minute live coaching sessions for founders and operators running ads on Meta, Google, and TikTok. Choose from a group of 10, a group of 5, or 1-on-1 sessions.",
+        "url": "https://growthroom.co/pricing",
+        "provider": { "@type": "Organization", "name": "Growth Room", "url": "https://growthroom.co" },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Group · 10 people",
+            "description": "Weekly 60-minute live session shared with up to 9 other operators.",
+            "price": "69",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock"
+          },
+          {
+            "@type": "Offer",
+            "name": "Group · 5 people",
+            "description": "Weekly 60-minute live session with up to 4 operators — more airtime per person.",
+            "price": "99",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock"
+          },
+          {
+            "@type": "Offer",
+            "name": "1-on-1",
+            "description": "The full 60 minutes with an expert focused entirely on your account.",
+            "price": "179",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does billing work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Billing is monthly, based on the sessions in that month. You pay for the sessions that happen — no signup fee, no long-term contract." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I cancel anytime?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Let us know before the next month starts and we stop billing — no penalty, no hassle. If you want to come back later, just reach out." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do the group plans have a waitlist?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Rooms have a hard cap of 10 or 5 people to keep quality high. When a spot opens, we contact the next person on the list. The 1-on-1 is available right away because it is scheduled individually." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are prices VAT-inclusive?",
+            "acceptedAnswer": { "@type": "Answer", "text": "All prices shown are exclusive of VAT. EU-registered businesses benefit from reverse charge — no VAT added. For EU consumers, local rates apply. Full details on your invoice." }
+          },
+          {
+            "@type": "Question",
+            "name": "What if I need more than 60 minutes a week?",
+            "acceptedAnswer": { "@type": "Answer", "text": "If you have an urgent situation or need more intensive support, get in touch directly. We will put together a custom arrangement that fits what you actually need." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <style>
     :root{
       --bg:#13131A;--bg-1:#1B1B22;--bg-2:#22222B;--bg-3:#2A2A33;
