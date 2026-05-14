@@ -467,6 +467,42 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     .light-section .section-cta .btn-primary{background:#1A1A1F;color:var(--accent);box-shadow:0 0 0 1px #1A1A1F,0 12px 40px -10px rgba(26,26,31,.4)}
     .light-section .section-cta .btn-primary:hover{background:#2A2A33}
     .form-error-msg{font-family:var(--mono);font-size:12px;color:var(--danger);letter-spacing:.04em;padding:12px 16px;border:1px solid var(--danger);border-radius:8px;background:rgba(255,106,85,.08);display:none;margin-top:12px}
+    /* PRICING PLANS */
+    .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+    .plan{padding:36px 30px 30px;border-right:1px solid var(--line);background:var(--bg-1);position:relative;display:flex;flex-direction:column}
+    .plan:last-child{border-right:0}
+    .plan.featured{background:linear-gradient(180deg,rgba(216,255,92,.10),rgba(216,255,92,0.02))}
+    .plan.featured::before{content:"";position:absolute;inset:-1px;border-radius:0;pointer-events:none;border-top:2px solid var(--accent)}
+    .plan-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid rgba(216,255,92,.4);color:var(--accent);background:rgba(216,255,92,.08);margin-bottom:16px}
+    .plan-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+    .plan-name{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+    .plan-price{display:flex;align-items:baseline;gap:6px;margin:16px 0 6px}
+    .plan-price .currency{font-family:var(--sans);font-size:20px;color:var(--fg-3);font-weight:400;margin-bottom:4px}
+    .plan-price .amount{font-family:var(--sans);font-size:clamp(40px,4.5vw,60px);line-height:1;letter-spacing:-.03em;font-weight:700}
+    .plan-price .period{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase;align-self:flex-end;padding-bottom:6px}
+    .plan-billing{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.04em;min-height:18px}
+    .plan-divider{height:1px;background:var(--line);margin:24px 0}
+    .plan-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;flex:1}
+    .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:var(--fg-2)}
+    .plan-features .ico{flex:0 0 18px;height:18px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:700;margin-top:1px}
+    .plan-features .ico.yes{background:var(--accent);color:#0A0A0B}
+    .plan-features .ico.no{background:transparent;border:1px solid var(--line-2);color:var(--fg-4)}
+    .plan-cta{width:100%;height:46px;border-radius:999px;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s;cursor:pointer;text-decoration:none;margin-top:24px}
+    .plan-cta-primary{background:var(--accent);color:#13131A;box-shadow:0 0 0 1px rgba(216,255,92,.4),0 8px 32px -8px rgba(216,255,92,.4)}
+    .plan-cta-primary:hover{background:#E4FF7A}
+    .plan-cta-ghost{border:1px solid var(--line-2);background:transparent;color:var(--fg)}
+    .plan-cta-ghost:hover{border-color:var(--fg-3);background:var(--bg-2)}
+    .pricing-contact{border:1px solid var(--line);border-radius:14px;padding:32px 36px;background:var(--bg-1);display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;margin-top:20px}
+    .pricing-contact h4{font-size:clamp(17px,1.6vw,22px);margin:0 0 8px}
+    .pricing-contact p{color:var(--fg-3);font-size:14px;margin:0;max-width:52ch}
+    @media(max-width:880px){
+      .plans-grid{grid-template-columns:1fr}
+      .plan{border-right:0;border-bottom:1px solid var(--line)}
+      .plan:last-child{border-bottom:0}
+      .plan.featured::before{border-top:0;border-left:2px solid var(--accent)}
+      .pricing-contact{grid-template-columns:1fr}
+    }
+
     @media(max-width:980px){
       .hero-grid{grid-template-columns:1fr;gap:48px}
       .trust-row{grid-template-columns:repeat(2,1fr)}
@@ -538,12 +574,13 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
       <a href="#problem">Problem</a>
       <a href="#solution">Solution</a>
       <a href="#compare">Compare</a>
+      <a href="#pricing">Pricing</a>
       <a href="#results">Results</a>
       <a href="#faq">FAQ</a>
     </div>
     <div class="nav-cta">
       <span class="availability"><span class="pulse"></span>50 priority spots · 18 left</span>
-      <a href="#apply" class="btn btn-primary">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </nav>
@@ -557,7 +594,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
         <h1 class="fu in">The room where your ads get fixed. Every week. <span class="lime">Live.</span></h1>
         <p class="lead hero-sub">Growth Room is a private weekly mastermind — a small group of people selling online, one expert, and real ad accounts on screen. You leave each session knowing exactly what to fix next.</p>
         <div class="hero-cta-row">
-          <a href="#apply" class="btn btn-primary btn-lg" id="magneticCta">Reserve your spot <span class="arrow">→</span></a>
+          <a href="#pricing" class="btn btn-primary btn-lg" id="magneticCta">See the Plans <span class="arrow">→</span></a>
           <a href="#solution" class="btn btn-ghost btn-lg">See how it works</a>
           <span class="meta">15-min intro call · No cost until match</span>
         </div>
@@ -687,7 +724,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— Stop guessing</span><span class="v">Apply to a room and get an expert audit on your real account.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -724,7 +761,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— See if you fit</span><span class="v">Ten operators per room. Apply now — 47 priority spots remaining.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -804,7 +841,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— Step 01</span><span class="v">Skip the cold pitch. Apply now and we'll match you to a room.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Start your application <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -857,13 +894,14 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— Pay a fraction</span><span class="v">Get retainer-grade access without the retainer price tag.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
 
 <div class="rule full"></div>
 
+<!-- PRICING -->
 <!-- RESULTS (LIGHT) -->
 <section id="results" class="light-section">
   <div class="wrap">
@@ -916,7 +954,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— Be the next number</span><span class="v">Cohort 04 opens this month. Apply for a seat.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -950,8 +988,99 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     </div>
     <div class="section-cta fu">
       <div class="cta-text"><span class="k">— Still curious?</span><span class="v">Best way to get answers: a 15-minute intro call.</span></div>
-      <a href="#apply" class="btn btn-primary btn-lg">Reserve your spot <span class="arrow">→</span></a>
+      <a href="#pricing" class="btn btn-primary btn-lg">See the Plans <span class="arrow">→</span></a>
     </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>Pricing</span>
+      <h2>Simple. <span class="lime">One session a week.</span></h2>
+      <p class="lead">One hour of live coaching every week. Pick the format that fits where you are right now.</p>
+    </div>
+
+    <div class="plans-grid fu">
+
+      <!-- GROUP 10 -->
+      <div class="plan">
+        <div class="plan-name">Group · 10 people</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Learn alongside other sellers, keep costs low, and still get expert eyes on your account every week.</p>
+        <div class="plan-price">
+          <span class="currency">€</span>
+          <span class="amount">69</span>
+          <span class="period">/&nbsp;session</span>
+        </div>
+        <div class="plan-billing">1 session per week · 1 hour</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Weekly live session (1h)</span></li>
+          <li><span class="ico yes">✓</span><span>Group account review</span></li>
+          <li><span class="ico yes">✓</span><span>Up to 10 people per room</span></li>
+          <li><span class="ico yes">✓</span><span>Private community access</span></li>
+          <li><span class="ico no">—</span><span style="color:var(--fg-4)">Dedicated time on your account</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-ghost" data-product="Group · 10 people">Apply For Next Room <span style="transition:transform .25s ease;display:inline-block">→</span></a>
+      </div>
+
+      <!-- GROUP 5 (FEATURED) -->
+      <div class="plan featured">
+        <div class="plan-badge"><span class="dot"></span>Most popular</div>
+        <div class="plan-name">Group · 5 people</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Smaller room, more airtime per person. Ideal if you want to move faster.</p>
+        <div class="plan-price">
+          <span class="currency">€</span>
+          <span class="amount">99</span>
+          <span class="period">/&nbsp;session</span>
+        </div>
+        <div class="plan-billing">1 session per week · 1 hour</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Weekly live session (1h)</span></li>
+          <li><span class="ico yes">✓</span><span>Deeper account review per person</span></li>
+          <li><span class="ico yes">✓</span><span>Max 5 people per room</span></li>
+          <li><span class="ico yes">✓</span><span>Private community access</span></li>
+          <li><span class="ico yes">✓</span><span>More focused attention each session</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-ghost" data-product="Group · 5 people">Apply For Next Room <span style="transition:transform .25s ease;display:inline-block">→</span></a>
+      </div>
+
+      <!-- 1-ON-1 -->
+      <div class="plan">
+        <div class="plan-badge"><span class="dot"></span>Available now</div>
+        <div class="plan-name">1-on-1</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Private session. 100% of the hour on your business, your campaigns, your situation.</p>
+        <div class="plan-price">
+          <span class="currency">€</span>
+          <span class="amount">179</span>
+          <span class="period">/&nbsp;session</span>
+        </div>
+        <div class="plan-billing">1 session per week · 1 hour</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Weekly live session (1h)</span></li>
+          <li><span class="ico yes">✓</span><span>Session fully dedicated to your account</span></li>
+          <li><span class="ico yes">✓</span><span>Just you and the expert</span></li>
+          <li><span class="ico yes">✓</span><span>Private community access</span></li>
+          <li><span class="ico yes">✓</span><span>Maximum depth and personalisation</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-primary" data-product="1-on-1">Get it Now →</a>
+      </div>
+
+    </div>
+
+    <!-- CONTACT CARD -->
+    <div class="pricing-contact fu">
+      <div>
+        <h4>Need more than 1 hour a week?</h4>
+        <p>If you have an urgent situation or need more intensive support, reach out. We'll put something together that fits.</p>
+      </div>
+      <a href="mailto:hello@growthroom.co" class="btn btn-ghost" style="white-space:nowrap">Get in touch →</a>
+    </div>
+
   </div>
 </section>
 
@@ -1099,7 +1228,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
       <div>
         <h5>Apply</h5>
         <ul>
-          <li><a href="#apply">Reserve a spot</a></li>
+          <li><a href="#pricing">See Plans</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="https://instagram.com/thegrowthroomhq" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
@@ -1312,7 +1441,7 @@ async function submitForm(){
     var res=await fetch('/api/leads',{
       method:'POST',
       headers:{'content-type':'application/json'},
-      body:JSON.stringify(Object.assign({},{fullName:fullName,email:email,phone:phone,channels:channels,monthlySpend:spend,biggestBlocker:blocker},trackingPayload))
+      body:JSON.stringify(Object.assign({},{fullName:fullName,email:email,phone:phone,channels:channels,monthlySpend:spend,biggestBlocker:blocker,product:window._selectedProduct||''},trackingPayload))
     });
     if(!res.ok)throw new Error('api_error');
 
@@ -1336,6 +1465,10 @@ async function submitForm(){
   el.addEventListener('input',function(){
     if(el.closest('.field').classList.contains('invalid'))validateStep(curStep);
   });
+});
+
+document.querySelectorAll('.plan-cta[data-product]').forEach(function(el){
+  el.addEventListener('click',function(){window._selectedProduct=el.dataset.product;});
 });
 
 setStep(1);

@@ -26,6 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
 		const channels       = String(payload?.channels       ?? "").trim();
 		const monthlySpend   = String(payload?.monthlySpend   ?? "").trim();
 		const biggestBlocker = String(payload?.biggestBlocker ?? "").trim();
+		const product        = String(payload?.product        ?? "").trim();
 
 		if (!fullName || !email || !phone || !channels || !monthlySpend || !biggestBlocker) {
 			return json(400, { ok: false, error: "Missing required fields." });
@@ -76,6 +77,7 @@ export const POST: APIRoute = async ({ request }) => {
 					channels,
 					monthly_spend:   monthlySpend,
 					biggest_blocker: biggestBlocker,
+					product,
 					// Tracking (enviado pelo FormScript via payload mesclado)
 					meta_event_id:         payload.meta_event_id         ?? "",
 					meta_em:               payload.meta_em               ?? "",

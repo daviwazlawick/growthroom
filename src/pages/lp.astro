@@ -1322,7 +1322,7 @@ async function submitForm(){
     var res=await fetch('/api/leads',{
       method:'POST',
       headers:{'content-type':'application/json'},
-      body:JSON.stringify(Object.assign({},{fullName:fullName,email:email,phone:phone,channels:channels,monthlySpend:spend,biggestBlocker:blocker},trackingPayload))
+      body:JSON.stringify(Object.assign({},{fullName:fullName,email:email,phone:phone,channels:channels,monthlySpend:spend,biggestBlocker:blocker,product:window._selectedProduct||''},trackingPayload))
     });
     if(!res.ok)throw new Error('api_error');
 
