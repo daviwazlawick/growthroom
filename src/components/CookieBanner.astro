@@ -1,84 +1,83 @@
 <style>
   #cookie-banner {
     position: fixed;
-    inset: 0;
+    bottom: 24px;
+    left: 24px;
     z-index: 2147483647;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    background: rgba(0, 0, 0, 0.78);
-    backdrop-filter: blur(10px) saturate(130%);
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    width: 100%;
+    max-width: 360px;
   }
 
   #cookie-card {
     position: relative;
-    width: 100%;
-    max-width: 440px;
-    border-radius: 20px;
-    border: 1px solid rgba(201, 164, 74, 0.28);
-    background: linear-gradient(160deg, rgba(201,164,74,0.10) 0%, rgba(201,164,74,0.03) 100%);
-    backdrop-filter: blur(4px);
-    padding: 32px;
-    box-shadow: 0 0 0 1px rgba(201,164,74,0.18), 0 32px 80px rgba(0,0,0,0.65);
+    border-radius: 16px;
+    border: 1px solid rgba(201, 164, 74, 0.25);
+    background: rgba(10, 10, 8, 0.92);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    padding: 20px 22px;
+    box-shadow: 0 0 0 1px rgba(201,164,74,0.12), 0 24px 60px rgba(0,0,0,0.7);
     overflow: hidden;
   }
 
-  /* ambient glow top-right */
   #cookie-card::before {
     content: "";
     pointer-events: none;
     position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 220px;
-    height: 220px;
+    top: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    background: rgba(201,164,74,0.12);
-    filter: blur(48px);
+    background: rgba(201,164,74,0.08);
+    filter: blur(40px);
   }
 
-  #cookie-fallback-panel {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 10px;
-    border: 1px solid rgba(201,164,74,0.18);
-    background: rgba(201,164,74,0.05);
+  #cookie-main { }
+
+  #cookie-prefs {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.07);
   }
+
+  #cookie-prefs.open { display: block; }
 
   .cb-pref-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 9px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 8px 0;
   }
 
-  .cb-pref-row:last-of-type { border-bottom: none; }
+  .cb-pref-row + .cb-pref-row {
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
 
   .cb-pref-label {
-    font-size: 13px;
-    color: #e5e5e5;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: #d4d4d0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
   }
 
   .cb-pref-label small {
-    font-size: 11px;
-    color: #7a7a72;
+    font-size: 10px;
+    color: #5a5a52;
     letter-spacing: 0.03em;
   }
 
   .cb-toggle {
     appearance: none;
     -webkit-appearance: none;
-    width: 36px;
-    height: 20px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.14);
+    width: 32px;
+    height: 18px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.12);
     cursor: pointer;
     position: relative;
     transition: background 0.2s, border-color 0.2s;
@@ -88,10 +87,10 @@
   .cb-toggle::after {
     content: "";
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: #888;
+    background: #666;
     top: 2px;
     left: 2px;
     transition: transform 0.2s, background 0.2s;
@@ -103,101 +102,104 @@
   }
 
   .cb-toggle:checked::after {
-    background: #000;
-    transform: translateX(16px);
+    background: #0a0a08;
+    transform: translateX(14px);
   }
 
   .cb-toggle:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 420px) {
+    #cookie-banner {
+      bottom: 0;
+      left: 0;
+      max-width: 100%;
+      border-radius: 0;
+    }
+    #cookie-card {
+      border-radius: 16px 16px 0 0;
+    }
   }
 </style>
 
 <section id="cookie-banner">
   <div id="cookie-card">
 
-    <!-- Eyebrow chip -->
-    <div class="premium-chip inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-4">
-      <span class="h-1.5 w-1.5 rounded-full bg-[#C9A44A] animate-pulse shrink-0"></span>
-      <span class="section-label">Privacy & Cookies</span>
+    <div id="cookie-main">
+      <p style="font-family:'Montserrat','Inter',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:-0.01em;margin:0 0 6px;">
+        Privacy &amp; Cookies
+      </p>
+      <p style="font-size:12px;color:#7a7a72;line-height:1.55;margin:0 0 16px;font-family:'Inter',sans-serif;">
+        We use necessary cookies to run the site. Optional analytics and marketing cookies load only with your consent.
+      </p>
+
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button
+          id="cookie-reject"
+          type="button"
+          onclick="window.growthroomCookieReject && window.growthroomCookieReject()"
+          style="flex:1;border-radius:8px;border:1px solid rgba(255,255,255,0.12);padding:8px 12px;font-size:12px;font-weight:600;color:#7a7a72;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:color 0.15s,border-color 0.15s;"
+          onmouseover="this.style.color='#d4d4d0';this.style.borderColor='rgba(255,255,255,0.22)'"
+          onmouseout="this.style.color='#7a7a72';this.style.borderColor='rgba(255,255,255,0.12)'"
+        >
+          Reject optional
+        </button>
+        <button
+          id="cookie-accept"
+          type="button"
+          onclick="window.growthroomCookieAccept && window.growthroomCookieAccept()"
+          class="btn-gold"
+          style="flex:1;padding:8px 12px !important;font-size:12px !important;border-radius:8px !important;"
+        >
+          Accept all →
+        </button>
+      </div>
+
+      <div style="margin-top:10px;text-align:center;">
+        <button
+          id="cookie-customize"
+          type="button"
+          onclick="window.growthroomCookieCustomize && window.growthroomCookieCustomize()"
+          style="background:none;border:none;font-size:11px;color:#5a5a52;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline;text-underline-offset:2px;"
+          onmouseover="this.style.color='#c9a44a'"
+          onmouseout="this.style.color='#5a5a52'"
+        >
+          Customize preferences
+        </button>
+      </div>
     </div>
 
-    <!-- Headline -->
-    <h3 class="text-xl font-bold text-white leading-snug" style="font-family:'Montserrat','Inter',sans-serif;letter-spacing:-0.015em;">
-      Your data, your choice.
-    </h3>
-
-    <!-- Divider -->
-    <div class="divider-gold my-4"></div>
-
-    <!-- Body -->
-    <p class="text-sm text-zinc-400 leading-relaxed">
-      We use necessary cookies to keep the site running. Optional analytics and marketing
-      cookies are only loaded with your consent — you can change this at any time.
-    </p>
-
-    <!-- Actions -->
-    <div class="mt-6 flex flex-wrap gap-2 items-center">
-      <button
-        id="cookie-reject"
-        type="button"
-        onclick="window.growthroomCookieReject && window.growthroomCookieReject()"
-        class="rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-zinc-400 transition hover:bg-white/5 hover:text-zinc-200"
-      >
-        Reject optional
-      </button>
-      <button
-        id="cookie-customize"
-        type="button"
-        onclick="window.growthroomCookieCustomize && window.growthroomCookieCustomize()"
-        class="rounded-lg border border-[#C9A44A]/35 px-4 py-2 text-sm font-semibold text-[#C9A44A] transition hover:bg-[#C9A44A]/10"
-      >
-        Customize
-      </button>
-      <button
-        id="cookie-accept"
-        type="button"
-        onclick="window.growthroomCookieAccept && window.growthroomCookieAccept()"
-        class="btn-gold !px-5 !py-2 !text-sm !rounded-lg ml-auto"
-      >
-        Accept all →
-      </button>
-    </div>
-
-    <!-- Fallback customize panel -->
-    <div id="cookie-fallback-panel" style="display:none;">
-      <p class="section-label mb-3">Cookie preferences</p>
-
+    <div id="cookie-prefs">
       <div class="cb-pref-row">
         <label class="cb-pref-label">
           Necessary
-          <small>Always active · required to run the site</small>
+          <small>Always active</small>
         </label>
         <input type="checkbox" class="cb-toggle" checked disabled />
       </div>
-
       <div class="cb-pref-row">
         <label class="cb-pref-label" for="cookie-opt-analytics">
           Analytics
-          <small>Page views &amp; session data</small>
+          <small>Page views &amp; sessions</small>
         </label>
         <input id="cookie-opt-analytics" type="checkbox" class="cb-toggle" />
       </div>
-
       <div class="cb-pref-row">
         <label class="cb-pref-label" for="cookie-opt-marketing">
           Marketing
-          <small>Ad targeting &amp; retargeting</small>
+          <small>Ad targeting</small>
         </label>
         <input id="cookie-opt-marketing" type="checkbox" class="cb-toggle" />
       </div>
-
-      <div class="mt-4 flex justify-end">
+      <div style="margin-top:12px;display:flex;justify-content:flex-end;">
         <button
           id="cookie-save-preferences"
           type="button"
           onclick="window.growthroomCookieSavePreferences && window.growthroomCookieSavePreferences()"
-          class="btn-gold !px-5 !py-2 !text-sm !rounded-lg"
+          class="btn-gold"
+          style="padding:7px 16px !important;font-size:12px !important;border-radius:8px !important;"
         >
           Save preferences
         </button>
@@ -215,7 +217,7 @@
 
       const CONSENT_COOKIE = "growthroom_cookie_choice_v1";
       const CONSENT_MAX_AGE_DAYS = 180;
-      const fallbackPanel = document.getElementById("cookie-fallback-panel");
+      const prefsPanel = document.getElementById("cookie-prefs");
       const analyticsOpt = document.getElementById("cookie-opt-analytics");
       const marketingOpt = document.getElementById("cookie-opt-marketing");
 
@@ -223,8 +225,7 @@
 
       const show = () => {
         _bannerVisible = true;
-        banner.style.display = "flex";
-        if (fallbackPanel) fallbackPanel.style.display = "none";
+        banner.style.display = "block";
         document.documentElement.classList.add("cookie-modal-open");
         document.body.classList.add("cookie-modal-open");
       };
@@ -305,7 +306,7 @@
           return;
         }
         awaitingCustomizeChoice = false;
-        if (fallbackPanel) fallbackPanel.style.display = "block";
+        if (prefsPanel) prefsPanel.classList.add("open");
       };
 
       const onAccept = () => {
