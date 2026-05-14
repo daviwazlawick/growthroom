@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import MetaEventId from "../components/MetaEventId.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import ApplyModal from "../components/ApplyModal.astro";
 
 interface Props {
   title?: string;
@@ -190,6 +191,7 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
   </head>
   <body class="antialiased">
     <slot />
+    <ApplyModal />
     <CookieBanner />
   </body>
 </html>

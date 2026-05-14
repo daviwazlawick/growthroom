@@ -1,0 +1,844 @@
+<style>
+  #apply-modal {
+    --m-bg:    #13131A;
+    --m-bg1:   #1B1B22;
+    --m-bg2:   #22222B;
+    --m-line:  #2E2E38;
+    --m-line2: #3A3A45;
+    --m-fg:    #F7F7F2;
+    --m-fg2:   #C8C8C2;
+    --m-fg3:   #9A9A95;
+    --m-fg4:   #6A6A66;
+    --m-accent: #D8FF5C;
+    --m-danger: #F55;
+    --m-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+    --m-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  #apply-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow-y: auto;
+  }
+
+  #apply-modal.open { display: flex; }
+
+  .am-card {
+    width: 100%;
+    max-width: 680px;
+    margin: auto;
+    background: var(--m-bg);
+    border: 1px solid var(--m-line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(216,255,92,0.06);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* Close button */
+  .am-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--m-line2);
+    background: var(--m-bg1);
+    color: var(--m-fg3);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    z-index: 10;
+  }
+  .am-close:hover {
+    border-color: var(--m-fg3);
+    color: var(--m-fg);
+    background: var(--m-bg2);
+  }
+
+  /* Form shell */
+  .am-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--m-line);
+    align-items: center;
+    background: var(--m-bg1);
+    padding-right: 64px;
+  }
+
+  .am-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--m-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--m-accent);
+  }
+
+  .am-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--m-accent);
+    box-shadow: 0 0 10px rgba(216,255,92,0.6);
+    flex-shrink: 0;
+  }
+
+  .am-title {
+    margin-top: 8px;
+    font-family: var(--m-sans);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--m-fg);
+    line-height: 1.2;
+  }
+
+  /* Progress */
+  .am-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .am-pstep {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--m-mono);
+    font-size: 10px;
+    color: var(--m-fg4);
+    letter-spacing: 0.08em;
+  }
+
+  .am-pdot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--m-line2);
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    color: var(--m-fg3);
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .am-pstep.done .am-pdot  { background: var(--m-accent); color: #0A0A0B; border-color: transparent; }
+  .am-pstep.active .am-pdot { border-color: var(--m-accent); color: var(--m-accent); box-shadow: 0 0 0 4px rgba(216,255,92,0.12); }
+  .am-pstep.done .am-plabel,
+  .am-pstep.active .am-plabel { color: var(--m-fg); }
+
+  .am-pbar {
+    flex: 0 0 48px;
+    height: 1px;
+    background: var(--m-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .am-pbar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--m-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+  .am-pstep.done + .am-pbar::after { transform: scaleX(1); }
+
+  /* Form body */
+  .am-body {
+    padding: 36px 32px 28px;
+    min-height: 280px;
+    position: relative;
+  }
+
+  .am-pane { display: none; animation: amFadeIn 0.4s ease both; }
+  .am-pane.active { display: block; }
+  @keyframes amFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .am-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .am-field label {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--m-fg3);
+  }
+
+  .am-field input[type=text],
+  .am-field input[type=email],
+  .am-field input[type=tel] {
+    background: var(--m-bg1);
+    border: 1px solid var(--m-line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--m-fg);
+    font-size: 15px;
+    font-family: var(--m-sans);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .am-field input:focus { border-color: var(--m-accent); background: var(--m-bg2); }
+
+  .am-field .am-err {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    color: var(--m-danger);
+    letter-spacing: 0.04em;
+    display: none;
+  }
+  .am-field.invalid input { border-color: var(--m-danger); }
+  .am-field.invalid .am-err { display: block; }
+
+  .am-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* MCQ */
+  .am-mcq {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .am-mcq.three { grid-template-columns: repeat(3, 1fr); }
+
+  .am-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--m-line2);
+    border-radius: 10px;
+    background: var(--m-bg1);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    text-align: left;
+  }
+  .am-opt:hover { border-color: var(--m-fg4); background: var(--m-bg2); }
+  .am-opt.on { background: var(--m-accent); border-color: transparent; }
+  .am-opt.on .am-opt-text { color: #0A0A0B; }
+  .am-opt.on .am-opt-meta { color: rgba(10,10,11,0.5); }
+
+  .am-check-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--m-line2);
+    background: var(--m-bg);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .am-opt.on .am-check-box { background: rgba(10,10,11,0.25); border-color: transparent; }
+  .am-check-box svg { display: none; }
+  .am-opt.on .am-check-box svg { display: block; }
+
+  .am-opt-text {
+    font-family: var(--m-sans);
+    font-size: 13px;
+    color: var(--m-fg2);
+    flex: 1;
+    line-height: 1.3;
+  }
+  .am-opt-meta {
+    font-family: var(--m-mono);
+    font-size: 10px;
+    color: var(--m-fg4);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+
+  .am-field.invalid .am-mcq { outline: 1px solid var(--m-danger); border-radius: 10px; }
+
+  /* Form foot */
+  .am-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    border-top: 1px solid var(--m-line);
+    background: var(--m-bg1);
+  }
+
+  .am-step-label {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    color: var(--m-fg4);
+    letter-spacing: 0.08em;
+  }
+
+  .am-actions { display: flex; gap: 10px; }
+
+  .am-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-family: var(--m-sans);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    border: none;
+  }
+  .am-btn:hover { transform: translateY(-1px); }
+
+  .am-btn-primary {
+    background: var(--m-accent);
+    color: #13131A;
+    box-shadow: 0 0 0 1px rgba(216,255,92,0.4), 0 8px 24px -6px rgba(216,255,92,0.35);
+  }
+  .am-btn-primary:hover { background: #e6ff7a; }
+  .am-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .am-btn-ghost {
+    background: var(--m-bg2);
+    border: 1px solid var(--m-line2);
+    color: var(--m-fg2);
+  }
+  .am-btn-ghost:hover { border-color: var(--m-fg3); color: var(--m-fg); }
+
+  .am-form-hint {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    color: var(--m-fg4);
+    letter-spacing: 0.04em;
+    margin-top: 10px;
+  }
+
+  .am-error-msg {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 85, 85, 0.3);
+    background: rgba(255, 85, 85, 0.08);
+    font-family: var(--m-mono);
+    font-size: 12px;
+    color: var(--m-danger);
+    display: none;
+  }
+
+  /* Success pane */
+  .am-success {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 48px 32px;
+  }
+  .am-success.show { display: flex; }
+
+  .am-success-check {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--m-accent);
+    display: grid;
+    place-items: center;
+    color: #13131A;
+    font-family: var(--m-mono);
+    font-weight: 700;
+    font-size: 22px;
+    animation: amPop 0.5s ease both;
+  }
+  @keyframes amPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+  .am-success-meta {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    color: var(--m-fg3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .am-success h3 {
+    font-family: var(--m-sans);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--m-fg);
+    margin: 0;
+  }
+
+  .am-success p {
+    font-family: var(--m-sans);
+    font-size: 15px;
+    color: var(--m-fg2);
+    line-height: 1.6;
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  .am-success-email {
+    font-family: var(--m-mono);
+    font-size: 12px;
+    color: var(--m-fg3);
+    letter-spacing: 0.04em;
+  }
+  .am-success-email span { color: var(--m-fg); }
+
+  @media (max-width: 600px) {
+    .am-head { padding: 22px 20px; padding-right: 56px; gap: 12px; }
+    .am-body { padding: 24px 20px 20px; }
+    .am-foot { padding: 16px 20px; }
+    .am-progress { display: none; }
+    .am-mcq, .am-mcq.three { grid-template-columns: 1fr; }
+    .am-row2 { grid-template-columns: 1fr; }
+    .am-success { padding: 32px 20px; }
+  }
+</style>
+
+<div id="apply-modal" role="dialog" aria-modal="true" aria-label="Apply for Growth Room">
+  <div class="am-card">
+
+    <button class="am-close" id="am-close-btn" aria-label="Close">&times;</button>
+
+    <div class="am-head">
+      <div>
+        <div class="am-eyebrow">
+          <span class="am-eyebrow-dot"></span>
+          Application · Cohort 04
+        </div>
+        <h3 class="am-title" id="am-title">What stage are you at?</h3>
+      </div>
+      <div class="am-progress" aria-label="Form progress">
+        <div class="am-pstep active" data-step="1">
+          <span class="am-pdot">1</span>
+          <span class="am-plabel">Stage</span>
+        </div>
+        <div class="am-pbar"></div>
+        <div class="am-pstep" data-step="2">
+          <span class="am-pdot">2</span>
+          <span class="am-plabel">Channels</span>
+        </div>
+        <div class="am-pbar"></div>
+        <div class="am-pstep" data-step="3">
+          <span class="am-pdot">3</span>
+          <span class="am-plabel">Blocker</span>
+        </div>
+        <div class="am-pbar"></div>
+        <div class="am-pstep" data-step="4">
+          <span class="am-pdot">4</span>
+          <span class="am-plabel">Contact</span>
+        </div>
+      </div>
+    </div>
+
+    <form id="am-form" class="am-body" novalidate>
+
+      <!-- Step 1: Spend -->
+      <div class="am-pane active" data-pane="1">
+        <div class="am-field" data-field="spend">
+          <label>What's your current monthly ad spend?</label>
+          <div class="am-mcq" id="am-mcq-spend">
+            <button type="button" class="am-opt" data-val="&lt;100">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Under €100 / month</span>
+              <span class="am-opt-meta">01</span>
+            </button>
+            <button type="button" class="am-opt" data-val="100-1K">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">€100 – €1K / month</span>
+              <span class="am-opt-meta">02</span>
+            </button>
+            <button type="button" class="am-opt" data-val="1-5K">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">€1K – €5K / month</span>
+              <span class="am-opt-meta">03</span>
+            </button>
+            <button type="button" class="am-opt" data-val="5-15K">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">€5K – €15K / month</span>
+              <span class="am-opt-meta">04</span>
+            </button>
+            <button type="button" class="am-opt" data-val="15-50K">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">€15K – €50K / month</span>
+              <span class="am-opt-meta">05</span>
+            </button>
+            <button type="button" class="am-opt" data-val="50K+">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">€50K+ / month</span>
+              <span class="am-opt-meta">06</span>
+            </button>
+          </div>
+          <span class="am-err">Pick the bracket closest to your current spend.</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Channels -->
+      <div class="am-pane" data-pane="2">
+        <div class="am-field" data-field="channels">
+          <label>Which channels are you running? (select all that apply)</label>
+          <div class="am-mcq three" id="am-mcq-channels">
+            <button type="button" class="am-opt" data-val="Meta">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Meta</span>
+            </button>
+            <button type="button" class="am-opt" data-val="Google">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Google</span>
+            </button>
+            <button type="button" class="am-opt" data-val="TikTok">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">TikTok</span>
+            </button>
+            <button type="button" class="am-opt" data-val="LinkedIn">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">LinkedIn</span>
+            </button>
+            <button type="button" class="am-opt" data-val="YouTube">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">YouTube</span>
+            </button>
+            <button type="button" class="am-opt" data-val="Other">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Other</span>
+            </button>
+          </div>
+          <span class="am-err">Pick at least one channel.</span>
+        </div>
+      </div>
+
+      <!-- Step 3: Blocker -->
+      <div class="am-pane" data-pane="3">
+        <div class="am-field" data-field="blocker">
+          <label>What's the single biggest thing blocking you right now?</label>
+          <div class="am-mcq" id="am-mcq-blocker">
+            <button type="button" class="am-opt" data-val="tracking">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Tracking & attribution don't agree</span>
+            </button>
+            <button type="button" class="am-opt" data-val="roas">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">ROAS is volatile / unprofitable</span>
+            </button>
+            <button type="button" class="am-opt" data-val="creative">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Creative is stuck / not converting</span>
+            </button>
+            <button type="button" class="am-opt" data-val="scale">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Can't scale past current ceiling</span>
+            </button>
+            <button type="button" class="am-opt" data-val="priority">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">No clear priority — too many dashboards</span>
+            </button>
+            <button type="button" class="am-opt" data-val="other">
+              <span class="am-check-box"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6 L5 9 L10 3" stroke="#0A0A0B" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="am-opt-text">Something else</span>
+            </button>
+          </div>
+          <span class="am-err">Pick the closest match — we'll dig deeper on the call.</span>
+        </div>
+      </div>
+
+      <!-- Step 4: Contact -->
+      <div class="am-pane" data-pane="4">
+        <div class="am-row2">
+          <div class="am-field" data-field="name">
+            <label for="am-name">Full name</label>
+            <input id="am-name" type="text" autocomplete="name" placeholder="Marco Vischer" required />
+            <span class="am-err">Please enter your full name.</span>
+          </div>
+          <div class="am-field" data-field="email">
+            <label for="am-email">Work email</label>
+            <input id="am-email" type="email" autocomplete="email" placeholder="marco@yourcompany.com" required />
+            <span class="am-err">Please enter a valid email.</span>
+          </div>
+        </div>
+        <div class="am-field" data-field="phone">
+          <label for="am-phone">Phone number</label>
+          <input id="am-phone" type="tel" autocomplete="tel" placeholder="+49 170 1234567" required />
+          <span class="am-err">Please enter a valid phone number.</span>
+        </div>
+        <p class="am-form-hint">By submitting you agree to a 15-minute intro call. We never sell your data.</p>
+        <div class="am-error-msg" id="am-error-msg">Something went wrong — please try again.</div>
+      </div>
+
+      <!-- Success -->
+      <div class="am-success" id="am-success">
+        <div class="am-success-check">✓</div>
+        <p class="am-success-meta">Application received · Cohort 04</p>
+        <h3 id="am-success-name">You're in the queue.</h3>
+        <p>An expert will review your account brief and get back within 48 hours — with either a room match or a candid "not yet, here's why."</p>
+        <p class="am-success-email">Confirmation sent to <span id="am-success-email">—</span></p>
+      </div>
+
+    </form>
+
+    <div class="am-foot" id="am-foot">
+      <span class="am-step-label" id="am-step-label">Step 01 of 04</span>
+      <div class="am-actions">
+        <button type="button" class="am-btn am-btn-ghost" id="am-back-btn" style="display:none">← Back</button>
+        <button type="button" class="am-btn am-btn-primary" id="am-next-btn">
+          Continue <span style="transition:transform .2s;display:inline-block">→</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+(function () {
+  var modal    = document.getElementById('apply-modal');
+  var closeBtn = document.getElementById('am-close-btn');
+  var form     = document.getElementById('am-form');
+  var foot     = document.getElementById('am-foot');
+  var title    = document.getElementById('am-title');
+  var stepLabel = document.getElementById('am-step-label');
+  var backBtn  = document.getElementById('am-back-btn');
+  var nextBtn  = document.getElementById('am-next-btn');
+  var errorMsg = document.getElementById('am-error-msg');
+  var success  = document.getElementById('am-success');
+  if (!modal) return;
+
+  var curStep = 1;
+  var totalSteps = 4;
+  var selectedProduct = '';
+
+  var titles = {
+    1: 'What stage are you at?',
+    2: 'Where are you running paid?',
+    3: 'What’s blocking you most?',
+    4: 'How do we reach you?'
+  };
+
+  // ── Open / Close ──────────────────────────────────────────────
+  window.openApplyModal = function (product) {
+    selectedProduct = product || '';
+    resetForm();
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // Intercept all #apply links anywhere on the page
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href="#apply"], a[href$="#apply"]');
+    if (!link) return;
+    e.preventDefault();
+    window.openApplyModal(link.dataset.product || '');
+  });
+
+  // ── MCQ setup ─────────────────────────────────────────────────
+  function setupMCQ(rootId, multi) {
+    var root = document.getElementById(rootId);
+    if (!root) return;
+    root.querySelectorAll('.am-opt').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (multi) {
+          b.classList.toggle('on');
+        } else {
+          root.querySelectorAll('.am-opt').forEach(function (x) { x.classList.remove('on'); });
+          b.classList.add('on');
+        }
+        var field = b.closest('.am-field');
+        if (field && field.classList.contains('invalid')) validateStep(curStep);
+      });
+    });
+  }
+  setupMCQ('am-mcq-spend', false);
+  setupMCQ('am-mcq-channels', true);
+  setupMCQ('am-mcq-blocker', false);
+
+  // ── Step management ───────────────────────────────────────────
+  function setStep(n) {
+    curStep = n;
+    form.querySelectorAll('.am-pane').forEach(function (p) {
+      p.classList.toggle('active', parseInt(p.dataset.pane, 10) === n);
+    });
+    modal.querySelectorAll('.am-pstep').forEach(function (p) {
+      var s = parseInt(p.dataset.step, 10);
+      p.classList.toggle('done', s < n);
+      p.classList.toggle('active', s === n);
+    });
+    title.textContent = titles[n];
+    stepLabel.textContent = 'Step ' + String(n).padStart(2, '0') + ' of ' + String(totalSteps).padStart(2, '0');
+    backBtn.style.display = n > 1 ? 'inline-flex' : 'none';
+    nextBtn.innerHTML = n === totalSteps
+      ? 'Submit application <span style="transition:transform .2s;display:inline-block">→</span>'
+      : 'Continue <span style="transition:transform .2s;display:inline-block">→</span>';
+    // Scroll card top on mobile
+    var card = modal.querySelector('.am-card');
+    if (card) card.scrollIntoView({ block: 'nearest' });
+  }
+
+  function resetForm() {
+    // Clear selections
+    modal.querySelectorAll('.am-opt').forEach(function (b) { b.classList.remove('on'); });
+    modal.querySelectorAll('.am-field').forEach(function (f) { f.classList.remove('invalid'); });
+    modal.querySelectorAll('input').forEach(function (i) { i.value = ''; });
+    if (errorMsg) errorMsg.style.display = 'none';
+    success.classList.remove('show');
+    foot.style.display = '';
+    setStep(1);
+  }
+
+  // ── Validation ────────────────────────────────────────────────
+  function setInvalid(el, bad) {
+    var field = el && el.classList && el.classList.contains('am-field')
+      ? el : el && el.closest ? el.closest('.am-field') : null;
+    if (field) field.classList.toggle('invalid', bad);
+  }
+
+  function validateStep(n) {
+    var ok = true;
+    if (n === 1) {
+      var sel = modal.querySelectorAll('#am-mcq-spend .am-opt.on');
+      setInvalid(modal.querySelector('[data-field=spend]'), sel.length === 0);
+      ok = sel.length > 0;
+    }
+    if (n === 2) {
+      var sel = modal.querySelectorAll('#am-mcq-channels .am-opt.on');
+      setInvalid(modal.querySelector('[data-field=channels]'), sel.length === 0);
+      ok = sel.length > 0;
+    }
+    if (n === 3) {
+      var sel = modal.querySelectorAll('#am-mcq-blocker .am-opt.on');
+      setInvalid(modal.querySelector('[data-field=blocker]'), sel.length === 0);
+      ok = sel.length > 0;
+    }
+    if (n === 4) {
+      var name  = document.getElementById('am-name');
+      var email = document.getElementById('am-email');
+      var phone = document.getElementById('am-phone');
+      var nOk = name.value.trim().length >= 2;
+      var eOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      var pOk = phone.value.trim().length >= 5;
+      setInvalid(name, !nOk);
+      setInvalid(email, !eOk);
+      setInvalid(phone, !pOk);
+      ok = nOk && eOk && pOk;
+    }
+    return ok;
+  }
+
+  backBtn.addEventListener('click', function () { if (curStep > 1) setStep(curStep - 1); });
+
+  nextBtn.addEventListener('click', function () {
+    if (!validateStep(curStep)) return;
+    if (curStep < totalSteps) {
+      setStep(curStep + 1);
+    } else {
+      submitForm();
+    }
+  });
+
+  ['am-name', 'am-email', 'am-phone'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function () {
+      if (el.closest('.am-field').classList.contains('invalid')) validateStep(curStep);
+    });
+  });
+
+  // ── Submit ────────────────────────────────────────────────────
+  async function submitForm() {
+    if (errorMsg) errorMsg.style.display = 'none';
+    nextBtn.disabled = true;
+    nextBtn.innerHTML = 'Sending…';
+
+    var spend    = (modal.querySelector('#am-mcq-spend .am-opt.on') || {}).dataset?.val || '';
+    var channels = Array.from(modal.querySelectorAll('#am-mcq-channels .am-opt.on'))
+                        .map(function (b) { return b.dataset.val; }).join(', ');
+    var blocker  = (modal.querySelector('#am-mcq-blocker .am-opt.on') || {}).dataset?.val || '';
+    var fullName = document.getElementById('am-name').value.trim();
+    var email    = document.getElementById('am-email').value.trim();
+    var phone    = document.getElementById('am-phone').value.trim();
+
+    var nameParts = fullName.split(/\s+/);
+    var firstName = nameParts[0] || '';
+    var lastName  = nameParts.slice(1).join(' ') || '';
+
+    var trackingPayload = {};
+    try {
+      if (typeof window.submitMetaForm === 'function') {
+        trackingPayload = await window.submitMetaForm({
+          firstName: firstName, lastName: lastName,
+          email: email, phone: phone,
+          channels: channels, monthlySpend: spend, biggestBlocker: blocker
+        });
+      }
+    } catch (e) {}
+
+    try {
+      var res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(Object.assign({}, {
+          fullName: fullName, email: email, phone: phone,
+          channels: channels, monthlySpend: spend, biggestBlocker: blocker,
+          product: selectedProduct
+        }, trackingPayload))
+      });
+      if (!res.ok) throw new Error('api_error');
+
+      form.querySelectorAll('.am-pane').forEach(function (p) { p.classList.remove('active'); });
+      success.classList.add('show');
+      foot.style.display = 'none';
+      title.textContent = 'Welcome to Cohort 04';
+      document.getElementById('am-success-email').textContent = email || '—';
+      document.getElementById('am-success-name').textContent = 'You’re in the queue, ' + firstName + '.';
+      modal.querySelectorAll('.am-pstep').forEach(function (p) { p.classList.add('done'); p.classList.remove('active'); });
+    } catch (e) {
+      nextBtn.disabled = false;
+      nextBtn.innerHTML = 'Submit application <span style="transition:transform .2s;display:inline-block">→</span>';
+      if (errorMsg) errorMsg.style.display = 'block';
+    }
+  }
+
+  setStep(1);
+})();
+</script>
