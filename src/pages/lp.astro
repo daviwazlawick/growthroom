@@ -1247,14 +1247,6 @@ document.querySelectorAll('.faq-item').forEach(function(item){
   btn.addEventListener('mouseleave',function(){btn.style.transform='';});
 })();
 
-/* ---------- Apply CTAs ---------- */
-document.querySelectorAll('a[href="#apply"]').forEach(function(el){
-  el.addEventListener('click',function(e){
-    e.preventDefault();
-    if(typeof window.openApplyModal==='function')window.openApplyModal(el.dataset.product||'');
-  });
-});
-
 </script>
 </body>
 </html>
