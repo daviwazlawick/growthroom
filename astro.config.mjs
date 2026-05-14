@@ -9,6 +9,9 @@ export default defineConfig({
 	adapter: node({
 		mode: 'standalone',
 	}),
+	build: {
+		inlineStylesheets: 'always',
+	},
 	vite: {
 		plugins: [tailwindcss()],
 	},

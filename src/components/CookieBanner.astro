@@ -71,14 +71,10 @@
       const analyticsOpt = document.getElementById("cookie-opt-analytics");
       const marketingOpt = document.getElementById("cookie-opt-marketing");
 
-      const isBannerVisible = () =>
-        !banner.classList.contains("hidden") &&
-        !!(banner.offsetParent || banner.getClientRects().length);
+      let _bannerVisible = false;
 
       const show = () => {
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H1',location:'CookieBanner.astro:show',message:'show() called',data:{cookie:readChoiceCookie()},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
+        _bannerVisible = true;
         banner.style.position = "fixed";
         banner.style.inset = "0";
         banner.style.display = "flex";
@@ -92,9 +88,7 @@
       };
 
       const hide = () => {
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H1',location:'CookieBanner.astro:hide',message:'hide() called',data:{cookie:readChoiceCookie()},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
+        _bannerVisible = false;
         banner.style.display = "none";
         banner.classList.add("hidden");
         document.documentElement.classList.remove("cookie-modal-open");
@@ -106,9 +100,6 @@
         const secure = window.location.protocol === "https:" ? "; Secure" : "";
         document.cookie =
           `${CONSENT_COOKIE}=${encodeURIComponent(choice)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H6',location:'CookieBanner.astro:setChoiceCookie',message:'consent cookie written',data:{choice:choice,cookieAfter:document.cookie.indexOf(CONSENT_COOKIE+'=')!==-1},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
       };
 
       const readChoiceCookie = () => {
@@ -130,9 +121,6 @@
           ad_user_data: marketing ? "granted" : "denied",
           ad_personalization: marketing ? "granted" : "denied",
         });
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'post-fix',hypothesisId:'H8',location:'CookieBanner.astro:updateConsentMode',message:'dispatching growthroom consent update',data:{analytics:analytics,marketing:marketing},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         window.dispatchEvent(new CustomEvent('growthroom:consent-updated', {
           detail: { analytics: !!analytics, marketing: !!marketing }
         }));
@@ -173,29 +161,17 @@
       let awaitingCustomizeChoice = false;
 
       const openCustomize = () => {
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H6',location:'CookieBanner.astro:openCustomize',message:'customize handler entered',data:{hasOpenPrivacy:typeof window.openPrivacySettings==='function',hasUC:!!window.UC_UI},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         awaitingCustomizeChoice = true;
         if (typeof window.openPrivacySettings === "function") {
-          // Hide custom layer first so Usercentrics layer can receive clicks.
           hide();
           window.openPrivacySettings();
           return;
         }
-        // Fallback: show in-banner category controls.
         awaitingCustomizeChoice = false;
         fallbackPanel?.classList.remove("hidden");
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'post-fix',hypothesisId:'H7',location:'CookieBanner.astro:openCustomize',message:'fallback preference panel shown',data:{reason:'openPrivacySettings missing'},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
       };
 
       const onAccept = () => {
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H2',location:'CookieBanner.astro:onAccept',message:'accept handler triggered',data:{hasUC:!!window.UC_UI,hasGtag:typeof window.gtag==='function'},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
-        // Close first for immediate UX feedback.
         const handledByUc = tryUcAcceptAll();
         if (!handledByUc) {
           updateConsentMode(true, true);
@@ -207,9 +183,6 @@
       };
 
       const onReject = () => {
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H2',location:'CookieBanner.astro:onReject',message:'reject handler triggered',data:{hasUC:!!window.UC_UI,hasGtag:typeof window.gtag==='function'},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         const handledByUc = tryUcRejectOptional();
         if (!handledByUc) {
           updateConsentMode(false, false);
@@ -224,33 +197,17 @@
       const onSavePreferences = () => {
         const analytics = !!analyticsOpt?.checked;
         const marketing = !!marketingOpt?.checked;
-        // #region agent log
-        fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'post-fix',hypothesisId:'H7',location:'CookieBanner.astro:onSavePreferences',message:'fallback preferences saved',data:{analytics:analytics,marketing:marketing},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         updateConsentMode(analytics, marketing);
         setChoiceCookie("customized");
         hide();
       };
 
-      // Global handlers ensure immediate response even if listener binding fails.
       window.growthroomCookieAccept = onAccept;
       window.growthroomCookieReject = onReject;
       window.growthroomCookieCustomize = onCustomize;
       window.growthroomCookieSavePreferences = onSavePreferences;
-      // #region agent log
-      fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H3',location:'CookieBanner.astro:globalHandlers',message:'global handlers assigned',data:{accept:typeof window.growthroomCookieAccept,reject:typeof window.growthroomCookieReject,customize:typeof window.growthroomCookieCustomize},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-
-      const accept = document.getElementById("cookie-accept");
-      const reject = document.getElementById("cookie-reject");
-      const customize = document.getElementById("cookie-customize");
-      // #region agent log
-      fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H4',location:'CookieBanner.astro:bind',message:'elements resolved for listeners',data:{acceptFound:!!accept,rejectFound:!!reject,customizeFound:!!customize,tagNameAccept:accept&&accept.tagName},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-      // Click behavior uses inline onclick + global handlers to avoid double-binding.
 
       window.addEventListener("UC_CONSENT", () => {
-        // Only persist/close from Customize flow after explicit user action.
         if (!awaitingCustomizeChoice) return;
         awaitingCustomizeChoice = false;
         applyStateFromHelper();
@@ -264,7 +221,6 @@
         }
       });
 
-      // Start safe on every load/HMR.
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       banner.classList.add("hidden");
@@ -274,13 +230,9 @@
       } else {
         show();
       }
-      // #region agent log
-      fetch('http://127.0.0.1:7483/ingest/4a08c514-3be5-4074-b836-26384ed65e06',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f3909c'},body:JSON.stringify({sessionId:'f3909c',runId:'pre-fix',hypothesisId:'H5',location:'CookieBanner.astro:init',message:'initial visibility state',data:{cookie:readChoiceCookie(),isHidden:banner.classList.contains('hidden')},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
 
-      // Permanent guard: if something touches overflow, release it.
       const guard = () => {
-        if (!isBannerVisible()) {
+        if (!_bannerVisible) {
           document.documentElement.style.overflow = "";
           document.body.style.overflow = "";
         }
@@ -291,7 +243,6 @@
       window.addEventListener("resize", guard);
       document.addEventListener("visibilitychange", guard);
     } catch (_) {
-      // Hard fail-safe: never trap user without scroll.
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     }
