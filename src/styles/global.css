@@ -152,6 +152,16 @@ h1, h2, h3 {
 .reveal.d4 { animation-delay: 0.32s; }
 .reveal.d5 { animation-delay: 0.40s; }
 
+/* Outline CTA button — used on non-featured pricing cards */
+.outline-btn {
+  border-color: rgba(201,164,74,0.5);
+  color: #c9a44a;
+}
+.outline-btn:hover {
+  border-color: #c9a44a;
+  background: rgba(201,164,74,0.1);
+}
+
 /* Hide Usercentrics default layer while custom cookie modal is open */
 html.cookie-modal-open #usercentrics-root,
 body.cookie-modal-open #usercentrics-root {
