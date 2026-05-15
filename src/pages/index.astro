@@ -556,6 +556,13 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
     .light-section .section-cta .btn-primary:hover{background:#2A2A33}
     .form-error-msg{font-family:var(--mono);font-size:12px;color:var(--danger);letter-spacing:.04em;padding:12px 16px;border:1px solid var(--danger);border-radius:8px;background:rgba(255,106,85,.08);display:none;margin-top:12px}
     /* PRICING PLANS */
+    .intro-call-banner{display:flex;align-items:center;justify-content:center;gap:16px;padding:18px 28px;margin-bottom:32px;border-radius:14px;border:1px solid rgba(216,255,92,.25);background:rgba(216,255,92,.06);text-align:center;flex-wrap:wrap}
+    .intro-call-banner .icb-icon{width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex-shrink:0;font-size:16px}
+    .intro-call-banner .icb-text{display:flex;flex-direction:column;gap:3px;text-align:left}
+    .intro-call-banner .icb-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+    .intro-call-banner .icb-body{font-family:var(--sans);font-size:15px;color:var(--fg);font-weight:500;letter-spacing:-.01em}
+    .intro-call-banner .icb-sub{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.02em;margin-top:1px}
+    @media(max-width:600px){.intro-call-banner{gap:12px;padding:16px 18px}.intro-call-banner .icb-text{text-align:center}}
     .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden}
     .plan{padding:36px 30px 30px;border-right:1px solid var(--line);background:var(--bg-1);position:relative;display:flex;flex-direction:column}
     .plan:last-child{border-right:0}
@@ -1089,6 +1096,15 @@ const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID
       <span class="eyebrow"><span class="dot"></span>Pricing</span>
       <h2>Simple. <span class="lime">One session a week.</span></h2>
       <p class="lead">60 minutes of live coaching every week. Pick the format that fits — the smaller the room, the more time on your account.</p>
+    </div>
+
+    <div class="intro-call-banner fu">
+      <div class="icb-icon">☎</div>
+      <div class="icb-text">
+        <span class="icb-label">Included with every plan</span>
+        <span class="icb-body">Every plan starts with a free 15-minute intro call.</span>
+        <span class="icb-sub">No card. No commitment. We find the right room for you — or you walk away with zero cost.</span>
+      </div>
     </div>
 
     <div class="plans-grid fu">
