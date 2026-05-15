@@ -586,7 +586,7 @@
           <input id="am-phone" type="tel" autocomplete="tel" placeholder="+49 170 1234567" required />
           <span class="am-err">Please enter a valid phone number.</span>
         </div>
-        <p class="am-form-hint">By submitting you agree to a 15-minute intro meeting. We never sell your data.</p>
+        <p class="am-form-hint">By submitting you agree to a 15-minute intro call. We never sell your data.</p>
         <div class="am-error-msg" id="am-error-msg">Something went wrong — please try again.</div>
       </div>
 
@@ -635,7 +635,7 @@
   var titles = {
     1: 'What stage are you at?',
     2: 'Where are you running paid?',
-    3: "What’s blocking you most?",
+    3: "What's blocking you most?",
     4: 'How do we reach you?'
   };
 
@@ -827,15 +827,15 @@
       });
       if (!res.ok) throw new Error('api_error');
 
-      form.querySelectorAll(‘.am-pane’).forEach(function (p) { p.classList.remove(‘active’); });
-      success.classList.add(‘show’);
-      foot.style.display = ‘none’;
-      title.textContent = selectedProduct ? ‘You\’re in — ‘ + selectedProduct : ‘You\’re in!’;
-      var successMeta = document.getElementById(‘am-success-meta’);
-      if (successMeta) successMeta.textContent = selectedProduct ? ‘Application received · ‘ + selectedProduct : ‘Application received’;
-      document.getElementById(‘am-success-email’).textContent = email || ‘—‘;
-      document.getElementById(‘am-success-name’).textContent = "You’re in the queue, " + firstName + ‘.’;
-      modal.querySelectorAll(‘.am-pstep’).forEach(function (p) { p.classList.add(‘done’); p.classList.remove(‘active’); });
+      form.querySelectorAll('.am-pane').forEach(function (p) { p.classList.remove('active'); });
+      success.classList.add('show');
+      foot.style.display = 'none';
+      title.textContent = selectedProduct ? 'You\'re in — ' + selectedProduct : 'You\'re in!';
+      var successMeta = document.getElementById('am-success-meta');
+      if (successMeta) successMeta.textContent = selectedProduct ? 'Application received · ' + selectedProduct : 'Application received';
+      document.getElementById('am-success-email').textContent = email || '—';
+      document.getElementById('am-success-name').textContent = "You're in the queue, " + firstName + '.';
+      modal.querySelectorAll('.am-pstep').forEach(function (p) { p.classList.add('done'); p.classList.remove('active'); });
     } catch (e) {
       nextBtn.disabled = false;
       nextBtn.innerHTML = 'Submit application <span style="transition:transform .2s;display:inline-block">→</span>';
