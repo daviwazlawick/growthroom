@@ -1,0 +1,1312 @@
+---
+import MetaEventId from '../../components/MetaEventId.astro';
+import FormScript from '../../components/FormScript.astro';
+import ApplyModal from '../../components/ApplyModal.astro';
+import CookieBanner from '../../components/CookieBanner.astro';
+
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID || "GTM-TD9BJC9F";
+const USERCENTRICS_SETTINGS_ID = import.meta.env.PUBLIC_USERCENTRICS_SETTINGS_ID || "";
+---
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <MetaEventId />
+  <script is:inline>
+    if (typeof navigator !== 'undefined' && 'registerProtocolHandler' in navigator) {
+      navigator.registerProtocolHandler = function () {};
+    }
+  </script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    window.gtag = window.gtag || gtag;
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 1500
+    });
+  </script>
+  {USERCENTRICS_SETTINGS_ID && (
+    <>
+      <script id="usercentrics-cmp" async src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id={USERCENTRICS_SETTINGS_ID}></script>
+      <script is:inline>
+        (function(){
+          function toGranted(v){return v?'granted':'denied';}
+          function readConsentState(){
+            var analytics=false,marketing=false;
+            try{
+              if(window.UC_UI&&typeof window.UC_UI.getServicesBaseInfo==='function'){
+                var services=window.UC_UI.getServicesBaseInfo()||[];
+                for(var i=0;i<services.length;i++){
+                  var svc=services[i];
+                  var name=(svc.name||'').toLowerCase();
+                  var cat=(svc.categorySlug||svc.category||'').toLowerCase();
+                  var granted=!!(svc.consent&&svc.consent.status);
+                  if(!granted)continue;
+                  if(cat.indexOf('marketing')!==-1||name.indexOf('facebook')!==-1||name.indexOf('ads')!==-1)marketing=true;
+                  if(cat.indexOf('analytics')!==-1||name.indexOf('analytics')!==-1)analytics=true;
+                }
+              }
+            }catch(_){}
+            return{analytics:analytics,marketing:marketing};
+          }
+          function applyConsentModeV2(){
+            var state=readConsentState();
+            window.gtag('consent','update',{analytics_storage:toGranted(state.analytics),ad_storage:toGranted(state.marketing),ad_user_data:toGranted(state.marketing),ad_personalization:toGranted(state.marketing)});
+            window.dispatchEvent(new CustomEvent('growthroom:consent-updated',{detail:state}));
+          }
+          function registerHooks(){
+            applyConsentModeV2();
+            window.addEventListener('UC_UI_INITIALIZED',applyConsentModeV2);
+            window.addEventListener('UC_UI_VIEW_CHANGED',applyConsentModeV2);
+            window.addEventListener('UC_CONSENT',applyConsentModeV2);
+          }
+          if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',registerHooks);
+          else registerHooks();
+          window.getGrowthroomConsentState=readConsentState;
+          window.openPrivacySettings=function(){
+            try{
+              if(window.UC_UI&&typeof window.UC_UI.showSecondLayer==='function'){window.UC_UI.showSecondLayer();return;}
+              if(window.UC_UI&&typeof window.UC_UI.showFirstLayer==='function')window.UC_UI.showFirstLayer();
+            }catch(_){}
+          };
+        })();
+      </script>
+    </>
+  )}
+  <script is:inline define:vars={{ GTM_ID }}>
+    (function(){
+      function loadGtmOnce(){
+        if(!GTM_ID||window.__growthroomGtmLoaded)return;
+        window.__growthroomGtmLoaded=true;
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+        var f=document.getElementsByTagName('script')[0];
+        var j=document.createElement('script');
+        j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+GTM_ID;
+        f.parentNode.insertBefore(j,f);
+      }
+      function shouldLoad(){
+        return document.cookie.indexOf('growthroom_cookie_choice_v1=accepted')!==-1||
+          document.cookie.indexOf('growthroom_cookie_choice_v1=customized')!==-1;
+      }
+      if(shouldLoad()){
+        gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});
+        loadGtmOnce();
+      }
+      window.addEventListener('growthroom:consent-updated',function(e){
+        var d=e&&e.detail?e.detail:{};
+        if(d.analytics||d.marketing)loadGtmOnce();
+      });
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+  <link rel="icon" type="image/png" href="/img/logo.png" />
+  <meta name="description" content="Não é um curso. Não é uma agência. Um grupo ao vivo toda semana onde fundadores e operadores corrigem seus anúncios pagos com um especialista. Grupo ou 1-a-1 — a partir de R$399/sessão." />
+  <link rel="canonical" href="https://growthroom.eu/br" />
+  <meta property="og:title" content="O grupo privado onde seus anúncios são corrigidos. Toda semana. | Growth Room" />
+  <meta property="og:description" content="Não é um curso. Não é uma agência. Um grupo ao vivo toda semana onde fundadores e operadores corrigem seus anúncios pagos com um especialista. Grupo ou 1-a-1 — a partir de R$399/sessão." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://growthroom.eu/br" />
+  <meta property="og:image" content="https://growthroom.eu/img/logo.png" />
+  <meta property="og:site_name" content="Growth Room" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="O grupo privado onde seus anúncios são corrigidos. Toda semana. | Growth Room" />
+  <meta name="twitter:description" content="Não é um curso. Não é uma agência. Um grupo ao vivo toda semana onde fundadores e operadores corrigem seus anúncios pagos com um especialista. Grupo ou 1-a-1 — a partir de R$399/sessão." />
+  <meta name="twitter:image" content="https://growthroom.eu/img/logo.png" />
+  <title>O grupo privado onde seus anúncios são corrigidos. Toda semana. | Growth Room</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Growth Room",
+        "url": "https://growthroom.eu",
+        "logo": "https://growthroom.eu/img/logo.png",
+        "email": "hello@growthroom.co",
+        "sameAs": ["https://instagram.com/thegrowthroomhq"]
+      },
+      {
+        "@type": "Service",
+        "name": "Growth Room — Weekly Paid Ads Coaching",
+        "serviceType": "Paid Advertising Coaching",
+        "description": "Sessões de coaching ao vivo de 60 minutos por semana para fundadores e operadores rodando anúncios no Meta, Google e TikTok. Escolha entre grupo de 10, grupo de 5 ou sessões 1-a-1.",
+        "url": "https://growthroom.eu/br",
+        "provider": { "@type": "Organization", "name": "Growth Room", "url": "https://growthroom.eu" },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Grupo · 10 pessoas",
+            "description": "Sessão ao vivo semanal de 60 minutos compartilhada com até 9 outros operadores.",
+            "price": "399",
+            "priceCurrency": "BRL",
+            "availability": "https://schema.org/InStock"
+          },
+          {
+            "@type": "Offer",
+            "name": "Grupo · 5 pessoas",
+            "description": "Sessão ao vivo semanal de 60 minutos com até 4 operadores — mais tempo de fala por pessoa.",
+            "price": "579",
+            "priceCurrency": "BRL",
+            "availability": "https://schema.org/InStock"
+          },
+          {
+            "@type": "Offer",
+            "name": "1-a-1",
+            "description": "Os 60 minutos completos com um especialista focado inteiramente na sua conta.",
+            "price": "999",
+            "priceCurrency": "BRL",
+            "availability": "https://schema.org/InStock"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Isso é um curso?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Não. Não há currículo, módulos nem biblioteca gravada para completar. Cada sessão é ao vivo, dez operadores no grupo, duas contas reais na tela. Se você quer um curso, este não é o produto certo." }
+          },
+          {
+            "@type": "Question",
+            "name": "Preciso já estar rodando anúncios para entrar?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Não. Alguns membros estão rodando campanhas ativamente, outros estão começando. Fazemos o match com um grupo baseado no seu estágio. A reunião de intro gratuita é como descobrimos o encaixe certo." }
+          },
+          {
+            "@type": "Question",
+            "name": "Quando eu realmente pago?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Somente após a reunião de 15 min e depois que fizermos o match com um grupo e especialista específico. Se não houver encaixe, você não paga nada. A cobrança é trimestral e você pode cancelar a qualquer trimestre." }
+          },
+          {
+            "@type": "Question",
+            "name": "Quem são os especialistas no grupo?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Operadores que gerenciaram pessoalmente mais de R$60M em verba publicitária e lideraram o crescimento em empresas que você já ouviu falar. Compartilhamos nomes específicos de forma privada durante a reunião de intro." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root{
+      --bg:#13131A;--bg-1:#1B1B22;--bg-2:#22222B;--bg-3:#2A2A33;
+      --line:#2E2E38;--line-2:#3A3A45;
+      --fg:#F7F7F2;--fg-2:#C8C8C2;--fg-3:#9A9A95;--fg-4:#6A6A66;
+      --accent:#D8FF5C;--accent-dim:#A8C840;
+      --warm:#F5E9D0;--danger:#FF6A55;
+      --serif:"Inter",ui-sans-serif,system-ui,sans-serif;
+      --sans:"Inter",ui-sans-serif,system-ui,sans-serif;
+      --mono:"JetBrains Mono",ui-monospace,"SF Mono",monospace;
+      --maxw:1240px;--pad:clamp(20px,4vw,56px);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{font-size:16px;line-height:1.55;background-image:radial-gradient(1100px 600px at 85% -5%,rgba(216,255,92,0.07),transparent 60%),radial-gradient(900px 500px at -10% 25%,rgba(245,233,208,0.04),transparent 60%),radial-gradient(800px 600px at 50% 110%,rgba(216,255,92,0.05),transparent 60%);background-color:var(--bg);overflow-x:hidden;}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.035;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+    input,select,textarea{font:inherit;color:inherit}
+    ::selection{background:var(--accent);color:#0A0A0B}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);position:relative;z-index:2}
+    .rule{height:1px;background:var(--line);width:100%}
+    .rule.full{position:relative;left:50%;transform:translateX(-50%);width:100vw}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-3);}
+    .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(200,241,53,.6)}
+    h1,h2,h3,h4{font-family:var(--sans);font-weight:600;letter-spacing:-0.02em;margin:0;color:var(--fg)}
+    h1{font-size:clamp(28px,5.5vw,88px);line-height:1.05;letter-spacing:-0.04em;font-weight:700}
+    h2{font-size:clamp(22px,4vw,56px);line-height:1.1;letter-spacing:-0.035em;font-weight:600}
+    h3{font-size:clamp(22px,2.2vw,30px);line-height:1.2;letter-spacing:-0.02em;font-weight:600}
+    h1 em,h2 em,h3 em{font-style:italic;color:var(--fg-2)}
+    h1 .lime,h2 .lime{color:var(--accent);font-style:italic}
+    p{margin:0;color:var(--fg-2)}
+    .lead{font-size:clamp(17px,1.4vw,20px);line-height:1.55;color:var(--fg-2);max-width:60ch}
+    .nav{position:sticky;top:0;z-index:50;background:rgba(19,19,26,0.72);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line);}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:0.04em;color:var(--fg)}
+    .logo-mark{width:22px;height:22px;border:1px solid var(--line-2);border-radius:5px;display:grid;place-items:center;background:var(--bg-1)}
+    .logo-mark::after{content:"";width:8px;height:8px;background:var(--accent);border-radius:1px;box-shadow:0 0 10px rgba(200,241,53,.6)}
+    .nav-links{display:flex;gap:28px;font-size:13px;color:var(--fg-3)}
+    .nav-links a{transition:color .2s}
+    .nav-links a:hover{color:var(--fg)}
+    .nav-cta{display:flex;align-items:center;gap:14px}
+    .nav-cta .availability{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+    .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent);position:relative}
+    .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:.5;animation:pulse 2s infinite}
+    @keyframes pulse{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:-0.005em;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s,color .2s,border-color .2s;will-change:transform;}
+    .btn-primary{background:var(--accent);color:#13131A;box-shadow:0 0 0 1px rgba(216,255,92,.6),0 12px 40px -10px rgba(216,255,92,.5);position:relative;overflow:hidden;}
+    .btn-primary::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,0.5) 50%,transparent 70%);transform:translateX(-110%);transition:transform .9s ease;}
+    .btn-primary:hover::before{transform:translateX(110%)}
+    .btn-primary:hover{background:#E4FF7A}
+    .btn-ghost{border:1px solid var(--line-2);color:var(--fg);background:var(--bg-1)}
+    .btn-ghost:hover{border-color:var(--fg-3);background:var(--bg-2)}
+    .btn-lg{height:54px;padding:0 28px;font-size:15px}
+    .arrow{transition:transform .25s ease}
+    .btn:hover .arrow{transform:translateX(3px)}
+    section{padding:clamp(72px,9vw,140px) 0;position:relative}
+    .section-head{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:64px}
+    .section-head .eyebrow{margin-bottom:6px}
+    .section-head h2{max-width:18ch}
+    .section-head .lead{margin-top:8px}
+    .hero{padding-top:clamp(80px,10vw,140px);padding-bottom:clamp(64px,7vw,100px);position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:64px;align-items:end}
+    .hero h1{margin-top:24px;max-width:14ch}
+    .hero h1 .strike{position:relative;display:inline-block;color:var(--fg-3)}
+    .hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;animation:strike 1s .8s cubic-bezier(.7,0,.3,1) forwards;}
+    @keyframes strike{to{transform:scaleX(1)}}
+    .hero-sub{margin-top:28px;max-width:48ch}
+    .hero-cta-row{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap}
+    .hero-cta-row .meta{font-family:var(--mono);font-size:12px;color:var(--fg-3);letter-spacing:.04em}
+    .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+    .trust{padding:18px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+    .trust:last-child{border-right:0}
+    .trust .k{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+    .trust .v{font-size:13px;color:var(--fg-2)}
+    .room-card{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));padding:22px;position:relative;overflow:hidden;}
+    .room-card::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(180deg,rgba(216,255,92,.22),transparent 40%);-webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);-webkit-mask-composite:xor;mask-composite:exclude;}
+    .room-head{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+    .room-head .live{display:flex;align-items:center;gap:8px;color:var(--accent)}
+    .room-head .live .pulse{background:var(--accent)}
+    .table-svg{display:block;width:100%;height:auto}
+    .room-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:20px;border-top:1px solid var(--line)}
+    .room-stat{padding:14px 12px;border-right:1px solid var(--line)}
+    .room-stat:last-child{border-right:0}
+    .room-stat .label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--fg-3);text-transform:uppercase}
+    .room-stat .num{font-family:var(--serif);font-size:28px;line-height:1;margin-top:6px;letter-spacing:-.02em}
+    .room-stat .delta{font-family:var(--mono);font-size:11px;color:var(--accent);margin-top:4px}
+    .stats-banner{padding:56px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+    .stat-cell{padding:24px 28px;border-right:1px solid var(--line)}
+    .stat-cell:last-child{border-right:0}
+    .stat-cell .eyebrow{margin-bottom:14px}
+    .stat-cell .big{font-family:var(--serif);font-size:clamp(56px,8vw,108px);line-height:.9;letter-spacing:-.03em}
+    .stat-cell .big .unit{font-family:var(--sans);font-size:.32em;color:var(--fg-3);font-weight:400;margin-left:8px;vertical-align:super}
+    .stat-cell .desc{margin-top:10px;color:var(--fg-3);font-size:13px;max-width:24ch}
+    .problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+    .problem{padding:32px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:240px;display:flex;flex-direction:column;justify-content:space-between;position:relative;transition:background .25s}
+    .problem:last-child{border-right:0}
+    .problem:hover{background:var(--bg-1)}
+    .problem .num{font-family:var(--mono);font-size:11px;color:var(--fg-4);letter-spacing:.12em}
+    .problem h3{margin-top:16px;font-size:24px}
+    .problem p{font-size:14px;color:var(--fg-3);margin-top:10px}
+    .problem::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+    .problem:hover::after{transform:scaleX(1)}
+    .pull-quote{margin-top:80px;padding:48px clamp(24px,5vw,72px);border:1px solid var(--line);border-radius:14px;background:radial-gradient(800px 300px at 0% 0%,rgba(216,255,92,.07),transparent 60%),linear-gradient(160deg,var(--bg-1),var(--bg-2));display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;}
+    .pull-quote .qmark{font-family:var(--serif);font-size:120px;line-height:.7;color:var(--accent);font-style:italic}
+    .pull-quote .quote{font-family:var(--serif);font-size:clamp(24px,2.6vw,38px);line-height:1.2;letter-spacing:-.02em}
+    .pull-quote .quote em{color:var(--fg-3);font-style:italic}
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .pillar{border:1px solid var(--line);border-radius:12px;padding:32px;background:var(--bg-1);position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+    .pillar:hover{border-color:var(--line-2);transform:translateY(-2px)}
+    .pillar:hover .pillar-glyph{color:var(--accent)}
+    .pillar-glyph{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--fg-4);transition:color .25s}
+    .pillar h3{margin-top:18px;max-width:14ch}
+    .pillar p{margin-top:14px;color:var(--fg-3);font-size:14.5px}
+    .pillar-line{margin-top:28px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.04em}
+    .pillar-line::before{content:"";width:24px;height:1px;background:var(--accent)}
+    .stack-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+    .stack-list{border-top:1px solid var(--line)}
+    .stack-row{padding:24px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:baseline;transition:padding .25s}
+    .stack-row:hover{padding-left:8px}
+    .stack-row .idx{font-family:var(--mono);font-size:12px;color:var(--fg-4);letter-spacing:.12em;min-width:32px}
+    .stack-row .name{font-family:var(--serif);font-size:22px;letter-spacing:-.01em}
+    .stack-row .val{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.04em}
+    .stack-aside{border:1px solid var(--accent);border-radius:14px;padding:36px;background:linear-gradient(180deg,rgba(216,255,92,.10),rgba(216,255,92,0.02));position:sticky;top:96px}
+    .stack-aside .eyebrow{color:var(--accent)}
+    .stack-aside .eyebrow .dot{background:var(--accent)}
+    .stack-aside h3{margin-top:18px;font-size:34px;line-height:1.05;max-width:14ch}
+    .stack-aside p{margin-top:16px;color:var(--fg-2)}
+    .stack-aside .price{margin-top:28px;display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--line-2);padding-top:24px}
+    .stack-aside .price .strike{font-family:var(--serif);font-size:28px;color:var(--fg-4);text-decoration:line-through;font-weight:380}
+    .stack-aside .price .now{font-family:var(--serif);font-size:46px;letter-spacing:-.02em;font-weight:400}
+    .stack-aside .price .ps{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase}
+    .outcomes{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg-1)}
+    .outcome{padding:28px 22px;border-right:1px solid var(--line);min-height:220px;display:flex;flex-direction:column;justify-content:space-between;transition:background .25s}
+    .outcome:last-child{border-right:0}
+    .outcome:hover{background:var(--bg-2)}
+    .tag{display:inline-flex;align-items:center;align-self:flex-start;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--line-2);border-radius:999px;color:var(--fg-2)}
+    .outcome.hot .tag{color:var(--accent);border-color:rgba(200,241,53,.3)}
+    .outcome .body{font-family:var(--serif);font-size:21px;line-height:1.2;letter-spacing:-.01em;margin-top:18px}
+    .outcome .metric{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--fg-3);display:flex;align-items:center;gap:8px}
+    .outcome .metric .arrow-up{color:var(--accent)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+    .step{padding:48px 32px 32px;border-right:1px solid var(--line);position:relative;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+    .step:last-child{border-right:0}
+    .step .step-num{font-family:var(--serif);font-size:clamp(96px,12vw,160px);line-height:.85;letter-spacing:-.04em;color:var(--fg);font-style:italic}
+    .step .step-num .ord{color:var(--accent);font-style:normal;font-family:var(--mono);font-size:.18em;letter-spacing:.18em;vertical-align:top;margin-right:14px}
+    .step h3{margin-top:32px;max-width:13ch}
+    .step p{margin-top:14px;color:var(--fg-3);font-size:14.5px;max-width:32ch}
+    .step .step-meta{margin-top:24px;font-family:var(--mono);font-size:11px;color:var(--fg-4);letter-spacing:.08em;display:flex;align-items:center;gap:8px}
+    .step .step-meta::before{content:"";width:18px;height:1px;background:var(--line-2)}
+    .vs-wrap{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--bg-1)}
+    .vs-grid{display:grid;grid-template-columns:1fr 96px 1fr;align-items:stretch}
+    .vs-side{padding:44px clamp(24px,3vw,44px) 36px}
+    .vs-left{background:linear-gradient(180deg,#1A1A22,#16161E);color:var(--fg-3);position:relative}
+    .vs-right{background:linear-gradient(180deg,rgba(216,255,92,0.10),rgba(216,255,92,0.02));border-left:1px solid var(--line);position:relative}
+    .vs-left::before,.vs-right::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.012) 0 1px,transparent 1px 9px)}
+    .vs-tag{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3)}
+    .vs-tag.lime{color:var(--accent)}
+    .vs-tag .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+    .vs-h{font-family:var(--serif);font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.02em;margin-top:14px}
+    .vs-left .vs-h{color:var(--fg-2)}
+    .vs-right .vs-h{color:var(--fg)}
+    .vs-price{margin-top:22px;display:flex;align-items:baseline;gap:10px}
+    .vs-price .num{font-family:var(--serif);font-size:48px;line-height:1;letter-spacing:-.02em;font-weight:400}
+    .vs-left .vs-price .num{color:var(--fg-3);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.18)}
+    .vs-right .vs-price .num{color:var(--accent)}
+    .vs-price .per{font-family:var(--mono);font-size:11px;color:var(--fg-4);letter-spacing:.08em;text-transform:uppercase}
+    .vs-list{margin-top:28px;padding:0;list-style:none;display:flex;flex-direction:column}
+    .vs-list li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-top:1px solid var(--line);font-size:14px}
+    .vs-list li:last-child{border-bottom:1px solid var(--line)}
+    .vs-list .ico{flex:0 0 18px;height:18px;border-radius:50%;display:grid;place-items:center;margin-top:1px;font-family:var(--mono);font-size:11px;font-weight:600}
+    .vs-left .vs-list .ico{background:transparent;border:1px solid #3a3a40;color:#74747c}
+    .vs-right .vs-list .ico{background:var(--accent);color:#0A0A0B}
+    .vs-left .vs-list li{color:var(--fg-3)}
+    .vs-right .vs-list li{color:var(--fg-2)}
+    .vs-mid{display:flex;align-items:center;justify-content:center;background:var(--bg-1);border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+    .vs-mid .vs-text{font-family:var(--serif);font-style:italic;font-size:64px;letter-spacing:-.04em;color:var(--fg)}
+    .vs-mid .vs-text .slash{color:var(--accent)}
+    .vs-mid::before,.vs-mid::after{content:"";position:absolute;left:50%;width:1px;height:38%;background:linear-gradient(transparent,var(--line),transparent)}
+    .vs-mid::before{top:0}
+    .vs-mid::after{bottom:0}
+    .vs-seals{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+    .seal{padding:22px 28px;border-right:1px solid var(--line);display:flex;align-items:center;gap:14px}
+    .seal:last-child{border-right:0}
+    .seal .icon{width:34px;height:34px;border:1px solid var(--line-2);border-radius:8px;display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--accent)}
+    .seal .label{display:flex;flex-direction:column}
+    .seal .label .k{font-family:var(--serif);font-size:18px;letter-spacing:-.01em}
+    .seal .label .v{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase}
+    .results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .result{padding:32px 28px;border-right:1px solid var(--line);background:var(--bg-1);position:relative;overflow:hidden}
+    .result:last-child{border-right:0}
+    .result .ey{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+    .result .num{font-family:var(--serif);font-size:clamp(44px,5vw,72px);line-height:.95;letter-spacing:-.03em;margin-top:14px;display:flex;align-items:baseline;gap:6px}
+    .result .num .pre{color:var(--fg-3);font-size:.55em}
+    .result .num .suf{font-family:var(--sans);color:var(--accent);font-size:.32em;font-weight:500;margin-left:6px;letter-spacing:0}
+    .result .desc{margin-top:14px;color:var(--fg-3);font-size:13px}
+    .result .spark{position:absolute;right:18px;bottom:18px;opacity:.5}
+    .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+    .tcard{border:1px solid var(--line);border-radius:14px;padding:32px;background:var(--bg-1);display:flex;flex-direction:column;gap:24px}
+    .tcard .quote{font-family:var(--serif);font-size:22px;line-height:1.3;letter-spacing:-.01em}
+    .tcard .quote .hl{color:var(--accent);font-style:italic}
+    .tperson{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);padding-top:22px}
+    .avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:18px;letter-spacing:-.01em;border:1px solid var(--line-2);background:linear-gradient(180deg,var(--bg-2),var(--bg-3));color:var(--fg)}
+    .avatar.lime{background:radial-gradient(circle at 30% 30%,#d8ff5a,#9DBB28);color:#0A0A0B;border-color:transparent}
+    .tperson .who{display:flex;flex-direction:column;gap:2px}
+    .tperson .name{font-size:14px;color:var(--fg)}
+    .tperson .role{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.04em}
+    .faq{border-top:1px solid var(--line)}
+    .faq-item{border-bottom:1px solid var(--line);padding:0}
+    .faq-q{display:grid;grid-template-columns:auto 1fr auto;gap:24px;padding:28px 4px;cursor:pointer;align-items:center}
+    .faq-q .qn{font-family:var(--mono);font-size:12px;color:var(--fg-4);letter-spacing:.12em}
+    .faq-q .qt{font-family:var(--serif);font-size:clamp(20px,2vw,26px);letter-spacing:-.01em;color:var(--fg);transition:color .2s}
+    .faq-q:hover .qt{color:var(--accent)}
+    .faq-q .plus{width:32px;height:32px;border:1px solid var(--line-2);border-radius:50%;display:grid;place-items:center;color:var(--fg-2);transition:transform .35s ease,background .2s,color .2s,border-color .2s;font-family:var(--mono);font-size:14px}
+    .faq-item.open .faq-q .plus{transform:rotate(45deg);background:var(--accent);color:#0A0A0B;border-color:transparent}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1);}
+    .faq-a-inner{padding:0 4px 28px 60px;color:var(--fg-3);font-size:15px;max-width:70ch}
+    .faq-item.open .faq-a{max-height:300px}
+    .form-shell{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));overflow:hidden;position:relative;}
+    .form-head{display:grid;grid-template-columns:1fr auto;gap:24px;padding:28px 32px;border-bottom:1px solid var(--line);align-items:center}
+    .form-head .left .eyebrow{color:var(--accent)}
+    .form-head .left .eyebrow .dot{background:var(--accent)}
+    .form-head h3{margin-top:8px;font-size:28px;letter-spacing:-.02em}
+    .progress{display:flex;align-items:center;gap:14px}
+    .pstep{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--fg-4);letter-spacing:.08em}
+    .pdot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-size:11px;color:var(--fg-3);transition:all .3s}
+    .pstep.done .pdot{background:var(--accent);color:#0A0A0B;border-color:transparent}
+    .pstep.active .pdot{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 4px rgba(200,241,53,.12)}
+    .pstep.done .label,.pstep.active .label{color:var(--fg)}
+    .pbar{flex:0 0 80px;height:1px;background:var(--line);position:relative;overflow:hidden}
+    .pbar::after{content:"";position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+    .pstep.done + .pbar::after{transform:scaleX(1)}
+    .form-body{padding:36px 32px 32px;min-height:320px;position:relative}
+    .step-pane{display:none;animation:fadeIn .45s ease both}
+    .step-pane.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+    .field label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+    .field input[type=text],.field input[type=email],.field input[type=tel],.field textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--fg);font-size:15px;outline:none;transition:border-color .2s,background .2s;font-family:var(--sans);}
+    .field input:focus,.field textarea:focus{border-color:var(--accent);background:var(--bg-1)}
+    .field textarea{resize:vertical;min-height:120px;font-family:var(--sans)}
+    .field .err{font-family:var(--mono);font-size:11px;color:var(--danger);letter-spacing:.04em;display:none}
+    .field.invalid input,.field.invalid textarea{border-color:var(--danger)}
+    .field.invalid .err{display:block}
+    .row-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{padding:10px 16px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;color:var(--fg-2);cursor:pointer;transition:all .2s;background:var(--bg-1)}
+    .chip:hover{border-color:var(--fg-3);color:var(--fg)}
+    .chip.on{background:var(--accent);color:#0A0A0B;border-color:transparent}
+    .form-foot{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;border-top:1px solid var(--line);background:var(--bg-1)}
+    .form-foot .step-label{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em}
+    .form-foot .actions{display:flex;gap:10px}
+    .success-pane{display:none;flex-direction:column;align-items:flex-start;gap:18px;padding:48px 32px}
+    .success-pane.show{display:flex}
+    .success-pane .check{width:54px;height:54px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#13131A;font-family:var(--mono);font-weight:700;animation:pop .5s ease both}
+    @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+    .success-pane h3{font-size:34px}
+    .success-pane p{color:var(--fg-2);max-width:48ch}
+    .success-pane .meta{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.12em;text-transform:uppercase}
+    footer{padding:80px 0 48px;border-top:1px solid var(--line);background:var(--bg-1)}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
+    .foot-grid h3{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.16em;text-transform:uppercase;margin:0 0 16px;font-weight:500}
+    .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+    .foot-grid a{font-size:14px;color:var(--fg-2);transition:color .2s}
+    .foot-grid a:hover{color:var(--accent)}
+    .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em}
+    .fu{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+    .fu.in{opacity:1;transform:none}
+    .light-section{background:#F5F1E8;color:#1A1A1F;position:relative;background-image:radial-gradient(900px 500px at 100% 0%,rgba(216,255,92,0.18),transparent 60%);}
+    .light-section .section-head h2,.light-section h2,.light-section h3,.light-section h4{color:#1A1A1F}
+    .light-section h2 em,.light-section h3 em{color:#5A5A55}
+    .light-section .lead,.light-section p{color:#4A4A48}
+    .light-section .eyebrow{color:#5A5A55}
+    .light-section .eyebrow .dot{background:#1A1A1F;box-shadow:none}
+    .light-section .pillar{background:#FFFFFF;border-color:#E4DFD2}
+    .light-section .pillar h3{color:#1A1A1F}
+    .light-section .pillar p{color:#5A5A55}
+    .light-section .pillar-glyph{color:#9A9A92}
+    .light-section .pillar-line{color:#5A5A55}
+    .light-section .pillar:hover{border-color:#1A1A1F}
+    .light-section .pillar:hover .pillar-glyph{color:#1A1A1F}
+    .light-section .tcard{background:#FFFFFF;border-color:#E4DFD2}
+    .light-section .tcard .quote{color:#1A1A1F}
+    .light-section .tcard .quote .hl{color:#1A1A1F;background:var(--accent);padding:0 6px;border-radius:4px;font-style:normal}
+    .light-section .tperson{border-top-color:#E4DFD2}
+    .light-section .tperson .name{color:#1A1A1F}
+    .light-section .tperson .role{color:#5A5A55}
+    .light-section .avatar{background:#F5F1E8;border-color:#E4DFD2;color:#1A1A1F}
+    .light-section .avatar.dark{background:#1A1A1F;color:#F5F1E8;border-color:transparent}
+    .light-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #1A1A1F;border-radius:14px;overflow:hidden;background:#1A1A1F}
+    .light-stats .lcell{padding:36px 28px;background:#FFFFFF}
+    .light-stats .lcell+.lcell{margin-left:1px}
+    .light-stats .lcell .ey{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5A5A55}
+    .light-stats .lcell .num{font-family:var(--serif);font-size:clamp(48px,6vw,76px);line-height:1;letter-spacing:-.03em;margin-top:14px;color:#1A1A1F;font-weight:380}
+    .light-stats .lcell .num .suf{font-family:var(--sans);font-size:.32em;color:#5A5A55;font-weight:500;margin-left:6px;letter-spacing:0}
+    .light-stats .lcell .desc{margin-top:14px;color:#5A5A55;font-size:14px;max-width:32ch}
+    .form-shell.light{background:#FFFFFF;border:1px solid #E4DFD2;color:#1A1A1F;}
+    .form-shell.light .form-head{border-bottom-color:#EDE7D6;background:#FAF7EE}
+    .form-shell.light .form-head h3{color:#1A1A1F}
+    .form-shell.light .form-head .eyebrow{color:#1A1A1F}
+    .form-shell.light .form-head .eyebrow .dot{background:#1A1A1F}
+    .form-shell.light .pdot{background:#FFFFFF;border-color:#D8D3C2;color:#5A5A55}
+    .form-shell.light .pstep{color:#7A7570}
+    .form-shell.light .pstep .label{color:#7A7570}
+    .form-shell.light .pstep.active .pdot{border-color:#1A1A1F;color:#1A1A1F;box-shadow:0 0 0 4px rgba(26,26,31,.08)}
+    .form-shell.light .pstep.done .pdot{background:var(--accent);color:#1A1A1F;border-color:transparent}
+    .form-shell.light .pstep.active .label,.form-shell.light .pstep.done .label{color:#1A1A1F}
+    .form-shell.light .pbar{background:#E4DFD2}
+    .form-shell.light .pstep.done+.pbar::after{background:#1A1A1F}
+    .form-shell.light .field label{color:#5A5A55}
+    .form-shell.light .field input[type=text],.form-shell.light .field input[type=email],.form-shell.light .field input[type=tel],.form-shell.light .field textarea{background:#FAF7EE;border-color:#E4DFD2;color:#1A1A1F;}
+    .form-shell.light .field input::placeholder,.form-shell.light .field textarea::placeholder{color:#9A9A92}
+    .form-shell.light .field input:focus,.form-shell.light .field textarea:focus{border-color:#1A1A1F;background:#FFFFFF}
+    .form-shell.light .form-foot{background:#FAF7EE;border-top-color:#EDE7D6}
+    .form-shell.light .step-label{color:#5A5A55}
+    .form-shell.light .btn-ghost{background:#FFFFFF;border-color:#D8D3C2;color:#1A1A1F}
+    .form-shell.light .btn-ghost:hover{border-color:#1A1A1F;background:#F5F1E8}
+    .form-shell.light .btn-primary{background:#1A1A1F;color:#F5F1E8;box-shadow:0 0 0 1px #1A1A1F,0 12px 40px -10px rgba(26,26,31,.4)}
+    .form-shell.light .btn-primary:hover{background:#2A2A33}
+    .mcq{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .mcq.three{grid-template-columns:repeat(3,1fr)}
+    .mcq-opt{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid #E4DFD2;border-radius:12px;background:#FFFFFF;cursor:pointer;transition:all .2s;text-align:left;color:#1A1A1F;font-size:14.5px;position:relative;}
+    .mcq-opt:hover{border-color:#1A1A1F;background:#FAF7EE}
+    .mcq-opt .check-box{width:22px;height:22px;border:1.5px solid #C8C2B0;border-radius:6px;flex-shrink:0;display:grid;place-items:center;transition:all .2s;background:#FFFFFF;}
+    .mcq-opt .check-box svg{opacity:0;transition:opacity .15s}
+    .mcq-opt.on{border-color:#1A1A1F;background:#FAF7EE;box-shadow:0 0 0 1px #1A1A1F inset}
+    .mcq-opt.on .check-box{background:var(--accent);border-color:#1A1A1F}
+    .mcq-opt.on .check-box svg{opacity:1}
+    .mcq-opt .opt-text{flex:1;font-weight:500}
+    .mcq-opt .opt-meta{font-family:var(--mono);font-size:11px;color:#7A7570;letter-spacing:.04em}
+    .mcq.radio .check-box{border-radius:50%}
+    .form-shell.light .success-pane h3{color:#1A1A1F}
+    .form-shell.light .success-pane p{color:#4A4A48}
+    .form-shell.light .success-pane .meta{color:#5A5A55}
+    .form-shell.light .success-pane .check{background:var(--accent);color:#1A1A1F}
+    .light-section .results-grid{border-color:#1A1A1F;background:#1A1A1F}
+    .light-section .result{background:#FFFFFF;border-right-color:#1A1A1F}
+    .light-section .result .ey{color:#5A5A55}
+    .light-section .result .num{color:#1A1A1F}
+    .light-section .result .num .pre{color:#5A5A55}
+    .light-section .result .num .suf{color:#1A1A1F;background:var(--accent);padding:0 8px;border-radius:4px}
+    .light-section .result .desc{color:#5A5A55}
+    .light-section .result .spark polyline{stroke:#1A1A1F !important}
+    .section-cta{margin-top:64px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 32px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,var(--bg-1),var(--bg-2));flex-wrap:wrap;}
+    .section-cta .cta-text{display:flex;flex-direction:column;gap:4px}
+    .section-cta .cta-text .k{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.16em;text-transform:uppercase}
+    .section-cta .cta-text .v{font-size:18px;font-weight:500;color:var(--fg);max-width:48ch}
+    .light-section .section-cta{background:#FFFFFF;border-color:#E4DFD2}
+    .light-section .section-cta .cta-text .k{color:#1A1A1F}
+    .light-section .section-cta .cta-text .v{color:#1A1A1F}
+    .light-section .section-cta .btn-primary{background:#1A1A1F;color:var(--accent);box-shadow:0 0 0 1px #1A1A1F,0 12px 40px -10px rgba(26,26,31,.4)}
+    .light-section .section-cta .btn-primary:hover{background:#2A2A33}
+    .form-error-msg{font-family:var(--mono);font-size:12px;color:var(--danger);letter-spacing:.04em;padding:12px 16px;border:1px solid var(--danger);border-radius:8px;background:rgba(255,106,85,.08);display:none;margin-top:12px}
+    /* PRICING PLANS */
+    .intro-call-banner{display:flex;align-items:center;justify-content:center;gap:16px;padding:18px 28px;margin-bottom:32px;border-radius:14px;border:1px solid rgba(216,255,92,.25);background:rgba(216,255,92,.06);text-align:center;flex-wrap:wrap}
+    .intro-call-banner .icb-icon{width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex-shrink:0;font-size:16px}
+    .intro-call-banner .icb-text{display:flex;flex-direction:column;gap:3px;text-align:left}
+    .intro-call-banner .icb-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+    .intro-call-banner .icb-body{font-family:var(--sans);font-size:15px;color:var(--fg);font-weight:500;letter-spacing:-.01em}
+    .intro-call-banner .icb-sub{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.02em;margin-top:1px}
+    @media(max-width:600px){.intro-call-banner{gap:12px;padding:16px 18px}.intro-call-banner .icb-text{text-align:center}}
+    .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+    .plan{padding:36px 30px 30px;border-right:1px solid var(--line);background:var(--bg-1);position:relative;display:flex;flex-direction:column}
+    .plan:last-child{border-right:0}
+    .plan.featured{background:linear-gradient(180deg,rgba(216,255,92,.10),rgba(216,255,92,0.02))}
+    .plan.featured::before{content:"";position:absolute;inset:-1px;border-radius:0;pointer-events:none;border-top:2px solid var(--accent)}
+    .plan-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid rgba(216,255,92,.4);color:var(--accent);background:rgba(216,255,92,.08);margin-bottom:16px}
+    .plan-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+    .plan-name{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+    .plan-price{display:flex;align-items:baseline;gap:6px;margin:16px 0 6px}
+    .plan-price .currency{font-family:var(--sans);font-size:20px;color:var(--fg-3);font-weight:400;margin-bottom:4px}
+    .plan-price .amount{font-family:var(--sans);font-size:clamp(40px,4.5vw,60px);line-height:1;letter-spacing:-.03em;font-weight:700}
+    .plan-price .period{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase;align-self:flex-end;padding-bottom:6px}
+    .plan-billing{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.04em;min-height:18px}
+    .plan-divider{height:1px;background:var(--line);margin:24px 0}
+    .plan-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;flex:1}
+    .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:var(--fg-2)}
+    .plan-features .ico{flex:0 0 18px;height:18px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:700;margin-top:1px}
+    .plan-features .ico.yes{background:var(--accent);color:#0A0A0B}
+    .plan-features .ico.no{background:transparent;border:1px solid var(--line-2);color:var(--fg-4)}
+    .plan-cta{width:100%;height:46px;border-radius:999px;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s;cursor:pointer;text-decoration:none;margin-top:24px}
+    .plan-cta-primary{background:var(--accent);color:#13131A;box-shadow:0 0 0 1px rgba(216,255,92,.4),0 8px 32px -8px rgba(216,255,92,.4)}
+    .plan-cta-primary:hover{background:#E4FF7A}
+    .plan-cta-ghost{border:1px solid var(--line-2);background:transparent;color:var(--fg)}
+    .plan-cta-ghost:hover{border-color:var(--fg-3);background:var(--bg-2)}
+    .pricing-contact{border:1px solid var(--line);border-radius:14px;padding:32px 36px;background:var(--bg-1);display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;margin-top:20px}
+    .pricing-contact h3{font-size:clamp(17px,1.6vw,22px);margin:0 0 8px}
+    .pricing-contact p{color:var(--fg-3);font-size:14px;margin:0;max-width:52ch}
+    @media(max-width:880px){
+      .plans-grid{grid-template-columns:1fr}
+      .plan{border-right:0;border-bottom:1px solid var(--line)}
+      .plan:last-child{border-bottom:0}
+      .plan.featured::before{border-top:0;border-left:2px solid var(--accent)}
+      .pricing-contact{grid-template-columns:1fr}
+    }
+
+    @media(max-width:980px){
+      .hero-grid{grid-template-columns:1fr;gap:48px}
+      .trust-row{grid-template-columns:repeat(2,1fr)}
+      .trust:nth-child(2){border-right:0}
+      .trust:nth-child(1),.trust:nth-child(2){border-bottom:1px solid var(--line)}
+      .stats-grid{grid-template-columns:1fr}
+      .stat-cell{border-right:0;border-bottom:1px solid var(--line)}
+      .stat-cell:last-child{border-bottom:0}
+      .problem-grid{grid-template-columns:repeat(2,1fr)}
+      .problem:nth-child(odd){border-right:1px solid var(--line)}
+      .problem:nth-child(even){border-right:0}
+      .pillars{grid-template-columns:1fr}
+      .stack-layout{grid-template-columns:1fr;gap:32px}
+      .stack-aside{position:static}
+      .outcomes{grid-template-columns:1fr 1fr}
+      .outcome{border-bottom:1px solid var(--line)}
+      .outcome:nth-child(odd){border-right:1px solid var(--line)}
+      .outcome:nth-child(even){border-right:0}
+      .steps{grid-template-columns:1fr}
+      .step{border-right:0;border-bottom:1px solid var(--line)}
+      .vs-grid{grid-template-columns:1fr}
+      .vs-mid{border-left:0;border-right:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-height:80px}
+      .vs-mid::before,.vs-mid::after{display:none}
+      .vs-right{border-left:0}
+      .vs-seals{grid-template-columns:1fr}
+      .seal{border-right:0;border-bottom:1px solid var(--line)}
+      .seal:last-child{border-bottom:0}
+      .results-grid{grid-template-columns:1fr 1fr}
+      .result{border-bottom:1px solid var(--line)}
+      .result:nth-child(odd){border-right:1px solid var(--line)}
+      .result:nth-child(even){border-right:0}
+      .testimonials{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .foot-grid{grid-template-columns:1fr 1fr}
+      .section-cta{flex-direction:column;align-items:flex-start;padding:22px}
+      .light-stats{grid-template-columns:1fr}
+      .light-stats .lcell+.lcell{margin-left:0;margin-top:1px}
+      .mcq{grid-template-columns:1fr}
+      .mcq.three{grid-template-columns:1fr}
+      .nav-cta .availability{display:none}
+    }
+    @media(max-width:560px){
+      .problem-grid{grid-template-columns:1fr}
+      .problem{border-right:0 !important}
+      .outcomes{grid-template-columns:1fr}
+      .outcome{border-right:0 !important}
+      .results-grid{grid-template-columns:1fr}
+      .result{border-right:0 !important}
+      .foot-grid{grid-template-columns:1fr}
+      .form-head{grid-template-columns:1fr;gap:18px}
+      .progress{flex-wrap:wrap}
+      .pull-quote{grid-template-columns:1fr;gap:8px}
+      .pull-quote .qmark{font-size:80px}
+    }
+  </style>
+</head>
+<body>
+
+<FormScript />
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo" aria-label="Growth Room home">
+      <span class="logo-mark"></span>
+      <span>Growth&nbsp;Room</span>
+    </a>
+    <div class="nav-links" aria-label="Primary">
+      <a href="#problem">Problema</a>
+      <a href="#solution">Solução</a>
+      <a href="#compare">Comparar</a>
+      <a href="#pricing">Preços</a>
+      <a href="#results">Resultados</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <span class="availability"><span class="pulse"></span>50 vagas · 18 restantes</span>
+      <a href="#pricing" class="btn btn-primary">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>Growth Room · Acesso Antecipado · 50 vagas · Próxima turma abrindo em breve</div>
+        <h1 class="fu in">O grupo onde seus anúncios são corrigidos. Toda semana. <span class="lime">Ao vivo.</span></h1>
+        <p class="lead hero-sub">O Growth Room é um mastermind semanal privado — um pequeno grupo de pessoas vendendo online, um especialista e contas de anúncios reais na tela. Você sai de cada sessão sabendo exatamente o que corrigir.</p>
+        <div class="hero-cta-row">
+          <a href="#pricing" class="btn btn-primary btn-lg" id="magneticCta">Ver os Planos <span class="arrow">→</span></a>
+          <a href="#solution" class="btn btn-ghost btn-lg">Veja como funciona</a>
+          <span class="meta">Reunião de 15 min · Sem custo até o match</span>
+        </div>
+      </div>
+      <aside class="room-card" aria-hidden="true">
+        <div class="room-head">
+          <span>Room 04 · Live Tuesdays · 18:00 CET</span>
+          <span class="live"><span class="pulse"></span>LIVE</span>
+        </div>
+        <svg class="table-svg" viewBox="0 0 420 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="tg" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#1a1a20"/>
+              <stop offset="100%" stop-color="#0d0d10"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="210" cy="130" rx="150" ry="44" fill="url(#tg)" stroke="#2A2A30"/>
+          <ellipse cx="210" cy="130" rx="100" ry="28" fill="none" stroke="#1F1F23" stroke-dasharray="2 4"/>
+          <g fill="#16161A" stroke="#2A2A30">
+            <rect x="68" y="120" width="20" height="20" rx="4"/>
+            <rect x="100" y="86" width="20" height="20" rx="4"/>
+            <rect x="170" y="74" width="20" height="20" rx="4"/>
+            <rect x="240" y="74" width="20" height="20" rx="4"/>
+            <rect x="310" y="86" width="20" height="20" rx="4"/>
+            <rect x="334" y="120" width="20" height="20" rx="4"/>
+            <rect x="100" y="166" width="20" height="20" rx="4"/>
+            <rect x="170" y="178" width="20" height="20" rx="4"/>
+            <rect x="240" y="178" width="20" height="20" rx="4"/>
+            <rect x="310" y="166" width="20" height="20" rx="4"/>
+          </g>
+          <rect x="170" y="74" width="20" height="20" rx="4" fill="#C8F135"/>
+          <circle cx="180" cy="84" r="22" fill="none" stroke="#C8F135" stroke-opacity="0.4"/>
+          <circle cx="180" cy="84" r="32" fill="none" stroke="#C8F135" stroke-opacity="0.2"/>
+          <text x="210" y="128" text-anchor="middle" font-family="monospace" font-size="9" letter-spacing="2" fill="#5A5A62">ROOM · 04</text>
+          <text x="210" y="142" text-anchor="middle" font-family="serif" font-size="14" fill="#F5F5F7">€8.4M tracked spend</text>
+          <g stroke="#2A2A30">
+            <line x1="20" y1="220" x2="40" y2="220"/>
+            <line x1="50" y1="220" x2="60" y2="220"/>
+            <line x1="380" y1="220" x2="400" y2="220"/>
+          </g>
+          <text x="20" y="214" font-family="monospace" font-size="8" fill="#5A5A62" letter-spacing="1.4">SESSION 12 / 52</text>
+          <text x="400" y="214" text-anchor="end" font-family="monospace" font-size="8" fill="#5A5A62" letter-spacing="1.4">REC · 00:42:18</text>
+        </svg>
+        <div class="room-stats">
+          <div class="room-stat">
+            <div class="label">Gasto de hoje</div>
+            <div class="num">R$1.1M</div>
+            <div class="delta">+ 4 contas revisadas</div>
+          </div>
+          <div class="room-stat">
+            <div class="label">Lift médio de ROAS</div>
+            <div class="num">2.4×</div>
+            <div class="delta">últimas 6 coortes</div>
+          </div>
+          <div class="room-stat">
+            <div class="label">Operadores</div>
+            <div class="num">10/10</div>
+            <div class="delta">vagas preenchidas</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust"><span class="k">— 01</span><span class="v">Vagas limitadas · 10 por grupo</span></div>
+      <div class="trust"><span class="k">— 02</span><span class="v">Intro gratuita de 15 min com especialista</span></div>
+      <div class="trust"><span class="k">— 03</span><span class="v">Sem custo até o match</span></div>
+      <div class="trust"><span class="k">— 04</span><span class="v">Revisão de contas ao vivo toda semana</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS BANNER -->
+<section class="stats-banner" aria-label="Quick facts">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="eyebrow"><span class="dot"></span>Coorte Prioritária</div>
+        <div class="big">18<span class="unit">vagas</span></div>
+        <div class="desc">As listas de espera nos ajudam a organizar melhores matches de grupo e a abertura de novos Grupos.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="eyebrow"><span class="dot"></span>Intro Gratuita</div>
+        <div class="big">15<span class="unit">min de reunião</span></div>
+        <div class="desc">Um especialista real revisa sua conta antes de sugerirmos um match. Sem apresentações, sem pitch.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="eyebrow"><span class="dot"></span>Perfil de Risco</div>
+        <div class="big"><span class="count" data-to="0" data-prefix="R$">R$0</span><span class="unit">até o match</span></div>
+        <div class="desc">Você não paga até que a gente te coloque em um grupo com operadores no mesmo estágio que você.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>O Problema</span>
+      <h2>Você está investindo em anúncios, mas ainda <em>adivinhando</em> o que está quebrado.</h2>
+      <p class="lead">A maioria das pessoas vendendo online está rodando anúncios no escuro — gastando dinheiro todo dia sem saber o que realmente funciona ou por que parou de funcionar.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem fu">
+        <div><div class="num">— 01</div><h3>Verba desperdiçada</h3><p>Os orçamentos se esvaziam silenciosamente em públicos quebrados, criativos mortos e campanhas que ninguém revisa há três semanas.</p></div>
+        <div class="tag">Custo</div>
+      </div>
+      <div class="problem fu">
+        <div><div class="num">— 02</div><h3>Rastreamento quebrado</h3><p>GA4, CAPI, server-side, UTMs — nenhum concorda com o outro. Você está otimizando com números em que não confia de verdade.</p></div>
+        <div class="tag">Sinal</div>
+      </div>
+      <div class="problem fu">
+        <div><div class="num">— 03</div><h3>Conversões inconsistentes</h3><p>Uma semana ROAS 4.2, na semana seguinte 1.6. Sem nenhuma explicação clara do que mudou ou o que fazer.</p></div>
+        <div class="tag">Volatilidade</div>
+      </div>
+      <div class="problem fu">
+        <div><div class="num">— 04</div><h3>Sem prioridade clara</h3><p>15 dashboards, 40 threads abertas no Slack. A equipe está ocupada. Ninguém sabe qual é a principal alavanca.</p></div>
+        <div class="tag">Foco</div>
+      </div>
+    </div>
+    <div class="pull-quote fu">
+      <div class="qmark">"</div>
+      <div>
+        <div class="quote">A pior parte não é <em>perder dinheiro</em> com anúncios ruins. É a erosão lenta da <span style="color:var(--accent);font-style:italic">convicção</span> — quando até suas vitórias parecem ruído e você para de acreditar no dashboard.</div>
+      </div>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— Pare de adivinhar</span><span class="v">Candidate-se a um grupo e receba uma auditoria de especialista na sua conta real.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- SOLUTION (LIGHT) -->
+<section id="solution" class="light-section">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>A Solução</span>
+      <h2>O Growth Room é um mastermind semanal feito para quem <em>vende online</em>, não&nbsp;para espectadores.</h2>
+      <p class="lead">Um pequeno grupo de pessoas vendendo online. Um especialista. Contas reais na tela toda semana. Você aparece com sua situação real e sai sabendo exatamente o que fazer.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar fu">
+        <div class="pillar-glyph">— 01 / SEMANAL</div>
+        <h3>Sessões ao vivo, toda terça-feira</h3>
+        <p>60 minutos, câmeras ligadas, contas reais na tela. Os mesmos lugares toda semana — você desenvolve reconhecimento de padrões junto com o grupo, não isolado.</p>
+        <div class="pillar-line">Ter 18:00 BRT · 52 sessões / ano</div>
+      </div>
+      <div class="pillar fu">
+        <div class="pillar-glyph">— 02 / DIAGNÓSTICO</div>
+        <h3>Diagnóstico de contas reais</h3>
+        <p>Dois membros colocam suas contas na tela a cada semana. Gasto, públicos, criativos, atribuição — examinados a fundo pelo especialista e pelo grupo.</p>
+        <div class="pillar-line">2 hot seats / semana · rotativo</div>
+      </div>
+      <div class="pillar fu">
+        <div class="pillar-glyph">— 03 / APLICADO</div>
+        <h3>Estratégia aplicada, ao vivo</h3>
+        <p>Nada de frameworks para enfeitar parede. Decisões que você pode executar na quarta de manhã — com a matemática, o ângulo criativo e o plano de teste anexados.</p>
+        <div class="pillar-line">Decisões, não slides</div>
+      </div>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— Veja se você se encaixa</span><span class="v">Escolha o formato que se encaixa no seu momento. 47 vagas prioritárias restantes.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- VALUE STACK -->
+<section>
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>O que está incluído</span>
+      <h2>Tudo que um operador realmente <em>usa</em>. Nada além disso.</h2>
+    </div>
+    <div class="stack-layout">
+      <div class="stack-list fu">
+        <div class="stack-row"><div class="idx">— 01</div><div><div class="name">Mastermind ao vivo semanal</div><p style="margin-top:6px;color:var(--fg-3);font-size:13.5px">52 sessões/ano. Câmeras ligadas. Mesmo grupo, mesmos operadores.</p></div><div class="val">R$14.400 · incl.</div></div>
+        <div class="stack-row"><div class="idx">— 02</div><div><div class="name">Revisão de conta no hot-seat</div><p style="margin-top:6px;color:var(--fg-3);font-size:13.5px">Sua conta, auditada a fundo pelo especialista e 9 pares — 4×/ano.</p></div><div class="val">R$28.800 · incl.</div></div>
+        <div class="stack-row"><div class="idx">— 03</div><div><div class="name">Mesa de especialista assíncrona</div><p style="margin-top:6px;color:var(--fg-3);font-size:13.5px">Mande um print, receba uma resposta fundamentada em menos de 24h, dias úteis.</p></div><div class="val">R$10.800 · incl.</div></div>
+        <div class="stack-row"><div class="idx">— 04</div><div><div class="name">Diretório exclusivo de membros</div><p style="margin-top:6px;color:var(--fg-3);font-size:13.5px">Uma rede privada de pessoas vendendo online que levam crescimento a sério. Sem espectadores.</p></div><div class="val">— não tem preço</div></div>
+        <div class="stack-row"><div class="idx">— 05</div><div><div class="name">Auditoria de rastreamento trimestral</div><p style="margin-top:6px;color:var(--fg-3);font-size:13.5px">Pixel, CAPI, server-side, GA4 — verificados de ponta a ponta a cada 90 dias.</p></div><div class="val">R$7.200 · incl.</div></div>
+      </div>
+      <aside class="stack-aside fu">
+        <div class="eyebrow"><span class="dot"></span>Oferta principal</div>
+        <h3>Acesso semanal a especialistas. Sem o preço de seis dígitos.</h3>
+        <p>O mesmo nível de orientação especializada pelo qual as pessoas pagam milhares por mês a agências e consultores — mas ao vivo, em grupo, na sua conta real.</p>
+        <div class="price">
+          <div class="strike">R$900K/ano</div>
+          <div class="now">A partir de R$399/sessão</div>
+        </div>
+        <div class="ps" style="margin-top:14px">A partir de R$399/sessão · cancele quando quiser</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- OUTCOMES -->
+<section>
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>Resultados</span>
+      <h2>O que os membros realmente <em>levam para casa</em>.</h2>
+    </div>
+    <div class="outcomes">
+      <div class="outcome hot fu"><span class="tag">Tracking</span><div><div class="body">Um stack de pixel/CAPI em que você confia nos primeiros 30 dias.</div><div class="metric"><span class="arrow-up">↑</span>Qualidade do sinal, de ponta a ponta</div></div></div>
+      <div class="outcome fu"><span class="tag">ROAS</span><div><div class="body">Melhora mensurável de ROAS em pelo menos uma campanha principal.</div><div class="metric"><span class="arrow-up">↑</span>Média da coorte: 2.4×</div></div></div>
+      <div class="outcome fu"><span class="tag">CVR</span><div><div class="body">Pontos de quebra do funil encontrados, priorizados e realmente corrigidos.</div><div class="metric"><span class="arrow-up">↑</span>Página → checkout</div></div></div>
+      <div class="outcome hot fu"><span class="tag">Clareza</span><div><div class="body">Uma única prioridade semanal — não quinze dashboards abertos.</div><div class="metric"><span class="arrow-up">↑</span>Velocidade de decisão</div></div></div>
+      <div class="outcome fu"><span class="tag">Escala</span><div><div class="body">Um plano de escala com a matemática junto, não feeling.</div><div class="metric"><span class="arrow-up">↑</span>Lucro por R$</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>Como funciona</span>
+      <h2>Três passos. <em>Sem</em> teatro de vendas.</h2>
+    </div>
+    <div class="steps">
+      <div class="step fu">
+        <div><div class="step-num"><span class="ord">PASSO</span>01</div><h3>Candidate-se e marque uma intro de 15 min</h3><p>Três perguntas, dois minutos. Avaliamos estágio e verba — não aparência em câmera.</p></div>
+        <div class="step-meta">~ 2 min · assíncrono</div>
+      </div>
+      <div class="step fu">
+        <div><div class="step-num"><span class="ord">PASSO</span>02</div><h3>Match com um grupo e um especialista</h3><p>Combinamos você com operadores no seu estágio e o especialista cuja visão se encaixa na sua conta.</p></div>
+        <div class="step-meta">~ 4 dias · curado</div>
+      </div>
+      <div class="step fu">
+        <div><div class="step-num"><span class="ord">PASSO</span>03</div><h3>Apareça na terça. Execute na quarta.</h3><p>Você só paga depois de ser alocado em um grupo que se encaixa no seu estágio. Cancele em qualquer trimestre, sem contratos, sem pressão.</p></div>
+        <div class="step-meta">Recorrente · cancele quando quiser</div>
+      </div>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— Passo 01</span><span class="v">Sem pitch frio. Candidate-se agora e faremos o match com um grupo.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- COMPARISON -->
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>A comparação</span>
+      <h2>Consultoria tradicional <em>versus</em> Growth Room.</h2>
+      <p class="lead">O mesmo acesso de nível operador. Uma década diferente.</p>
+    </div>
+    <div class="vs-wrap fu">
+      <div class="vs-grid">
+        <div class="vs-side vs-left">
+          <span class="vs-tag"><span class="dot"></span>Modelo antigo</span>
+          <div class="vs-h">Consultoria tradicional</div>
+          <div class="vs-price"><span class="num">R$900K+</span><span class="per">/ ano, retainer</span></div>
+          <ul class="vs-list">
+            <li><span class="ico">×</span><span>Um consultor, uma caixa de entrada, uma perspectiva.</span></li>
+            <li><span class="ico">×</span><span>Apresentações entregues com 2 semanas de atraso.</span></li>
+            <li><span class="ico">×</span><span>Preso em contratos de 12 meses com multa de cancelamento.</span></li>
+            <li><span class="ico">×</span><span>Frameworks generalistas, sem revisão de contas ao vivo.</span></li>
+            <li><span class="ico">×</span><span>Você é cobrado independente de executar ou não.</span></li>
+            <li><span class="ico">×</span><span>Sem rede de pares — você assume o risco sozinho.</span></li>
+          </ul>
+        </div>
+        <div class="vs-mid"><div class="vs-text"><span class="slash">/</span>vs<span class="slash">/</span></div></div>
+        <div class="vs-side vs-right">
+          <span class="vs-tag lime"><span class="dot"></span>Growth Room</span>
+          <div class="vs-h">Um grupo de operadores &amp; um especialista</div>
+          <div class="vs-price"><span class="per">A partir de</span><span class="num">R$399</span><span class="per">/ sessão</span></div>
+          <ul class="vs-list">
+            <li><span class="ico">✓</span><span>Nove operadores + um especialista no mesmo grupo toda semana.</span></li>
+            <li><span class="ico">✓</span><span>Decisões ao vivo, executadas na mesma semana.</span></li>
+            <li><span class="ico">✓</span><span>Sem custo até o match. Trimestre a trimestre.</span></li>
+            <li><span class="ico">✓</span><span>Revisão de contas reais, na tela, toda terça-feira.</span></li>
+            <li><span class="ico">✓</span><span>Você sai de cada sessão com uma decisão e uma correção.</span></li>
+            <li><span class="ico">✓</span><span>Diretório exclusivo de operadores. Verificado, nunca público.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="vs-seals">
+        <div class="seal"><div class="icon">+</div><div class="label"><span class="k">Mais acesso</span><span class="v">9 pares + especialista, semanal</span></div></div>
+        <div class="seal"><div class="icon">−</div><div class="label"><span class="k">Menos custo</span><span class="v">A partir de R$399/sessão</span></div></div>
+        <div class="seal"><div class="icon">↑</div><div class="label"><span class="k">Crescimento real</span><span class="v">Lucro por real investido</span></div></div>
+      </div>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— A partir de R$399/sessão</span><span class="v">Tenha acesso de nível retainer sem o preço de retainer.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- PRICING -->
+<!-- RESULTS (LIGHT) -->
+<section id="results" class="light-section">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>Resultados reais · Coorte 03</span>
+      <h2>Números de contas <em>reais</em>. Operadores, não influenciadores.</h2>
+      <p class="lead">Agregado em 32 contas de operadores durante a última coorte de 12 semanas. Verificado pela auditoria de rastreamento in-room.</p>
+    </div>
+    <div class="results-grid fu">
+      <div class="result">
+        <div class="ey">Operadores</div>
+        <div class="num">32</div>
+        <div class="desc">Em SaaS, DTC, marketplaces e serviços B2B no Brasil e na Europa.</div>
+        <svg class="spark" width="80" height="24" viewBox="0 0 80 24"><polyline points="0,18 12,16 24,14 36,12 48,9 60,8 72,5 80,2" fill="none" stroke="#C8F135" stroke-width="1.5"/></svg>
+      </div>
+      <div class="result">
+        <div class="ey">Verba rastreada</div>
+        <div class="num"><span class="pre">R$</span>1.4M</div>
+        <div class="desc">Total de verba semanal revisado dentro dos grupos.</div>
+        <svg class="spark" width="80" height="24" viewBox="0 0 80 24"><polyline points="0,20 16,17 32,15 48,10 64,8 80,3" fill="none" stroke="#C8F135" stroke-width="1.5"/></svg>
+      </div>
+      <div class="result">
+        <div class="ey">Conversões / sem</div>
+        <div class="num">3,842</div>
+        <div class="desc">Média semanal de compras / leads atribuídos in-room em toda a coorte.</div>
+        <svg class="spark" width="80" height="24" viewBox="0 0 80 24"><polyline points="0,16 12,18 24,12 36,14 48,9 60,7 72,5 80,3" fill="none" stroke="#C8F135" stroke-width="1.5"/></svg>
+      </div>
+      <div class="result">
+        <div class="ey">Lift médio de ROAS</div>
+        <div class="num">2.4<span class="suf">×</span></div>
+        <div class="desc">Lift mediano na campanha que cada operador escolheu focar.</div>
+        <svg class="spark" width="80" height="24" viewBox="0 0 80 24"><polyline points="0,20 16,17 32,12 48,9 64,4 80,2" fill="none" stroke="#C8F135" stroke-width="1.5"/></svg>
+      </div>
+    </div>
+    <div class="testimonials">
+      <article class="tcard fu">
+        <div class="quote">"After 90 days the room found a tracking gap that was hiding 22% of our revenue. We weren't <em>scaling</em> — we were <span class="hl">underbidding</span>. Fixing it changed the entire P&amp;L."</div>
+        <div class="tperson">
+          <div class="avatar lime">MV</div>
+          <div class="who"><span class="name">Marco V.</span><span class="role">Founder · DTC skincare · €1.4M ARR</span></div>
+        </div>
+      </article>
+      <article class="tcard fu">
+        <div class="quote">"I'd been quoted €14K/month by a consultancy to do exactly what the room does in 60 minutes a week. The difference: <em>nine other operators</em> stress-testing your decisions in real time."</div>
+        <div class="tperson">
+          <div class="avatar">AR</div>
+          <div class="who"><span class="name">Ana R.</span><span class="role">Co-founder · B2B SaaS · €3M ARR</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— Seja o próximo número</span><span class="v">A coorte 04 abre este mês. Candidate-se a uma vaga.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>FAQ</span>
+      <h2>Perguntas que <em>valem a pena</em> fazer.</h2>
+    </div>
+    <div class="faq fu">
+      <div class="faq-item open">
+        <div class="faq-q" role="button" tabindex="0"><span class="qn">— 01</span><span class="qt">Isso é um curso?</span><span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Não. Não há currículo, módulos nem biblioteca gravada para "completar." Cada sessão é ao vivo, dez operadores no grupo, duas contas reais na tela. Se você quer um curso, este não é o produto certo.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0"><span class="qn">— 02</span><span class="qt">Preciso já estar rodando anúncios para entrar?</span><span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Não. Alguns membros estão rodando campanhas ativamente, outros estão começando. Fazemos o match com um grupo baseado no seu estágio — há grupos para quem está lançando a primeira campanha e grupos para quem já investe verba expressiva. A reunião de intro gratuita é como descobrimos o encaixe certo.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0"><span class="qn">— 03</span><span class="qt">Quando eu realmente pago?</span><span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Somente após a reunião de 15 min e depois que fizermos o match com um grupo e especialista específico. Se não houver encaixe, você não paga nada. A cobrança é trimestral e você pode cancelar a qualquer trimestre.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0"><span class="qn">— 04</span><span class="qt">Quem são os especialistas no grupo?</span><span class="plus">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Operadores que gerenciaram pessoalmente R$60M+ em verba e lideraram o crescimento em empresas que você já ouviu falar. Compartilhamos nomes específicos de forma privada durante a reunião de intro — não os listamos publicamente porque estamos protegendo as agendas deles, não construindo um site de marketing.</div></div>
+      </div>
+    </div>
+    <div class="section-cta fu">
+      <div class="cta-text"><span class="k">— Ainda curioso?</span><span class="v">A melhor forma de obter respostas: uma reunião de intro de 15 minutos.</span></div>
+      <a href="#pricing" class="btn btn-primary btn-lg">Ver os Planos <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="rule full"></div>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head fu">
+      <span class="eyebrow"><span class="dot"></span>Preços</span>
+      <h2>Simples. <span class="lime">Uma sessão por semana.</span></h2>
+      <p class="lead">60 minutos de coaching ao vivo toda semana. Escolha o formato que se encaixa — quanto menor o grupo, mais tempo na sua conta.</p>
+    </div>
+
+    <div class="intro-call-banner fu">
+      <div class="icb-icon">🤝</div>
+      <div class="icb-text">
+<span class="icb-body">Todo plano começa com uma reunião de intro gratuita de 15 minutos.</span>
+        <span class="icb-sub">Sem cartão. Sem compromisso. Encontramos o grupo certo para você — ou você vai embora sem custo algum.</span>
+      </div>
+    </div>
+
+    <div class="plans-grid fu">
+
+      <!-- GROUP 10 -->
+      <div class="plan">
+        <div class="plan-name">Grupo · 10 pessoas</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Olhos especializados na sua conta toda semana. Você compartilha os 60 minutos com outros 9 operadores — melhor custo-benefício, menos tempo individual por sessão.</p>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">399</span>
+          <span class="period">/&nbsp;sessão</span>
+        </div>
+        <div class="plan-billing">1 sessão por semana · 60 min</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Reunião de Intro Gratuita de 15 min</span></li>
+          <li><span class="ico yes">✓</span><span>Sessão ao vivo semanal (60 min)</span></li>
+          <li><span class="ico yes">✓</span><span>Revisão de conta em grupo</span></li>
+          <li><span class="ico yes">✓</span><span>Até 10 pessoas por grupo</span></li>
+          <li><span class="ico yes">✓</span><span>Acesso à comunidade privada</span></li>
+          <li><span class="ico no">—</span><span style="color:var(--fg-4)">Tempo dedicado à sua conta</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-ghost" data-product="Group · 10 people">Candidatar-se ao Próximo Grupo <span style="transition:transform .25s ease;display:inline-block">→</span></a>
+      </div>
+
+      <!-- GROUP 5 (FEATURED) -->
+      <div class="plan featured">
+        <div class="plan-badge"><span class="dot"></span>Mais popular</div>
+        <div class="plan-name">Grupo · 5 pessoas</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Metade do grupo, o dobro do tempo de fala. Com apenas 5 operadores você tem significativamente mais tempo na sua conta a cada sessão do que no grupo de 10.</p>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">579</span>
+          <span class="period">/&nbsp;sessão</span>
+        </div>
+        <div class="plan-billing">1 sessão por semana · 60 min</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Reunião de Intro Gratuita de 15 min</span></li>
+          <li><span class="ico yes">✓</span><span>Sessão ao vivo semanal (60 min)</span></li>
+          <li><span class="ico yes">✓</span><span>Mais tempo de fala por pessoa do que no grupo de 10</span></li>
+          <li><span class="ico yes">✓</span><span>Máx. 5 pessoas por grupo</span></li>
+          <li><span class="ico yes">✓</span><span>Acesso à comunidade privada</span></li>
+          <li><span class="ico yes">✓</span><span>Foco mais aprofundado na sua conta toda semana</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-ghost" data-product="Group · 5 people">Candidatar-se ao Próximo Grupo <span style="transition:transform .25s ease;display:inline-block">→</span></a>
+      </div>
+
+      <!-- 1-ON-1 -->
+      <div class="plan">
+        <div class="plan-badge"><span class="dot"></span>Disponível agora</div>
+        <div class="plan-name">1-a-1</div>
+        <p style="color:var(--fg-3);font-size:14px;margin-bottom:16px">Os 60 minutos completos são seus. Sem grupo, sem tempo compartilhado — a atenção total do especialista na sua conta, em cada sessão.</p>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">999</span>
+          <span class="period">/&nbsp;sessão</span>
+        </div>
+        <div class="plan-billing">1 sessão por semana · 60 min</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="ico yes">✓</span><span>Reunião de Intro Gratuita de 15 min</span></li>
+          <li><span class="ico yes">✓</span><span>Sessão ao vivo semanal (60 min)</span></li>
+          <li><span class="ico yes">✓</span><span>100% da sessão na sua conta</span></li>
+          <li><span class="ico yes">✓</span><span>Só você e o especialista</span></li>
+          <li><span class="ico yes">✓</span><span>Acesso à comunidade privada</span></li>
+          <li><span class="ico yes">✓</span><span>Máxima profundidade — sem divisão, sem espera</span></li>
+        </ul>
+        <a href="#apply" class="plan-cta plan-cta-primary" data-product="1-on-1">Quero Agora →</a>
+      </div>
+
+    </div>
+
+    <!-- CONTACT CARD -->
+    <div class="pricing-contact fu">
+      <div>
+        <h3>Precisa de mais de 60 minutos por semana?</h3>
+        <p>Se você tem uma situação urgente ou precisa de suporte mais intensivo, entre em contato. Vamos montar algo que se encaixe.</p>
+      </div>
+      <a href="#apply" class="btn btn-ghost plan-cta" data-product="Custom" style="white-space:nowrap">Fale conosco →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo" style="margin-bottom:18px;display:inline-flex">
+          <span class="logo-mark"></span>
+          <span>Growth&nbsp;Room</span>
+        </a>
+        <p style="margin-top:14px;color:var(--fg-3);font-size:14px;max-width:36ch">Um grupo semanal privado para quem vende online e quer que os anúncios realmente funcionem. Ajuda especializada. Contas reais. Toda semana.</p>
+      </div>
+      <div>
+        <h3>Produto</h3>
+        <ul>
+          <li><a href="#problem">Problema</a></li>
+          <li><a href="#solution">Solução</a></li>
+          <li><a href="#compare">Comparar</a></li>
+          <li><a href="#results">Resultados</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Candidatar-se</h3>
+        <ul>
+          <li><a href="#pricing">Ver Planos</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="https://instagram.com/thegrowthroomhq" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="/">Site principal</a></li>
+          <li><button type="button" style="font-size:14px;color:var(--fg-2);cursor:pointer;transition:color .2s;background:none;border:0;padding:0;font-family:inherit" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--fg-2)'" onclick="window.openPrivacySettings&&window.openPrivacySettings()">Configurações de privacidade</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Growth Room · Feito para operadores, não espectadores</span>
+      <span>Berlim · Lisboa · Remoto</span>
+    </div>
+  </div>
+</footer>
+
+<ApplyModal />
+<CookieBanner />
+
+<script is:inline>
+/* ---------- Counter animation ---------- */
+function animateCount(el){
+  var to=parseFloat(el.dataset.to);
+  var decimals=parseInt(el.dataset.decimals||'0',10);
+  var thousands=el.dataset.thousands==='true';
+  var prefix=el.dataset.prefix||'';
+  var dur=1400;
+  var start=performance.now();
+  function fmt(v){
+    var n=decimals?v.toFixed(decimals):Math.round(v).toString();
+    if(thousands&&!decimals){n=Math.round(v).toLocaleString('de-DE').replace(/,/g,'.');}
+    return prefix+n;
+  }
+  function tick(t){
+    var p=Math.min(1,(t-start)/dur);
+    var ease=1-Math.pow(1-p,3);
+    el.textContent=fmt(to*ease);
+    if(p<1)requestAnimationFrame(tick);
+    else el.textContent=fmt(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ---------- Intersection observer ---------- */
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.querySelectorAll){
+        e.target.querySelectorAll('.count').forEach(function(c){
+          if(!c.dataset.done){c.dataset.done='1';animateCount(c);}
+        });
+      }
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.fu').forEach(function(el){io.observe(el);});
+document.querySelectorAll('.count').forEach(function(c){io.observe(c);});
+
+/* ---------- FAQ ---------- */
+document.querySelectorAll('.faq-item').forEach(function(item){
+  var q=item.querySelector('.faq-q');
+  q.addEventListener('click',function(){item.classList.toggle('open');});
+  q.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();item.classList.toggle('open');}
+  });
+});
+
+/* ---------- Magnetic CTA ---------- */
+(function(){
+  var btn=document.getElementById('magneticCta');
+  if(!btn)return;
+  btn.addEventListener('mousemove',function(e){
+    var r=btn.getBoundingClientRect();
+    var x=e.clientX-(r.left+r.width/2);
+    var y=e.clientY-(r.top+r.height/2);
+    btn.style.transform='translate('+x*0.18+'px,'+y*0.25+'px)';
+  });
+  btn.addEventListener('mouseleave',function(){btn.style.transform='';});
+})();
+
+/* ---------- Apply CTAs ---------- */
+document.querySelectorAll('a[href="#apply"]').forEach(function(el){
+  el.addEventListener('click',function(e){
+    e.preventDefault();
+    if(typeof window.openApplyModal==='function')window.openApplyModal(el.dataset.product||'');
+  });
+});
+
+</script>
+</body>
+</html>
