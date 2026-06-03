@@ -1156,13 +1156,28 @@ const CHECKOUT_URL = "#checkout";
       </div>
     </div>
 
-    <div class="reveal" style="margin-top:40px;padding:28px 32px;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;">
-      <p style="font-size:clamp(16px,2.5vw,20px);color:var(--text);font-weight:600;line-height:1.6;">
-        Here's the truth nobody tells you:<br />
-        <strong style="color:var(--accent)">Meta Ads aren't hard. The setup is just confusing when you don't know the order.</strong><br />
-        Follow the right steps, in the right sequence — and it clicks.
-      </p>
+    <div class="reveal" style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+      <div style="border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.12);">
+        <img src="/img/fail-section.png" alt="Running Meta Ads campaigns from anywhere" style="width:100%;display:block;" loading="lazy" />
+      </div>
+      <div style="padding:8px 0;">
+        <p style="font-size:clamp(16px,2.5vw,22px);color:var(--text);font-weight:700;line-height:1.5;margin-bottom:16px;">
+          Here's the truth nobody tells you:
+        </p>
+        <p style="font-size:clamp(15px,2vw,18px);color:var(--text2);line-height:1.7;margin-bottom:16px;">
+          Meta Ads aren't hard.<br />
+          <strong style="color:var(--accent)">The setup is just confusing when you don't know the order.</strong>
+        </p>
+        <p style="font-size:clamp(15px,2vw,18px);color:var(--text2);line-height:1.7;">
+          Follow the right steps, in the right sequence — and it clicks. That's all this course is.
+        </p>
+      </div>
     </div>
+    <style>
+      @media (max-width: 600px) {
+        .fail-insight-grid { grid-template-columns: 1fr !important; }
+      }
+    </style>
   </div>
 </section>
 
