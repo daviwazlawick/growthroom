@@ -235,23 +235,12 @@
     <p class="lead">The complete blueprint for creating ads and running them yourself — from your very first campaign to your first real results.</p>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
+    <div style="margin: 36px -24px 36px;">
+      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — product mockup" style="width:100%; display:block;" />
+    </div>
+
     <a href="#pricing" class="btn">Give me the whole blueprint →</a>
     <p class="tiny" style="margin-top:14px;">One-time payment · Instant access · 30-day guarantee</p>
-
-    <div class="stats">
-      <div>
-        <span class="stat-val">€5/day</span>
-        <span class="stat-lbl">minimum budget to start</span>
-      </div>
-      <div>
-        <span class="stat-val">60 min</span>
-        <span class="stat-lbl">to your first live campaign</span>
-      </div>
-      <div>
-        <span class="stat-val">Zero</span>
-        <span class="stat-lbl">experience needed to start</span>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -644,6 +633,136 @@
     <p class="tiny" style="text-align:center; margin-top:48px;">Launch Ads Blueprint is an independent course. Results depend on your offer, market, and implementation.</p>
   </div>
 </section>
+
+
+<!-- SOCIAL PROOF WIDGET -->
+<style>
+  #sp-widget {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9999;
+    width: 296px;
+    background: #fff;
+    border: 1px solid #E0DDD8;
+    box-shadow: 0 8px 32px -8px rgba(0,0,0,.18), 0 2px 8px -4px rgba(0,0,0,.08);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    transform: translateX(calc(-100% - 32px));
+    transition: transform .55s cubic-bezier(.34,1.56,.64,1);
+    pointer-events: auto;
+  }
+  #sp-widget.sp-in  { transform: translateX(0); }
+  #sp-widget.sp-out { transform: translateX(calc(-100% - 32px)); transition: transform .38s cubic-bezier(.4,0,.2,1); }
+  .sp-body { display: flex; gap: 12px; align-items: flex-start; padding: 14px 14px 12px; }
+  .sp-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px;
+  }
+  .sp-copy { flex: 1; min-width: 0; }
+  .sp-name { font-size: 13px; font-weight: 600; color: #1A1A1A; margin-bottom: 2px; }
+  .sp-action { font-size: 12px; color: #444; line-height: 1.45; }
+  .sp-action strong { color: #1A1A1A; font-weight: 600; }
+  .sp-meta { font-size: 11px; color: #999; margin-top: 5px; }
+  .sp-close {
+    background: none; border: none; cursor: pointer;
+    color: #C0BDB8; font-size: 13px; line-height: 1; padding: 0;
+    flex-shrink: 0; margin-top: -1px; transition: color .15s;
+  }
+  .sp-close:hover { color: #555; }
+  .sp-track { height: 3px; background: #F0EDEA; }
+  .sp-bar   { height: 3px; width: 100%; }
+  @media (max-width: 400px) { #sp-widget { width: calc(100vw - 32px); left: 16px; bottom: 16px; } }
+</style>
+
+<div id="sp-widget" aria-live="polite" aria-atomic="true" role="status">
+  <div class="sp-body">
+    <div class="sp-avatar" id="sp-av"></div>
+    <div class="sp-copy">
+      <div class="sp-name"  id="sp-name"></div>
+      <div class="sp-action" id="sp-action"></div>
+      <div class="sp-meta"  id="sp-meta"></div>
+    </div>
+    <button class="sp-close" id="sp-close" aria-label="Close">✕</button>
+  </div>
+  <div class="sp-track"><div class="sp-bar" id="sp-bar"></div></div>
+</div>
+
+<script>
+(function () {
+  var names   = ['James T.','Sarah K.','Michael B.','Emily R.','David L.','Jessica M.','Chris W.','Amanda H.'];
+  var actions = ['just purchased','just signed up for','just upgraded to'];
+  var cities  = ['New York 🇺🇸','Los Angeles 🇺🇸','London 🇬🇧','Toronto 🇨🇦','Sydney 🇦🇺','Berlin 🇩🇪'];
+  var times   = ['just now','2 min ago','4 min ago','9 min ago','14 min ago','22 min ago'];
+  var colors  = ['#F5A623','#4A7FD4','#7B68EE','#2DB5A3','#E8697A','#5ABF8A'];
+  var product = 'Launch Ads Blueprint';
+
+  var w      = document.getElementById('sp-widget');
+  var avEl   = document.getElementById('sp-av');
+  var nameEl = document.getElementById('sp-name');
+  var actEl  = document.getElementById('sp-action');
+  var metaEl = document.getElementById('sp-meta');
+  var barEl  = document.getElementById('sp-bar');
+  var closeBtn = document.getElementById('sp-close');
+
+  var VISIBLE = 5000;
+  var CYCLE   = 7000;
+  var visible = false;
+  var autoHide = null;
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function show() {
+    var name  = pick(names);
+    var color = pick(colors);
+
+    avEl.textContent        = name[0];
+    avEl.style.background   = color;
+    nameEl.textContent      = name;
+    actEl.innerHTML         = pick(actions) + ' <strong>' + product + '</strong>';
+    metaEl.textContent      = pick(times) + ' · ' + pick(cities);
+    barEl.style.background  = color;
+
+    // reset bar without transition, then animate
+    barEl.style.transition  = 'none';
+    barEl.style.width       = '100%';
+
+    w.classList.remove('sp-out');
+    // force reflow so transition fires
+    void w.offsetWidth;
+    w.classList.add('sp-in');
+    visible = true;
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        barEl.style.transition = 'width ' + VISIBLE + 'ms linear';
+        barEl.style.width = '0%';
+      });
+    });
+
+    autoHide = setTimeout(hide, VISIBLE);
+  }
+
+  function hide() {
+    if (!visible) return;
+    clearTimeout(autoHide);
+    w.classList.remove('sp-in');
+    w.classList.add('sp-out');
+    visible = false;
+  }
+
+  closeBtn.addEventListener('click', hide);
+
+  // start 3 s after load; cycle every 7 s
+  setTimeout(function () {
+    show();
+    setInterval(function () {
+      hide();
+      setTimeout(show, 420);
+    }, CYCLE);
+  }, 3000);
+}());
+</script>
 
 </body>
 </html>
