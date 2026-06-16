@@ -9,11 +9,9 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ads Blueprint — Learn to Run Ads Yourself</title>
 
-<!-- Meta Pixel (GDPR: dispara só após consentimento de marketing) -->
+<!-- Meta Pixel: PageView dispara sempre no load; demais eventos exigem consentimento -->
 <script>
-  window.loadMetaPixel = function () {
-    if (window.__fbqLoaded) return;
-    window.__fbqLoaded = true;
+  (function () {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
@@ -21,6 +19,15 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1009429968103557');
     fbq('track', 'PageView');
+  })();
+
+  // Gate de consentimento: vale para TODOS os eventos depois do PageView.
+  var CONSENT_KEY = "gr_cookie_consent_v1";
+  try { window.__marketingConsent = localStorage.getItem(CONSENT_KEY) === "accepted"; }
+  catch (e) { window.__marketingConsent = false; }
+  window.trackMarketing = function (event, params) {
+    if (!window.__marketingConsent || typeof window.fbq !== "function") return;
+    window.fbq("track", event, params || {});
   };
 </script>
 <!-- End Meta Pixel -->
@@ -803,16 +810,15 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
     try { choice = localStorage.getItem(KEY); } catch (e) {}
     if (!choice) {
       banner.style.display = "block";
-    } else if (choice === "accepted" && typeof window.loadMetaPixel === "function") {
-      window.loadMetaPixel();
     }
     document.getElementById("cookie-accept").addEventListener("click", function () {
       save("accepted");
-      if (typeof window.loadMetaPixel === "function") window.loadMetaPixel();
+      window.__marketingConsent = true;
       hide();
     });
     document.getElementById("cookie-reject").addEventListener("click", function () {
       save("rejected");
+      window.__marketingConsent = false;
       hide();
     });
   })();
@@ -842,6 +848,8 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
           // monta fbc a partir do fbclid se o cookie ainda não existir
           url.searchParams.set("fbc", "fb.1." + Date.now() + "." + current.get("fbclid"));
         }
+        // repassa o consentimento definido na primeira página para o checkout
+        url.searchParams.set("consent", window.__marketingConsent ? "granted" : "denied");
         return url.toString();
       } catch (e) { return base; }
     }
