@@ -9,19 +9,21 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ads Blueprint — Learn to Run Ads Yourself</title>
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel (GDPR: dispara só após consentimento de marketing) -->
 <script>
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1009429968103557');
-  fbq('track', 'PageView');
+  window.loadMetaPixel = function () {
+    if (window.__fbqLoaded) return;
+    window.__fbqLoaded = true;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1009429968103557');
+    fbq('track', 'PageView');
+  };
 </script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1009429968103557&ev=PageView&noscript=1" alt="" /></noscript>
-<!-- End Meta Pixel Code -->
+<!-- End Meta Pixel -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -799,9 +801,20 @@ const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
     function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
     var choice = null;
     try { choice = localStorage.getItem(KEY); } catch (e) {}
-    if (!choice) banner.style.display = "block";
-    document.getElementById("cookie-accept").addEventListener("click", function () { save("accepted"); hide(); });
-    document.getElementById("cookie-reject").addEventListener("click", function () { save("rejected"); hide(); });
+    if (!choice) {
+      banner.style.display = "block";
+    } else if (choice === "accepted" && typeof window.loadMetaPixel === "function") {
+      window.loadMetaPixel();
+    }
+    document.getElementById("cookie-accept").addEventListener("click", function () {
+      save("accepted");
+      if (typeof window.loadMetaPixel === "function") window.loadMetaPixel();
+      hide();
+    });
+    document.getElementById("cookie-reject").addEventListener("click", function () {
+      save("rejected");
+      hide();
+    });
   })();
 </script>
 <!-- End Cookie Banner -->
