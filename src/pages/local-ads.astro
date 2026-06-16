@@ -1,4 +1,5 @@
 ---
+const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
 ---
 
 <!DOCTYPE html>
@@ -197,7 +198,7 @@
   .cta-price { font-size: 52px; font-weight: 600; line-height: 1; color: var(--accent); }
   .cta-was { font-size: 18px; color: #777; text-decoration: line-through; text-decoration-color: #666; }
   .cta-sub { font-size: 13px; color: #BCBAB5; margin-bottom: 24px; }
-  .btn-light { display: block; width: 100%; background: var(--bg); color: var(--ink); padding: 15px; font-size: 14px; font-weight: 600; letter-spacing: .02em; text-align: center; cursor: pointer; transition: background .15s; border: none; }
+  .btn-light { display: block; width: 100%; background: var(--bg); color: var(--ink); padding: 15px; font-size: 14px; font-weight: 600; letter-spacing: .02em; text-align: center; text-decoration: none; cursor: pointer; transition: background .15s; border: none; }
   .btn-light:hover { background: #fff; }
   .cta-note { font-size: 11px; color: #888; text-align: center; margin-top: 10px; }
 
@@ -263,7 +264,7 @@
     <h2 class="h2" style="margin-bottom:24px;">Why most beginners never launch<br>their first ad — and how to fix it.</h2>
     <div class="video-frame">
       <iframe
-        src="https://www.youtube-nocookie.com/embed/WO-gY8OCEA8"
+        src="https://www.youtube.com/embed/pqgiUcjp8Zw?controls=0&rel=0&modestbranding=1&showinfo=0&playsinline=1&iv_load_policy=3"
         title="Launch Ads Blueprint"
         loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -612,7 +613,7 @@
             <span class="cta-was">€197</span>
           </div>
           <p class="cta-sub">One-time payment. No subscription.</p>
-          <button class="btn-light">Yes, give me the system →</button>
+          <a href={CHECKOUT_URL} class="btn-light">Yes, give me the system →</a>
           <p class="cta-note">Instant access after payment</p>
         </div>
 

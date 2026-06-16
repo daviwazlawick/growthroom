@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Ads That Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #F7F5F2;
+    --white:    #FFFFFF;
+    --ink:      #1A1A1A;
+    --ink2:     #333333;
+    --ink3:     #555555;
+    --muted:    #888888;
+    --faint:    #AAAAAA;
+    --border:   #E0DDD8;
+    --border2:  #EEECEA;
+    --tag-bg:   #EDEBE7;
+  }
+
+  html { font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--ink); }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Layout ── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  section { border-bottom: 1px solid var(--border); }
+  .s-white { background: var(--white); }
+  .s-bg    { background: var(--bg); }
+
+  /* ── Type scale ── */
+  .eyebrow { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; display: block; margin-bottom: 14px; }
+  .h1 { font-size: clamp(32px, 5vw, 50px); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; color: var(--ink); margin-bottom: 20px; }
+  .h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 600; line-height: 1.15; letter-spacing: -.018em; color: var(--ink); margin-bottom: 28px; }
+  .lead { font-size: 18px; color: var(--ink3); line-height: 1.6; margin-bottom: 12px; }
+  .body { font-size: 15px; color: var(--ink3); line-height: 1.7; }
+  .small { font-size: 13px; color: var(--ink3); line-height: 1.6; }
+  .tiny  { font-size: 11px; color: var(--muted); }
+  .mono  { font-family: 'DM Mono', monospace; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .03em;
+    cursor: pointer;
+    transition: background .15s;
+    border: none;
+  }
+  .btn:hover { background: #2d2d2d; }
+  .btn-sm { padding: 11px 22px; font-size: 13px; }
+
+  /* ── Price tag ── */
+  .price-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: var(--bg);
+    font-size: 11px; font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase; padding: 5px 12px;
+    margin-bottom: 28px;
+  }
+  .price-tag s { color: #777; text-decoration-color: #777; }
+
+  /* ── Stats strip ── */
+  .stats { display: flex; flex-wrap: wrap; gap: 32px; padding-top: 36px; margin-top: 36px; border-top: 1px solid var(--border); }
+  .stat-val { font-size: 24px; font-weight: 600; color: var(--ink); display: block; }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; display: block; }
+
+  /* ── Divider rows ── */
+  .divide > * + * { border-top: 1px solid var(--border2); }
+
+  /* ── Pain rows ── */
+  .pain-row { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 24px 0; align-items: start; }
+  @media (max-width: 600px) { .pain-row { grid-template-columns: 1fr; gap: 6px; } }
+  .pain-label { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding-top: 2px; }
+  .pain-body { font-size: 15px; color: var(--ink2); line-height: 1.65; }
+  .pain-note { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 6px; }
+
+  /* ── Dark callout ── */
+  .callout-dark { background: var(--ink); color: var(--bg); padding: 28px 32px; margin: 28px 0; }
+  .callout-dark p { font-size: 16px; line-height: 1.6; }
+  .callout-dark span { color: #BCBAB5; }
+
+  /* ── Timeline ── */
+  .timeline { border: 1px solid var(--border); }
+  .tl-head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 12px; padding: 10px 20px; background: var(--bg); border-bottom: 1px solid var(--border2); }
+  .tl-head span { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .tl-row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border2); align-items: start; }
+  @media (max-width: 580px) {
+    .tl-head { grid-template-columns: 1fr 1fr; }
+    .tl-head span:nth-child(2) { display: none; }
+    .tl-row { grid-template-columns: 80px 1fr; }
+    .tl-row .tl-detail { display: none; }
+  }
+  .tl-period { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .tl-detail { font-size: 13px; color: var(--muted); }
+  .tl-result { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  /* ── Case grid ── */
+  .case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 24px; }
+  .case-card { background: var(--bg); border: 1px solid var(--border); padding: 14px 16px; }
+  .case-biz  { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .case-city { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Three column grid ── */
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border2); border: 1px solid var(--border2); margin-top: 28px; }
+  @media (max-width: 640px) { .three-col { grid-template-columns: 1fr; } }
+  .three-col-cell { background: var(--white); padding: 24px 22px; }
+  .cell-head { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .cell-body { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── Bio layout ── */
+  .bio-grid { display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: start; }
+  @media (max-width: 640px) { .bio-grid { grid-template-columns: 1fr; } }
+  .bio-sidebar > * + * { margin-top: 10px; }
+  .sidebar-card { border: 1px solid var(--border); background: var(--bg); padding: 20px; }
+  .sidebar-dark { background: var(--ink); color: var(--bg); padding: 20px; }
+  .sidebar-dark .cell-head { color: #BCBAB5; }
+  .sidebar-dark .cell-body { color: #D0CEC9; font-size: 13px; line-height: 1.65; font-style: italic; }
+  .cred-list { list-style: none; }
+  .cred-list li { display: flex; gap: 8px; font-size: 13px; color: var(--ink2); padding: 4px 0; }
+  .cred-list li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
+
+  /* ── Checklist ── */
+  .checklist { border: 1px solid var(--border); background: var(--white); }
+  .check-item { display: flex; gap: 16px; align-items: flex-start; padding: 14px 20px; border-top: 1px solid var(--border2); }
+  .check-item:first-child { border-top: none; }
+  .check-icon { flex-shrink: 0; margin-top: 2px; }
+  .check-icon svg { width: 14px; height: 14px; }
+  .check-text { font-size: 14px; color: var(--ink2); line-height: 1.55; }
+
+  /* ── Module grid ── */
+  .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border2); border: 1px solid var(--border2); }
+  @media (max-width: 580px) { .module-grid { grid-template-columns: 1fr; } }
+  .module-cell { background: var(--white); padding: 22px 24px; }
+  .mod-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--faint); margin-bottom: 10px; }
+  .mod-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .mod-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Bonus items ── */
+  .bonus-list > * + * { margin-top: 8px; }
+  .bonus-item { display: flex; gap: 16px; align-items: flex-start; background: var(--bg); border: 1px solid var(--border); padding: 18px 20px; }
+  .bonus-body { flex: 1; }
+  .bonus-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .bonus-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .bonus-val { text-align: right; flex-shrink: 0; }
+  .bonus-val .tiny { display: block; }
+  .bonus-val strong { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+  /* ── Pricing ── */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 620px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .value-table { border: 1px solid var(--border); background: var(--white); }
+  .value-table-head { padding: 14px 20px; border-bottom: 1px solid var(--border2); }
+  .value-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 20px; border-top: 1px solid var(--border2); font-size: 13px; }
+  .value-row:first-child { border-top: none; }
+  .value-row.total { background: var(--bg); font-weight: 600; }
+  .value-row span:last-child { color: var(--muted); }
+  .value-row.total span:last-child { color: var(--ink); font-weight: 600; }
+
+  .cta-block { background: var(--ink); color: var(--bg); padding: 28px; }
+  .cta-price-row { display: flex; align-items: baseline; gap: 12px; margin: 10px 0 6px; }
+  .cta-price { font-size: 52px; font-weight: 600; line-height: 1; }
+  .cta-was { font-size: 18px; color: #777; text-decoration: line-through; text-decoration-color: #666; }
+  .cta-sub { font-size: 13px; color: #BCBAB5; margin-bottom: 24px; }
+  .btn-light { display: block; width: 100%; background: var(--bg); color: var(--ink); padding: 15px; font-size: 14px; font-weight: 600; letter-spacing: .02em; text-align: center; cursor: pointer; transition: background .15s; border: none; }
+  .btn-light:hover { background: #fff; }
+  .cta-note { font-size: 11px; color: #888; text-align: center; margin-top: 10px; }
+
+  .guarantee { border: 1px solid var(--border); background: var(--white); padding: 20px; margin-top: 10px; }
+  .guarantee .cell-head { margin-bottom: 8px; }
+
+  /* ── Business tags ── */
+  .biz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .biz-tag { font-size: 12px; color: var(--ink3); border: 1px solid var(--border); background: var(--white); padding: 5px 12px; }
+
+  /* ── Section padding ── */
+  .pad { padding: 64px 0; }
+  @media (max-width: 600px) { .pad { padding: 48px 0; } }
+
+  /* ── Body copy spacing ── */
+  .prose > * + * { margin-top: 18px; }
+</style>
+</head>
+<body>
+
+<!-- ───────────────────────────────────────────
+     HERO
+─────────────────────────────────────────────── -->
+<section class="s-bg">
+  <div class="wrap pad">
+    <div class="price-tag">Special offer — €27 &nbsp;<s>€197</s></div>
+    <h1 class="h1">It's not "running ads" if you're<br>still guessing what to click.</h1>
+    <p class="lead">The Local Ads System for business owners who tried ads once, got nothing, and gave up.</p>
+    <p class="body" style="max-width:520px; margin-bottom:36px;">Get customers through your door — without hiring an agency or burning your budget.</p>
+    <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed growth at venture-backed startups across Europe — and knows exactly what scales down to a local budget.</p>
+    <a href="#pricing" class="btn">Give me the whole system →</a>
+    <p class="tiny" style="margin-top:14px;">One-time payment · Instant access · 30-day guarantee</p>
+
+    <div class="stats">
+      <div>
+        <span class="stat-val">€5/day</span>
+        <span class="stat-lbl">minimum budget to start</span>
+      </div>
+      <div>
+        <span class="stat-val">60 min</span>
+        <span class="stat-lbl">to your first live campaign</span>
+      </div>
+      <div>
+        <span class="stat-val">Meta + Google</span>
+        <span class="stat-lbl">both platforms covered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     PAIN
+─────────────────────────────────────────────── -->
+<section class="s-white">
+  <div class="wrap pad">
+    <span class="eyebrow">Sound familiar?</span>
+    <h2 class="h2">Does this sound like you?</h2>
+
+    <div class="divide">
+
+      <div class="pain-row">
+        <span class="pain-label">The useless boost</span>
+        <div>
+          <p class="pain-body">You hit "Boost Post" on Facebook, spent €50, got 200 likes from people in countries you've never heard of — and zero customers.</p>
+          <p class="pain-note">That wasn't an ad. That was a donation to Meta.</p>
+        </div>
+      </div>
+
+      <div class="pain-row">
+        <span class="pain-label">The intimidating dashboard</span>
+        <div>
+          <p class="pain-body">You opened Ads Manager once. There were 14 menus, 6 campaign objectives, and a budget field you were afraid to touch. You closed the tab.</p>
+          <p class="pain-note">Later never came.</p>
+        </div>
+      </div>
+
+      <div class="pain-row">
+        <span class="pain-label">The agency quote</span>
+        <div>
+          <p class="pain-body">You called an agency. They quoted you €1,200/month plus setup fees. You run a local business. That's not a marketing budget — that's a salary.</p>
+        </div>
+      </div>
+
+      <div class="pain-row">
+        <span class="pain-label">Fear of burning money</span>
+        <div>
+          <p class="pain-body">You've heard the stories. "I spent €300 and got nothing." The idea of watching your budget drain with no results keeps you from even starting.</p>
+        </div>
+      </div>
+
+      <div class="pain-row">
+        <span class="pain-label">Clicks without customers</span>
+        <div>
+          <p class="pain-body">You got clicks. Maybe even a few website visits. But the phone didn't ring. Nobody walked in. You still don't know what went wrong.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     AGITATION
+─────────────────────────────────────────────── -->
+<section class="s-bg">
+  <div class="wrap pad">
+    <span class="eyebrow">The real problem</span>
+    <h2 class="h2">Most ads advice was written<br>for someone else.</h2>
+
+    <div class="prose" style="max-width:620px;">
+      <p class="body">Most advice about running ads is written for e-commerce brands with a €10k budget and a marketing team.</p>
+      <p class="body">You're a dentist in Rotterdam. A gym owner in Stockholm. A plumber in Warsaw. You don't have a team. You don't have months to test. You need customers <em>this week.</em></p>
+      <p class="body">The generic tutorials on YouTube were made for someone else. The agency playbook was designed to justify a retainer, not to get you results fast. And boosting posts? That's paying for reach you can't measure and leads you can't close.</p>
+    </div>
+
+    <div class="callout-dark" style="max-width:620px;">
+      <p>You're not bad at marketing. <span>You've just been handed the wrong tools.</span></p>
+    </div>
+
+    <p class="body" style="max-width:620px;">So I did the opposite of what every agency told me to do — and built a system that actually fits how local businesses work.</p>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     PROOF
+─────────────────────────────────────────────── -->
+<section class="s-white">
+  <div class="wrap pad">
+    <span class="eyebrow">Real results</span>
+    <h2 class="h2">A dental clinic in Rotterdam.<br>Here's what happened.</h2>
+    <p class="body" style="color:var(--muted); margin-bottom:28px;">Starting budget: €8/day. No prior ads. No agency.</p>
+
+    <div class="timeline">
+      <div class="tl-head">
+        <span>Period</span>
+        <span>What changed</span>
+        <span>Result</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period">Week 1</span>
+        <span class="tl-detail">€8/day budget · 3 creatives tested</span>
+        <span class="tl-result">4 appointment requests</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period">Week 2</span>
+        <span class="tl-detail">Dropped 1 creative, scaled winner to €15/day</span>
+        <span class="tl-result">11 new bookings</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period">Week 3</span>
+        <span class="tl-detail">Same system, zero changes</span>
+        <span class="tl-result">18 bookings · €9.40/patient</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-period">Month 2</span>
+        <span class="tl-detail">Owner stopped answering my calls</span>
+        <span class="tl-result">31 bookings · schedule full</span>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top:28px; margin-bottom:18px; max-width:560px;">Same system. Different city. Different business. Same outcome.</p>
+
+    <div class="case-grid">
+      <div class="case-card"><p class="case-biz">Dental clinic</p><p class="case-city">Rotterdam, NL</p></div>
+      <div class="case-card"><p class="case-biz">Gym</p><p class="case-city">Gothenburg, SE</p></div>
+      <div class="case-card"><p class="case-biz">Hair salon</p><p class="case-city">Amsterdam, NL</p></div>
+      <div class="case-card"><p class="case-biz">Renovation contractor</p><p class="case-city">Kraków, PL</p></div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <a href="#pricing" class="btn btn-sm">I want results like this →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     MARKET SHIFT
+─────────────────────────────────────────────── -->
+<section class="s-bg">
+  <div class="wrap pad">
+    <span class="eyebrow">The shift</span>
+    <h2 class="h2">The agency model is broken<br>for small businesses.</h2>
+
+    <div class="prose" style="max-width:620px;">
+      <p class="body">Agencies charge a flat monthly fee whether your ads work or not. Their incentive is to keep you as a client — not to make you so profitable you don't need them anymore.</p>
+      <p class="body">Meanwhile, Meta and Google have made self-managed ads more powerful than ever. AI-assisted targeting. Automated creative testing. Smart bidding that optimises while you sleep.</p>
+      <p class="body">The tools used to require a specialist. They don't anymore.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="three-col-cell">
+        <p class="cell-head">What it used to take</p>
+        <p class="cell-body">A certified specialist, a dedicated tool stack, and a €2k/month minimum.</p>
+      </div>
+      <div class="three-col-cell">
+        <p class="cell-head">What it takes now</p>
+        <p class="cell-body">The right setup sequence, the right campaign objective, and €5/day.</p>
+      </div>
+      <div class="three-col-cell">
+        <p class="cell-head">The only gap left</p>
+        <p class="cell-body">Knowing what to configure, in what order, with what goal. That's exactly what this course teaches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     BIO
+─────────────────────────────────────────────── -->
+<section class="s-white">
+  <div class="wrap pad">
+    <span class="eyebrow">Who made this</span>
+    <div class="bio-grid">
+      <div>
+        <h2 class="h2">Hi. I'm Davi Wazlawick.</h2>
+        <div class="prose" style="max-width:480px;">
+          <p class="body">I've spent over a decade running performance marketing for companies across Europe and the US — from early-stage startups to established brands in fitness, health, and B2B tech.</p>
+          <p class="body">As VP of Performance at VAHA, Growth Director at Pixformance, and consultant for companies like Bioniq and WorkMotion, I've built and managed paid acquisition systems across Meta, Google, and beyond — always focused on one thing: profitable growth with lean budgets.</p>
+          <p class="body">I've also worked directly with local and mid-size businesses through my own consultancies, helping owners who had never run a single ad go from zero to consistent customer flow.</p>
+          <p class="body" style="color:var(--ink); font-weight:500;">This course distills what actually works for local businesses — no agency markup, no fluff, no wasted budget.</p>
+        </div>
+      </div>
+
+      <div class="bio-sidebar">
+        <div class="sidebar-card">
+          <p class="cell-head">Experience</p>
+          <ul class="cred-list">
+            <li>Meta + Google Ads, both platforms</li>
+            <li>Local businesses in NL, SE, PL, DE</li>
+            <li>Clients with zero prior ad experience</li>
+            <li>Campaigns from €5/day to €200/day</li>
+          </ul>
+        </div>
+        <div class="sidebar-dark">
+          <p class="cell-head">The rule</p>
+          <p class="cell-body">"I've managed million-euro budgets for venture-backed startups. The principles that work there are the same ones that fill a local dentist's calendar — just applied at the right scale."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     PRODUCT
+─────────────────────────────────────────────── -->
+<section class="s-bg">
+  <div class="wrap pad">
+    <span class="eyebrow">The system</span>
+    <h2 class="h2">Local Ads That Work</h2>
+    <p class="body" style="max-width:520px; margin-bottom:28px;">A step-by-step system for running profitable Meta and Google Ads for your local business — even if you've never touched Ads Manager before.</p>
+
+    <div class="checklist" style="max-width:660px;">
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Gets your first campaign live in under 60 minutes</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Works with a budget of €5–10/day to start</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Shows you exactly which campaign objective to choose — and why the wrong one is wasting your money right now</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Teaches you to write ad copy that makes locals stop scrolling and call you</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Covers Meta Ads, Google Search Ads, and Google Business Profile</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Gives you a troubleshooting checklist — know within 48 hours if something isn't working and exactly how to fix it</span>
+      </div>
+      <div class="check-item">
+        <span class="check-icon"><svg viewBox="0 0 14 14" fill="none" stroke="#1A1A1A" stroke-width="1.5"><polyline points="1.5,7 5,10.5 12.5,3"/></svg></span>
+        <span class="check-text">Scales to €50, €100, €200/day without rebuilding anything</span>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;">
+      <a href="#pricing" class="btn btn-sm">Get instant access →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     INCLUDES
+─────────────────────────────────────────────── -->
+<section class="s-white">
+  <div class="wrap pad">
+    <span class="eyebrow">What's inside</span>
+    <h2 class="h2">Everything included.</h2>
+
+    <!-- Modules -->
+    <p class="tiny" style="letter-spacing:.07em; text-transform:uppercase; font-weight:500; color:var(--muted); margin-bottom:14px;">6 core modules</p>
+    <div class="module-grid">
+      <div class="module-cell">
+        <p class="mod-num mono">01</p>
+        <p class="mod-title">Why local ads fail</p>
+        <p class="mod-desc">The single most common mistake local businesses make — and how to fix it before you spend a cent.</p>
+      </div>
+      <div class="module-cell">
+        <p class="mod-num mono">02</p>
+        <p class="mod-title">Your first Meta Ad in 48 hours</p>
+        <p class="mod-desc">Full Ads Manager walkthrough: campaign structure, radius targeting, budget setup, going live without second-guessing every click.</p>
+      </div>
+      <div class="module-cell">
+        <p class="mod-num mono">03</p>
+        <p class="mod-title">The local ad creative formula</p>
+        <p class="mod-desc">The exact copy structure and image formula for local businesses. Canva templates included — adaptable in 20 minutes.</p>
+      </div>
+      <div class="module-cell">
+        <p class="mod-num mono">04</p>
+        <p class="mod-title">Google Ads for local shops</p>
+        <p class="mod-desc">Search campaigns, Google Business Profile ads, call extensions, location targeting. The 30-minute setup — not the 4-hour certification.</p>
+      </div>
+      <div class="module-cell">
+        <p class="mod-num mono">05</p>
+        <p class="mod-title">Reading your numbers</p>
+        <p class="mod-desc">CPL, ROAS, cost per new customer. How to know if your campaign is working without being a data analyst.</p>
+      </div>
+      <div class="module-cell">
+        <p class="mod-num mono">06</p>
+        <p class="mod-title">Scale or fix: week 1 debrief</p>
+        <p class="mod-desc">If it worked: how to scale. If it didn't: a 5-step diagnostic checklist that finds the problem in under 15 minutes.</p>
+      </div>
+    </div>
+
+    <!-- Bonuses -->
+    <p class="tiny" style="letter-spacing:.07em; text-transform:uppercase; font-weight:500; color:var(--muted); margin: 36px 0 14px;">Bonuses included</p>
+    <div class="bonus-list">
+      <div class="bonus-item">
+        <div class="bonus-body">
+          <p class="bonus-title">Local Business Ad Templates Pack</p>
+          <p class="bonus-desc">10 ready-to-edit ad templates by business type: restaurant, dental, gym, salon, plumber, electrician, physio, lawyer, real estate, contractor.</p>
+        </div>
+        <div class="bonus-val"><span class="tiny">val.</span><strong>€97</strong></div>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-body">
+          <p class="bonus-title">Ad Launch Checklist</p>
+          <p class="bonus-desc">Every step to verify before hitting publish. Never wonder if your setup is complete.</p>
+        </div>
+        <div class="bonus-val"><span class="tiny">val.</span><strong>€47</strong></div>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-body">
+          <p class="bonus-title">ChatGPT Ad Copy Prompts</p>
+          <p class="bonus-desc">Fill-in-the-blank prompts that generate local ad copy in under 5 minutes. Tested on real campaigns.</p>
+        </div>
+        <div class="bonus-val"><span class="tiny">val.</span><strong>€47</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ───────────────────────────────────────────
+     PRICING
+─────────────────────────────────────────────── -->
+<section class="s-bg" id="pricing">
+  <div class="wrap pad">
+    <span class="eyebrow">Get started</span>
+    <h2 class="h2">Everything above. One price.</h2>
+
+    <div class="pricing-grid">
+
+      <!-- Value table -->
+      <div class="value-table">
+        <div class="value-table-head">
+          <p class="tiny" style="letter-spacing:.07em; text-transform:uppercase; font-weight:500;">What you get</p>
+        </div>
+        <div class="value-row"><span class="small">6 core modules</span><span class="small">€197</span></div>
+        <div class="value-row"><span class="small">Ad Templates Pack</span><span class="small">€97</span></div>
+        <div class="value-row"><span class="small">Ad Launch Checklist</span><span class="small">€47</span></div>
+        <div class="value-row"><span class="small">ChatGPT Copy Prompts</span><span class="small">€47</span></div>
+        <div class="value-row total"><span class="small">Total value</span><span class="small">€388</span></div>
+      </div>
+
+      <!-- CTA block -->
+      <div>
+        <div class="cta-block">
+          <p class="tiny" style="color:#BCBAB5; letter-spacing:.08em; text-transform:uppercase; font-weight:500;">Today's price</p>
+          <div class="cta-price-row">
+            <span class="cta-price">€27</span>
+            <span class="cta-was">€197</span>
+          </div>
+          <p class="cta-sub">One-time payment. No subscription.</p>
+          <button class="btn-light">Yes, give me the system →</button>
+          <p class="cta-note">Instant access after payment</p>
+        </div>
+
+        <div class="guarantee">
+          <p class="cell-head">30-day guarantee</p>
+          <p class="small" style="color:var(--ink3);">Go through the system. If you don't feel ready to run your first campaign, email me and I'll refund every cent. No questions asked.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business tags -->
+    <div style="margin-top:56px; padding-top:40px; border-top:1px solid var(--border);">
+      <p class="tiny" style="letter-spacing:.08em; text-transform:uppercase; font-weight:500; margin-bottom:14px;">Works for these businesses</p>
+      <div class="biz-tags">
+        <span class="biz-tag">Restaurants</span>
+        <span class="biz-tag">Dental clinics</span>
+        <span class="biz-tag">Gyms</span>
+        <span class="biz-tag">Hair salons</span>
+        <span class="biz-tag">Plumbers</span>
+        <span class="biz-tag">Electricians</span>
+        <span class="biz-tag">Physiotherapists</span>
+        <span class="biz-tag">Lawyers</span>
+        <span class="biz-tag">Real estate agents</span>
+        <span class="biz-tag">Contractors</span>
+        <span class="biz-tag">Veterinarians</span>
+        <span class="biz-tag">Accountants</span>
+      </div>
+    </div>
+
+    <p class="tiny" style="text-align:center; margin-top:48px;">Local Ads That Work is an independent course. Results depend on your industry, market, and implementation.</p>
+  </div>
+</section>
+
+</body>
+</html>
