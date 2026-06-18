@@ -38,6 +38,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   };
 </script>
 <!-- End Meta Pixel -->
+
+<!-- Google tag (gtag.js): Analytics gated by consent via Consent Mode -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRFL8MQJ5R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // Consent Mode: analytics negado por padrão; liberado só após o "Accept".
+  gtag('consent', 'default', { 'analytics_storage': 'denied' });
+  // Se o usuário já consentiu numa visita anterior, libera de imediato.
+  if (window.__marketingConsent) {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+  }
+
+  gtag('config', 'G-TRFL8MQJ5R');
+</script>
+<!-- End Google tag -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -825,11 +844,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById("cookie-accept").addEventListener("click", function () {
       save("accepted");
       window.__marketingConsent = true;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'granted' });
       hide();
     });
     document.getElementById("cookie-reject").addEventListener("click", function () {
       save("rejected");
       window.__marketingConsent = false;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'denied' });
       hide();
     });
   })();
