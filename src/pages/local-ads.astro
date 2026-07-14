@@ -151,6 +151,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .fc-lesson.locked { color: var(--muted); background: var(--bg); }
   .fc-lesson .mono { font-size: 11px; color: var(--accent-dark); flex-shrink: 0; }
   .fc-lesson .fc-tag { margin-left: auto; font-size: 11px; flex-shrink: 0; }
+  .fc-attn { animation: fcPulse 1.2s ease-in-out 3; }
+  @keyframes fcPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }
+    50%      { box-shadow: 0 0 0 6px rgba(245,166,35,.45); }
+  }
 
   /* ── Emphasis ── */
   .prose em, .body em, .lead em { color: var(--accent-dark); font-style: italic; font-weight: 500; }
@@ -328,9 +333,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
 
-    <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn">Give me the whole blueprint →</a>
-    <p class="tiny" style="margin-top:14px;">One-time payment · Instant access · 30-day guarantee</p>
-    <button type="button" class="link-free" data-free-class>Not sure yet? Watch the first lesson free →</button>
+    <button type="button" class="btn" data-free-class>Watch the first lesson free — before you buy →</button>
+    <p class="tiny" style="margin-top:14px;">100% free preview · No card required · Full course is a one-time €27</p>
   </div>
 </section>
 
@@ -351,9 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <p class="video-cap">Davi walks you through exactly what's inside and why the setup — not the platform — is what makes beginners fail.</p>
     <div style="margin-top:24px;">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn btn-sm">Get instant access — €27 →</a>
-      <br>
-      <button type="button" class="link-free" data-free-class>Or watch the full first lesson free before you decide →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch the full first lesson free →</button>
     </div>
   </div>
 </section>
@@ -476,7 +478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:32px;">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn btn-sm">I want to launch mine →</a>
+      <button type="button" class="btn btn-sm" data-free-class>Start with the free lesson →</button>
     </div>
   </div>
 </section>
@@ -592,7 +594,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:28px;">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn btn-sm">Get instant access →</a>
+      <button type="button" class="btn btn-sm" data-free-class>Watch lesson 1 free →</button>
     </div>
   </div>
 </section>
@@ -897,8 +899,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="fc-lesson locked"><span class="mono">05</span> Launch: campaign, budget &amp; first ad <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">06</span> Reading your numbers <span class="fc-tag">🔒</span></div>
       </div>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn" id="fc-next" style="display:block; text-align:center; margin-top:20px;">Next lesson → Unlock all 6 modules for €27</a>
-      <p class="tiny" style="text-align:center; margin-top:10px;">One-time payment · Instant access · 30-day guarantee</p>
+      <div class="cta-block" id="fc-offer" style="margin-top:20px; padding:22px 22px 18px;">
+        <p class="tiny" style="color:#BCBAB5; letter-spacing:.08em; text-transform:uppercase; font-weight:500;">Ready for lesson 2?</p>
+        <div class="cta-price-row" style="margin:8px 0 4px;">
+          <span class="cta-price" style="font-size:38px;">€27</span>
+          <span class="cta-was" style="font-size:15px;">€197</span>
+        </div>
+        <p class="cta-sub" style="margin-bottom:16px;">One-time payment · Unlocks lessons 2–6 + all bonuses, ready to watch on the Alfima platform</p>
+        <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light" id="fc-next" style="text-align:center;">Next lesson → Buy &amp; keep watching on Alfima</a>
+        <p class="cta-note">Instant access after payment · 30-day money-back guarantee</p>
+      </div>
     </div>
   </div>
 </div>
@@ -1044,6 +1054,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
   var milestones = { 25: false, 50: false, 75: false, 95: false };
   if (player) {
+    player.addEventListener("ended", function () {
+      var offer = document.getElementById("fc-offer");
+      if (!offer) return;
+      offer.scrollIntoView({ behavior: "smooth", block: "center" });
+      offer.classList.add("fc-attn");
+      setTimeout(function () { offer.classList.remove("fc-attn"); }, 4000);
+    });
     player.addEventListener("timeupdate", function () {
       if (!player.duration) return;
       var pct = (player.currentTime / player.duration) * 100;
