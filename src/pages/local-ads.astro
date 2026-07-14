@@ -85,7 +85,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   a { color: inherit; text-decoration: none; }
 
   /* ── Layout ── */
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
   section { border-bottom: 1px solid var(--border); }
   .s-white { background: var(--white); }
   .s-bg    { background: var(--bg); }
@@ -103,19 +103,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* ── Buttons ── */
   .btn {
     display: inline-block;
-    background: var(--accent);
+    background: linear-gradient(180deg, #FFBE5C 0%, var(--accent) 55%, #F09B10 100%);
     color: #1A1A1A;
-    padding: 14px 28px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .03em;
+    padding: 16px 32px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background .15s, transform .1s;
+    transition: transform .12s, box-shadow .15s, filter .15s;
     border: none;
-    box-shadow: 0 6px 18px -8px rgba(245,166,35,.6);
+    box-shadow: 0 12px 26px -10px rgba(245,166,35,.75), inset 0 1px 0 rgba(255,255,255,.45);
   }
-  .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
-  .btn-sm { padding: 11px 22px; font-size: 13px; }
+  .btn:hover { filter: brightness(.96); transform: translateY(-1px); box-shadow: 0 14px 30px -10px rgba(212,136,10,.8), inset 0 1px 0 rgba(255,255,255,.3); }
+  .btn:active { transform: translateY(0); }
+  .btn-sm { padding: 14px 26px; font-size: 14px; }
 
   /* ── Free lesson link ── */
   .link-free {
@@ -135,17 +137,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     overflow-y: auto; padding: 24px;
   }
   #fc-overlay.open { display: flex; }
-  .fc-modal { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--accent); max-width: 640px; width: 100%; margin: auto; position: relative; padding: 32px 28px; }
+  .fc-modal { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 16px; max-width: 640px; width: 100%; margin: auto; position: relative; padding: 32px 28px; }
   @media (max-width: 480px) { .fc-modal { padding: 26px 20px; } #fc-overlay { padding: 14px; } }
   .fc-close { position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 15px; color: var(--muted); cursor: pointer; padding: 6px; transition: color .15s; }
   .fc-close:hover { color: var(--ink); }
   .fc-field { margin-bottom: 14px; }
   .fc-field label { display: block; font-size: 12px; font-weight: 600; color: var(--ink2); margin-bottom: 6px; }
-  .fc-field input { width: 100%; border: 1px solid var(--border); background: var(--bg); padding: 12px 14px; font-size: 14px; font-family: inherit; color: var(--ink); }
+  .fc-field input { width: 100%; border: 1px solid var(--border); background: var(--bg); padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--ink); border-radius: 10px; }
   .fc-field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
   .fc-error { display: none; font-size: 12px; color: #C0392B; margin-top: 10px; }
-  .fc-video video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; border: 1px solid var(--border); }
-  .fc-lessons { border: 1px solid var(--border); margin-top: 20px; }
+  .fc-video video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; border: 1px solid var(--border); border-radius: 10px; }
+  .fc-lessons { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 20px; }
+  #fc-offer { border-radius: 14px; }
   .fc-lesson { display: flex; gap: 12px; align-items: center; padding: 11px 16px; border-top: 1px solid var(--border2); font-size: 13px; color: var(--ink2); }
   .fc-lesson:first-child { border-top: none; }
   .fc-lesson.locked { color: var(--muted); background: var(--bg); }
@@ -287,7 +290,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .cta-price { font-size: 52px; font-weight: 600; line-height: 1; color: var(--accent); }
   .cta-was { font-size: 18px; color: #777; text-decoration: line-through; text-decoration-color: #666; }
   .cta-sub { font-size: 13px; color: #BCBAB5; margin-bottom: 24px; }
-  .btn-light { display: block; width: 100%; background: var(--bg); color: var(--ink); padding: 15px; font-size: 14px; font-weight: 600; letter-spacing: .02em; text-align: center; text-decoration: none; cursor: pointer; transition: background .15s; border: none; }
+  .btn-light { display: block; width: 100%; background: var(--bg); color: var(--ink); padding: 16px; font-size: 14px; font-weight: 700; letter-spacing: .02em; text-align: center; text-decoration: none; cursor: pointer; transition: background .15s; border: none; border-radius: 10px; }
   .btn-light:hover { background: #fff; }
   .cta-note { font-size: 11px; color: #888; text-align: center; margin-top: 10px; }
 
@@ -299,19 +302,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .biz-tag { font-size: 12px; color: var(--ink3); border: 1px solid var(--border); background: var(--white); padding: 5px 12px; }
 
   /* ── Section padding ── */
-  .pad { padding: 64px 0; }
-  @media (max-width: 600px) { .pad { padding: 48px 0; } }
+  /* longhand de propósito: .wrap controla o padding lateral e .pad o vertical
+     no mesmo elemento — shorthand `padding` em qualquer um anula o outro */
+  .pad { padding-top: 64px; padding-bottom: 64px; }
+  @media (max-width: 600px) { .pad { padding-top: 48px; padding-bottom: 48px; } }
 
   /* ── Body copy spacing ── */
   .prose > * + * { margin-top: 18px; }
 
   /* ── Mobile breathing room ── */
   @media (max-width: 600px) {
-    .wrap { padding: 0 22px; }
+    .wrap { padding-left: 22px; padding-right: 22px; }
     .h1 br, .h2 br, .lead br { display: none; }
     .callout-dark { padding: 22px 22px; }
     .cta-block, .cta-price { word-break: break-word; }
     .cta-price { font-size: 46px; }
+    .btn, .btn-sm { display: block; width: 100%; text-align: center; padding: 17px 20px; margin: 4px 0 14px; }
+    .btn + .tiny { text-align: center; }
+    .link-free { display: block; width: 100%; text-align: center; margin-top: 10px; }
   }
 </style>
 </head>
@@ -325,7 +333,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-bg" style="background:linear-gradient(170deg,#FFF1DA 0%,#FBF0E0 30%,var(--bg) 75%);">
   <div class="wrap pad">
     <div class="price-tag">Special offer — €27 &nbsp;<s>€197</s></div>
-    <h1 class="h1">Stop paying someone to do<br>what you can learn in a weekend.</h1>
+    <h1 class="h1">Stop paying someone to do <br>what you can learn in a weekend.</h1>
     <p class="lead">The complete blueprint for creating ads and running them yourself — from your very first campaign to your first real results.</p>
     <div style="margin: 36px -24px 36px;">
       <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — product mockup" style="width:100%; display:block;" />
@@ -343,7 +351,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-white">
   <div class="wrap pad">
     <span class="eyebrow">Watch first — 4 minutes</span>
-    <h2 class="h2" style="margin-bottom:24px;">Why most beginners never launch<br>their first ad — and how to fix it.</h2>
+    <h2 class="h2" style="margin-bottom:24px;">Why most beginners never launch <br>their first ad — and how to fix it.</h2>
     <div class="video-frame">
       <iframe
         src="https://www.youtube.com/embed/pqgiUcjp8Zw?controls=0&rel=0&modestbranding=1&showinfo=0&playsinline=1&iv_load_policy=3"
@@ -416,7 +424,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-white">
   <div class="wrap pad">
     <span class="eyebrow">The real problem</span>
-    <h2 class="h2">The platform isn't the problem.<br>The setup is.</h2>
+    <h2 class="h2">The platform isn't the problem. <br>The setup is.</h2>
 
     <div class="prose" style="max-width:620px;">
       <p class="body">Open Ads Manager and you're hit with campaigns, ad sets, the pixel, audiences, budgets, objectives — a thousand buttons, and the feeling that one wrong click burns your money.</p>
@@ -437,7 +445,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-bg">
   <div class="wrap pad">
     <span class="eyebrow">Real results</span>
-    <h2 class="h2">A complete beginner.<br>Their first campaign ever.</h2>
+    <h2 class="h2">A complete beginner. <br>Their first campaign ever.</h2>
     <p class="body" style="color:var(--muted); margin-bottom:28px;">Starting budget: €8/day. Never touched Ads Manager before. No agency.</p>
 
     <div class="timeline">
@@ -488,7 +496,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-white">
   <div class="wrap pad">
     <span class="eyebrow">The shift</span>
-    <h2 class="h2">You don't need a specialist<br>anymore. You need the steps.</h2>
+    <h2 class="h2">You don't need a specialist <br>anymore. You need the steps.</h2>
 
     <div class="prose" style="max-width:620px;">
       <p class="body">Hiring someone to set up your Meta Ads account correctly costs €400, €500, €1,000 or more — before you've spent a single euro on ads.</p>
