@@ -32,9 +32,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   var CONSENT_KEY = "gr_cookie_consent_v1";
   try { window.__marketingConsent = localStorage.getItem(CONSENT_KEY) === "accepted"; }
   catch (e) { window.__marketingConsent = false; }
-  window.trackMarketing = function (event, params) {
+  window.trackMarketing = function (event, params, options) {
     if (!window.__marketingConsent || typeof window.fbq !== "function") return;
-    window.fbq("track", event, params || {});
+    window.fbq("track", event, params || {}, options || {});
   };
 </script>
 <!-- End Meta Pixel -->
@@ -116,6 +116,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
   .btn-sm { padding: 11px 22px; font-size: 13px; }
+
+  /* ── Free lesson link ── */
+  .link-free {
+    display: inline-block; margin-top: 16px;
+    font-size: 13px; color: var(--ink3); font-family: inherit;
+    text-decoration: underline; text-underline-offset: 3px;
+    background: none; border: none; padding: 0; cursor: pointer;
+    transition: color .15s;
+  }
+  .link-free:hover { color: var(--accent-dark); }
+
+  /* ── Free class modal ── */
+  #fc-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(26,26,26,.55);
+    display: none; align-items: flex-start; justify-content: center;
+    overflow-y: auto; padding: 24px;
+  }
+  #fc-overlay.open { display: flex; }
+  .fc-modal { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--accent); max-width: 640px; width: 100%; margin: auto; position: relative; padding: 32px 28px; }
+  @media (max-width: 480px) { .fc-modal { padding: 26px 20px; } #fc-overlay { padding: 14px; } }
+  .fc-close { position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 15px; color: var(--muted); cursor: pointer; padding: 6px; transition: color .15s; }
+  .fc-close:hover { color: var(--ink); }
+  .fc-field { margin-bottom: 14px; }
+  .fc-field label { display: block; font-size: 12px; font-weight: 600; color: var(--ink2); margin-bottom: 6px; }
+  .fc-field input { width: 100%; border: 1px solid var(--border); background: var(--bg); padding: 12px 14px; font-size: 14px; font-family: inherit; color: var(--ink); }
+  .fc-field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .fc-error { display: none; font-size: 12px; color: #C0392B; margin-top: 10px; }
+  .fc-video video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; border: 1px solid var(--border); }
+  .fc-lessons { border: 1px solid var(--border); margin-top: 20px; }
+  .fc-lesson { display: flex; gap: 12px; align-items: center; padding: 11px 16px; border-top: 1px solid var(--border2); font-size: 13px; color: var(--ink2); }
+  .fc-lesson:first-child { border-top: none; }
+  .fc-lesson.locked { color: var(--muted); background: var(--bg); }
+  .fc-lesson .mono { font-size: 11px; color: var(--accent-dark); flex-shrink: 0; }
+  .fc-lesson .fc-tag { margin-left: auto; font-size: 11px; flex-shrink: 0; }
 
   /* ── Emphasis ── */
   .prose em, .body em, .lead em { color: var(--accent-dark); font-style: italic; font-weight: 500; }
@@ -295,6 +330,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn">Give me the whole blueprint →</a>
     <p class="tiny" style="margin-top:14px;">One-time payment · Instant access · 30-day guarantee</p>
+    <button type="button" class="link-free" data-free-class>Not sure yet? Watch the first lesson free →</button>
   </div>
 </section>
 
@@ -316,6 +352,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="video-cap">Davi walks you through exactly what's inside and why the setup — not the platform — is what makes beginners fail.</p>
     <div style="margin-top:24px;">
       <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn btn-sm">Get instant access — €27 →</a>
+      <br>
+      <button type="button" class="link-free" data-free-class>Or watch the full first lesson free before you decide →</button>
     </div>
   </div>
 </section>
@@ -657,6 +695,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p class="cta-sub">One-time payment. No subscription.</p>
           <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Yes, give me the system →</a>
           <p class="cta-note">Instant access after payment</p>
+          <button type="button" class="link-free" data-free-class style="display:block; width:100%; text-align:center; color:#BCBAB5;">Want a taste first? Watch lesson 1 free →</button>
         </div>
 
         <div class="guarantee">
@@ -817,6 +856,212 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }, 3000);
 }());
 </script>
+
+<!-- FREE FIRST LESSON MODAL -->
+<div id="fc-overlay" role="dialog" aria-modal="true" aria-labelledby="fc-title">
+  <div class="fc-modal">
+    <button type="button" class="fc-close" id="fc-close" aria-label="Close">✕</button>
+
+    <!-- State 1: capture -->
+    <div id="fc-form-state">
+      <span class="eyebrow">Free preview</span>
+      <h3 id="fc-title" class="h2" style="font-size:24px; margin-bottom:10px;">Watch the first lesson. Free.</h3>
+      <p class="small" style="margin-bottom:22px;">Lesson 1 — <em style="color:var(--accent-dark);">Why most beginners fail</em> — is the exact lesson from inside the Blueprint. Tell me who you are and start watching right now.</p>
+      <form id="fc-form" novalidate>
+        <div class="fc-field">
+          <label for="fc-name">Your name</label>
+          <input id="fc-name" name="fullName" type="text" autocomplete="name" placeholder="Jane Smith" required />
+        </div>
+        <div class="fc-field">
+          <label for="fc-email">Your email</label>
+          <input id="fc-email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+        </div>
+        <button type="submit" class="btn" id="fc-submit" style="display:block; width:100%; text-align:center;">Unlock lesson 1 — free →</button>
+        <p class="fc-error" id="fc-error">Please enter your name and a valid email.</p>
+        <p class="tiny" style="margin-top:12px;">I'll also email you the lesson link plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
+      </form>
+    </div>
+
+    <!-- State 2: video -->
+    <div id="fc-video-state" style="display:none;">
+      <span class="eyebrow">Lesson 1 of 6 — free preview</span>
+      <h3 class="h2" style="font-size:24px; margin-bottom:16px;">Why most beginners fail.</h3>
+      <div class="fc-video">
+        <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="metadata" playsinline></video>
+      </div>
+      <div class="fc-lessons">
+        <div class="fc-lesson"><span class="mono">01</span> Why most beginners fail <span class="fc-tag" style="color:var(--accent-dark); font-weight:600;">▶ Watching now</span></div>
+        <div class="fc-lesson locked"><span class="mono">02</span> Business Manager + ad account setup <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">03</span> Tracking that actually works <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">04</span> Choosing the right objective <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">05</span> Launch: campaign, budget &amp; first ad <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">06</span> Reading your numbers <span class="fc-tag">🔒</span></div>
+      </div>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn" id="fc-next" style="display:block; text-align:center; margin-top:20px;">Next lesson → Unlock all 6 modules for €27</a>
+      <p class="tiny" style="text-align:center; margin-top:10px;">One-time payment · Instant access · 30-day guarantee</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var UNLOCK_KEY = "gr_free_class_v1";
+
+  var overlay    = document.getElementById("fc-overlay");
+  var formState  = document.getElementById("fc-form-state");
+  var videoState = document.getElementById("fc-video-state");
+  var form       = document.getElementById("fc-form");
+  var submitBtn  = document.getElementById("fc-submit");
+  var errorEl    = document.getElementById("fc-error");
+  var player     = document.getElementById("fc-player");
+
+  // ── Helpers (mesmo padrão do FormScript do site principal) ─────────
+  async function sha256(value) {
+    var normalized = (value || "").toLowerCase().trim();
+    if (!normalized) return "";
+    var buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(normalized));
+    return Array.from(new Uint8Array(buffer)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  }
+  function getCookie(name) {
+    var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return m ? m.pop() : "";
+  }
+  function getFbc() {
+    var fbc = getCookie("_fbc");
+    if (fbc) return fbc;
+    var m = window.location.search.match(/[?&]fbclid=([^&]+)/);
+    return m ? "fb.1." + Date.now() + "." + decodeURIComponent(m[1]) : "";
+  }
+  function getUrlParams() {
+    var params = {};
+    new URLSearchParams(window.location.search).forEach(function (v, k) { if (v) params[k] = v; });
+    return params;
+  }
+
+  function isUnlocked() {
+    try { return !!localStorage.getItem(UNLOCK_KEY); } catch (e) { return false; }
+  }
+  function renderState() {
+    var unlocked = isUnlocked();
+    formState.style.display  = unlocked ? "none" : "block";
+    videoState.style.display = unlocked ? "block" : "none";
+  }
+  function openModal() {
+    renderState();
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    if (player) player.pause();
+  }
+
+  // ── Open/close wiring ───────────────────────────────────────────────
+  var triggers = document.querySelectorAll("[data-free-class]");
+  for (var i = 0; i < triggers.length; i++) {
+    triggers[i].addEventListener("click", function (e) { e.preventDefault(); openModal(); });
+  }
+  document.getElementById("fc-close").addEventListener("click", closeModal);
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
+  });
+
+  // ── Submit ──────────────────────────────────────────────────────────
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var fullName = document.getElementById("fc-name").value.trim();
+    var email    = document.getElementById("fc-email").value.trim().toLowerCase();
+
+    if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.textContent = "Please enter your name and a valid email.";
+      errorEl.style.display = "block";
+      return;
+    }
+    errorEl.style.display = "none";
+    submitBtn.disabled = true;
+    var originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Unlocking…";
+
+    var nameParts = fullName.split(/\s+/);
+    var eventId   = Date.now() + "_" + Math.floor(Math.random() * 1e15);
+    var emHash = await sha256(email);
+    var fnHash = await sha256(nameParts[0]);
+    var lnHash = await sha256(nameParts.slice(1).join(" "));
+    var fbp = getCookie("_fbp");
+    var fbc = getFbc();
+
+    try {
+      var res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leadType: "free_class",
+          product:  "launch-ads-blueprint",
+          fullName: fullName,
+          email:    email,
+          meta_event_id:         eventId,
+          meta_em:               emHash,
+          meta_fn:               fnHash,
+          meta_ln:               lnHash,
+          meta_fbp:              fbp,
+          meta_fbc:              fbc,
+          meta_user_agent:       navigator.userAgent,
+          meta_event_source_url: window.location.href,
+          submitted_at:          new Date().toISOString(),
+          marketing_consent:     !!window.__marketingConsent,
+          url_params:            getUrlParams(),
+        }),
+      });
+      if (!res.ok) throw new Error("bad status");
+
+      try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ email: email, at: new Date().toISOString() })); } catch (err) {}
+
+      // Lead: pixel gated por consentimento + dataLayer para o GTM
+      if (typeof window.trackMarketing === "function") {
+        window.trackMarketing("Lead", { content_name: "Free Lesson 1", content_category: "free_class" }, { eventID: eventId });
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "free_class_lead",
+        event_id: eventId,
+        em: emHash, fn: fnHash, ln: lnHash,
+        fbp: fbp, fbc: fbc,
+      });
+
+      renderState();
+      if (player && player.play) player.play().catch(function () {});
+    } catch (err) {
+      errorEl.textContent = "Something went wrong. Please try again.";
+      errorEl.style.display = "block";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
+  // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
+  var milestones = { 25: false, 50: false, 75: false, 95: false };
+  if (player) {
+    player.addEventListener("timeupdate", function () {
+      if (!player.duration) return;
+      var pct = (player.currentTime / player.duration) * 100;
+      for (var mark in milestones) {
+        if (!milestones[mark] && pct >= Number(mark)) {
+          milestones[mark] = true;
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "free_class_progress", video_percent: Number(mark) });
+          if (mark === "50" && typeof window.trackMarketing === "function") {
+            window.trackMarketing("ViewContent", { content_name: "Free Lesson 1", content_category: "free_class" });
+          }
+        }
+      }
+    });
+  }
+})();
+</script>
+<!-- End free first lesson modal -->
 
 <!-- Cookie Banner -->
 <div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; z-index:9999; display:none; max-width:560px; margin:0 auto; background:var(--white); color:var(--ink2); border:1px solid #E5E1DB; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.12); padding:18px 20px;">

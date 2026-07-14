@@ -8,6 +8,9 @@ const dataDir   = join(__dirname, "../../../data");
 const leadsFile = join(dataDir, "leads.csv");
 const csvHeader = "fullName,email,phone,channels,monthlySpend,biggestBlocker,createdAt\n";
 
+const freeClassFile   = join(dataDir, "free-class-leads.csv");
+const freeClassHeader = "fullName,email,marketingConsent,createdAt\n";
+
 const toCsvValue = (v: string) => `"${v.replace(/"/g, '""')}"`;
 
 const json = (status: number, body: Record<string, unknown>) =>
@@ -27,6 +30,63 @@ export const POST: APIRoute = async ({ request }) => {
 		const monthlySpend   = String(payload?.monthlySpend   ?? "").trim();
 		const biggestBlocker = String(payload?.biggestBlocker ?? "").trim();
 		const product        = String(payload?.product        ?? "").trim();
+		const leadType       = String(payload?.leadType       ?? "").trim();
+
+		// ── Free-class lead: só nome + e-mail obrigatórios ────────────
+		if (leadType === "free_class") {
+			if (!fullName || !email) {
+				return json(400, { ok: false, error: "Missing required fields." });
+			}
+
+			const createdAt = new Date().toISOString();
+			const line = [
+				toCsvValue(fullName),
+				toCsvValue(email),
+				toCsvValue(String(payload?.marketing_consent ?? false)),
+				toCsvValue(createdAt),
+			].join(",") + "\n";
+
+			await mkdir(dataDir, { recursive: true });
+			try { await access(freeClassFile); }
+			catch { await appendFile(freeClassFile, freeClassHeader, "utf8"); }
+			await appendFile(freeClassFile, line, "utf8");
+
+			const webhookUrl = import.meta.env.PUBLIC_WEBHOOK_URL;
+			if (webhookUrl) {
+				const nameParts  = fullName.split(/\s+/);
+				const clientIp =
+					request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+					request.headers.get("x-real-ip") ||
+					"";
+
+				fetch(webhookUrl, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						lead_type:  "free_class",
+						full_name:  fullName,
+						first_name: nameParts[0] ?? "",
+						last_name:  nameParts.slice(1).join(" "),
+						email,
+						product,
+						meta_event_id:         payload.meta_event_id         ?? "",
+						meta_em:               payload.meta_em               ?? "",
+						meta_fn:               payload.meta_fn               ?? "",
+						meta_ln:               payload.meta_ln               ?? "",
+						meta_fbp:              payload.meta_fbp              ?? "",
+						meta_fbc:              payload.meta_fbc              ?? "",
+						meta_user_agent:       payload.meta_user_agent       ?? "",
+						meta_event_source_url: payload.meta_event_source_url ?? "",
+						submitted_at:          payload.submitted_at          ?? createdAt,
+						marketing_consent:     payload.marketing_consent     ?? false,
+						url_params:            payload.url_params            ?? {},
+						client_ip_address: clientIp,
+					}),
+				}).catch((err) => console.error("[leads] n8n webhook failed:", err));
+			}
+
+			return json(200, { ok: true });
+		}
 
 		if (!fullName || !email || !phone || !channels || !monthlySpend || !biggestBlocker) {
 			return json(400, { ok: false, error: "Missing required fields." });
