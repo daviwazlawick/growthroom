@@ -152,6 +152,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .fc-lesson { display: flex; gap: 12px; align-items: center; padding: 11px 16px; border-top: 1px solid var(--border2); font-size: 13px; color: var(--ink2); }
   .fc-lesson:first-child { border-top: none; }
   .fc-lesson.locked { color: var(--muted); background: var(--bg); }
+  .fc-lesson.fc-playable { cursor: pointer; transition: background .15s; }
+  .fc-lesson.fc-playable:hover { background: var(--accent-soft); }
+  .fc-lesson.fc-playable.active .fc-tag { color: var(--accent-dark); font-weight: 600; }
   .fc-lesson .mono { font-size: 11px; color: var(--accent-dark); flex-shrink: 0; }
   .fc-lesson .fc-tag { margin-left: auto; font-size: 11px; flex-shrink: 0; }
   .fc-attn { animation: fcPulse 1.2s ease-in-out 3; }
@@ -341,7 +344,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
 
-    <button type="button" class="btn" data-free-class>Watch the first lesson free — before you buy →</button>
+    <button type="button" class="btn" data-free-class>Watch the first 2 lessons free — before you buy →</button>
     <p class="tiny" style="margin-top:14px;">100% free preview · No card required · Full course is a one-time €27</p>
   </div>
 </section>
@@ -363,7 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <p class="video-cap">Davi walks you through exactly what's inside and why the setup — not the platform — is what makes beginners fail.</p>
     <div style="margin-top:24px;">
-      <button type="button" class="btn btn-sm" data-free-class>Watch the full first lesson free →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch the first 2 lessons free →</button>
     </div>
   </div>
 </section>
@@ -486,7 +489,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:32px;">
-      <button type="button" class="btn btn-sm" data-free-class>Start with the free lesson →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Start with the 2 free lessons →</button>
     </div>
   </div>
 </section>
@@ -602,7 +605,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:28px;">
-      <button type="button" class="btn btn-sm" data-free-class>Watch lesson 1 free →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch lessons 1 &amp; 2 free →</button>
     </div>
   </div>
 </section>
@@ -705,7 +708,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p class="cta-sub">One-time payment. No subscription.</p>
           <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Yes, give me the system →</a>
           <p class="cta-note">Instant access after payment</p>
-          <button type="button" class="link-free" data-free-class style="display:block; width:100%; text-align:center; color:#BCBAB5;">Want a taste first? Watch lesson 1 free →</button>
+          <button type="button" class="link-free" data-free-class style="display:block; width:100%; text-align:center; color:#BCBAB5;">Want a taste first? Watch the first 2 lessons free →</button>
         </div>
 
         <div class="guarantee">
@@ -875,8 +878,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- State 1: capture -->
     <div id="fc-form-state">
       <span class="eyebrow">Free preview</span>
-      <h3 id="fc-title" class="h2" style="font-size:24px; margin-bottom:10px;">Watch the first lesson. Free.</h3>
-      <p class="small" style="margin-bottom:22px;">Lesson 1 — <em style="color:var(--accent-dark);">Why most beginners fail</em> — is the exact lesson from inside the Blueprint. Tell me who you are and start watching right now.</p>
+      <h3 id="fc-title" class="h2" style="font-size:24px; margin-bottom:10px;">Watch the first two lessons. Free.</h3>
+      <p class="small" style="margin-bottom:22px;">Lessons 1 and 2 — <em style="color:var(--accent-dark);">Why most beginners fail</em> and <em style="color:var(--accent-dark);">Who the Meta Ads course is for</em> — are the exact lessons from inside the Blueprint. Tell me who you are and start watching right now.</p>
       <form id="fc-form" novalidate>
         <div class="fc-field">
           <label for="fc-name">Your name</label>
@@ -886,7 +889,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label for="fc-email">Your email</label>
           <input id="fc-email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
         </div>
-        <button type="submit" class="btn" id="fc-submit" style="display:block; width:100%; text-align:center;">Unlock lesson 1 — free →</button>
+        <button type="submit" class="btn" id="fc-submit" style="display:block; width:100%; text-align:center;">Unlock lessons 1 &amp; 2 — free →</button>
         <p class="fc-error" id="fc-error">Please enter your name and a valid email.</p>
         <p class="tiny" style="margin-top:12px;">I'll also email you the lesson link plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
       </form>
@@ -894,16 +897,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- State 2: video -->
     <div id="fc-video-state" style="display:none;">
-      <span class="eyebrow">Lesson 1 of 20 — free preview</span>
-      <h3 class="h2" style="font-size:24px; margin-bottom:16px;">Why most beginners fail.</h3>
+      <span class="eyebrow" id="fc-eyebrow">Lesson 1 of 20 — free preview</span>
+      <h3 class="h2" id="fc-lesson-title" style="font-size:24px; margin-bottom:16px;">Why most beginners fail.</h3>
       <div class="fc-video">
-        <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="metadata" playsinline></video>
+        <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
       </div>
       <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn" style="display:block; text-align:center; margin-top:16px;">Next lesson → Buy &amp; keep watching — €27</a>
       <p class="tiny" style="text-align:center; margin-top:8px;">One-time payment · Instant access on Alfima · 30-day guarantee</p>
       <div class="fc-lessons">
-        <div class="fc-lesson"><span class="mono">01</span> Why most beginners fail <span class="fc-tag" style="color:var(--accent-dark); font-weight:600;">▶ Watching now</span></div>
-        <div class="fc-lesson locked"><span class="mono">02</span> Who the Meta Ads course is for <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson fc-playable" data-lesson="0"><span class="mono">01</span> Why most beginners fail <span class="fc-tag">▶ Watching now</span></div>
+        <div class="fc-lesson fc-playable" data-lesson="1"><span class="mono">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Watch free</span></div>
         <div class="fc-lesson locked"><span class="mono">03</span> Meta Ads setup checklist <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">04</span> Creating the Facebook page <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">05</span> Adding Ads Manager and payment <span class="fc-tag">🔒</span></div>
@@ -929,7 +932,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="cta-price" style="font-size:38px;">€27</span>
           <span class="cta-was" style="font-size:15px;">€197</span>
         </div>
-        <p class="cta-sub" style="margin-bottom:16px;">One-time payment · Unlocks all 19 remaining lessons + bonuses, ready to watch on the Alfima platform</p>
+        <p class="cta-sub" style="margin-bottom:16px;">One-time payment · Unlocks all 18 remaining lessons + bonuses, ready to watch on the Alfima platform</p>
         <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light" id="fc-next" style="text-align:center;">Next lesson → Buy &amp; keep watching on Alfima</a>
         <p class="cta-note">Instant access after payment · 30-day money-back guarantee</p>
       </div>
@@ -1075,10 +1078,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   });
 
-  // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
+  // ── Free lessons: player com aulas 1 e 2 ────────────────────────────
+  var LESSONS = [
+    { label: "Lesson 1 of 20 — free preview", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
+    { label: "Lesson 2 of 20 — free preview", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
+  ];
+  var currentLesson = 0;
   var milestones = { 25: false, 50: false, 75: false, 95: false };
+
+  function playLesson(i, autoplay) {
+    currentLesson = i;
+    milestones = { 25: false, 50: false, 75: false, 95: false };
+    document.getElementById("fc-eyebrow").textContent = LESSONS[i].label;
+    document.getElementById("fc-lesson-title").textContent = LESSONS[i].title;
+    var rows = document.querySelectorAll(".fc-lesson.fc-playable");
+    for (var r = 0; r < rows.length; r++) {
+      var active = Number(rows[r].dataset.lesson) === i;
+      rows[r].classList.toggle("active", active);
+      rows[r].querySelector(".fc-tag").textContent = active ? "▶ Watching now" : "▶ Watch free";
+    }
+    if (player.getAttribute("src") !== LESSONS[i].src) player.setAttribute("src", LESSONS[i].src);
+    if (autoplay && player.play) player.play().catch(function () {});
+  }
+
+  document.querySelectorAll(".fc-lesson.fc-playable").forEach(function (row) {
+    row.addEventListener("click", function () { playLesson(Number(row.dataset.lesson), true); });
+  });
+
+  // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
   if (player) {
     player.addEventListener("ended", function () {
+      // fim da aula 1 → emenda na aula 2; fim da aula 2 → destaca a oferta
+      if (currentLesson === 0) { playLesson(1, true); return; }
       var offer = document.getElementById("fc-offer");
       if (!offer) return;
       offer.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1092,9 +1123,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if (!milestones[mark] && pct >= Number(mark)) {
           milestones[mark] = true;
           window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({ event: "free_class_progress", video_percent: Number(mark) });
+          window.dataLayer.push({ event: "free_class_progress", lesson: currentLesson + 1, video_percent: Number(mark) });
           if (mark === "50" && typeof window.trackMarketing === "function") {
-            window.trackMarketing("ViewContent", { content_name: "Free Lesson 1", content_category: "free_class" });
+            window.trackMarketing("ViewContent", { content_name: "Free Lesson " + (currentLesson + 1), content_category: "free_class" });
           }
         }
       }
