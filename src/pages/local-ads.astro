@@ -594,8 +594,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Companies big and small, EU &amp; US</li>
             <li>Trained total beginners from zero</li>
           </ul>
-          <!-- TODO: substituir <<<YOUR_LINKEDIN_URL>>> pela URL real do LinkedIn do Davi -->
-          <a href="<<<YOUR_LINKEDIN_URL>>>" target="_blank" rel="noopener" class="small" style="display:inline-block; margin-top:12px; color:var(--accent-dark); text-decoration:underline; text-underline-offset:3px;">Verify my background on LinkedIn →</a>
+          <a href="https://www.linkedin.com/in/davi-wazlawick-43593525/" target="_blank" rel="noopener" class="small" style="display:inline-block; margin-top:12px; color:var(--accent-dark); text-decoration:underline; text-underline-offset:3px;">Verify my background on LinkedIn →</a>
           <!-- TODO: logo strip VAHA / Pixformance / Bioniq / WorkMotion when logo files are available -->
         </div>
         <div class="sidebar-dark">
@@ -885,10 +884,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var barEl  = document.getElementById('sp-bar');
   var closeBtn = document.getElementById('sp-close');
 
-  var VISIBLE = 5000;
-  var CYCLE   = 7000;
-  var visible = false;
-  var autoHide = null;
+  var VISIBLE   = 5000;
+  var MAX_SHOWS = 4;
+  var shows     = 0;
+  var visible   = false;
+  var autoHide  = null;
 
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
@@ -933,14 +933,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   closeBtn.addEventListener('click', hide);
 
-  // start 3 s after load; cycle every 7 s
-  setTimeout(function () {
-    show();
-    setInterval(function () {
-      hide();
-      setTimeout(show, 420);
-    }, CYCLE);
-  }, 3000);
+  // primeira aparição após 15 s; depois intervalos aleatórios de 40–90 s, máx. 4 por visita
+  setTimeout(function loop() {
+    if (shows++ >= MAX_SHOWS) return;
+    show(); // esconde sozinho após VISIBLE
+    setTimeout(loop, VISIBLE + 40000 + Math.random() * 50000);
+  }, 15000);
 }());
 </script>
 
