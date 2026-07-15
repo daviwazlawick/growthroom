@@ -155,6 +155,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .fc-lesson.fc-playable { cursor: pointer; transition: background .15s; }
   .fc-lesson.fc-playable:hover { background: var(--accent-soft); }
   .fc-lesson.fc-playable.active .fc-tag { color: var(--accent-dark); font-weight: 600; }
+  .fc-lesson.locked { cursor: pointer; transition: background .15s; }
+  .fc-lesson.locked:hover { background: var(--accent-soft); }
+  .fc-lock-note { display: none; padding: 16px; background: var(--accent-soft); border-top: 1px solid var(--border2); }
+  .fc-lock-note p { font-size: 13px; color: var(--ink2); line-height: 1.55; margin-bottom: 12px; }
+  .fc-lock-note strong { color: var(--ink); }
   .fc-lesson .mono { font-size: 11px; color: var(--accent-dark); flex-shrink: 0; }
   .fc-lesson .fc-tag { margin-left: auto; font-size: 11px; flex-shrink: 0; }
   .fc-attn { animation: fcPulse 1.2s ease-in-out 3; }
@@ -925,6 +930,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="fc-lesson locked"><span class="mono">18</span> Wrapping up ads with some tips <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">19</span> Setting up events from Meta to optimise <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">20</span> Testing the event and final class <span class="fc-tag">🔒</span></div>
+        <div class="fc-lock-note" id="fc-lock-note">
+          <p id="fc-lock-text"></p>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn btn-sm" style="display:block; text-align:center;">Unlock the full course — €27 →</a>
+        </div>
       </div>
       <div class="cta-block" id="fc-offer" style="margin-top:20px; padding:22px 22px 18px;">
         <p class="tiny" style="color:#BCBAB5; letter-spacing:.08em; text-transform:uppercase; font-weight:500;">Ready for lesson 2?</p>
@@ -1103,6 +1112,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   document.querySelectorAll(".fc-lesson.fc-playable").forEach(function (row) {
     row.addEventListener("click", function () { playLesson(Number(row.dataset.lesson), true); });
+  });
+
+  // ── Aulas bloqueadas: clique mostra aviso + CTA de compra ────────────
+  var lockNote = document.getElementById("fc-lock-note");
+  document.querySelectorAll(".fc-lesson.locked").forEach(function (row) {
+    row.addEventListener("click", function () {
+      var num = row.querySelector(".mono").textContent;
+      var title = Array.prototype.filter
+        .call(row.childNodes, function (n) { return n.nodeType === 3; })
+        .map(function (n) { return n.textContent; }).join("").trim();
+      document.getElementById("fc-lock-text").innerHTML =
+        "Lesson " + num + " — <strong>" + title + "</strong> — is part of the full course. " +
+        "Unlock all 18 remaining lessons + the bonuses for a one-time <strong>€27</strong> <s>€197</s>.";
+      row.after(lockNote);
+      lockNote.style.display = "block";
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "free_class_locked_click", lesson: Number(num) });
+    });
   });
 
   // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
