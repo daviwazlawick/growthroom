@@ -1,5 +1,7 @@
 ---
 const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
+// TODO: publish when real testimonials are collected. Never invent testimonials, names, or photos.
+const SHOW_TESTIMONIALS = false;
 ---
 
 <!DOCTYPE html>
@@ -341,6 +343,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="s-bg" style="background:linear-gradient(170deg,#FFF1DA 0%,#FBF0E0 30%,var(--bg) 75%);">
   <div class="wrap pad">
     <div class="price-tag">Special offer — €27 &nbsp;<s>€197</s></div>
+    <p class="tiny" style="margin-top:-16px; margin-bottom:24px;">Launch price for the first students. It goes to €197 once the first cohort of reviews is in.</p>
     <h1 class="h1">Stop paying someone to do <br>what you can learn in a weekend.</h1>
     <p class="lead">The complete blueprint for creating ads and running them yourself — from your very first campaign to your first real results.</p>
     <div style="margin: 36px -24px 36px;">
@@ -349,8 +352,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
 
-    <button type="button" class="btn" data-free-class>Watch the first 2 lessons free — before you buy →</button>
-    <p class="tiny" style="margin-top:14px;">100% free preview · No card required · Full course is a one-time €27</p>
+    <button type="button" class="btn" data-free-class>Watch the first 2 lessons — set up your account with me →</button>
+    <p class="tiny" style="margin-top:14px;">2 full lessons open · No card required · By lesson 2 your Meta Business account is live · Full course is a one-time €27</p>
   </div>
 </section>
 
@@ -371,7 +374,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <p class="video-cap">Davi walks you through exactly what's inside and why the setup — not the platform — is what makes beginners fail.</p>
     <div style="margin-top:24px;">
-      <button type="button" class="btn btn-sm" data-free-class>Watch the first 2 lessons free →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch the first 2 lessons → (no card needed)</button>
     </div>
   </div>
 </section>
@@ -494,11 +497,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:32px;">
-      <button type="button" class="btn btn-sm" data-free-class>Start with the 2 free lessons →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch the first 2 lessons → (no card needed)</button>
     </div>
   </div>
 </section>
 
+
+<!-- TESTIMONIALS — oculto até haver depoimentos reais -->
+<!-- TODO: publish when real testimonials are collected. Never invent testimonials, names, or photos. -->
+{SHOW_TESTIMONIALS && (
+<section class="s-white">
+  <div class="wrap pad">
+    <span class="eyebrow">What students say</span>
+    <h2 class="h2">From the first cohort.</h2>
+    <div class="case-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+      <div class="sidebar-card">
+        <img class="bio-photo" style="width:48px; height:48px; margin-bottom:12px;" src="/img/PLACEHOLDER-student-1.png" alt="[PLACEHOLDER — real student photo]" loading="lazy" />
+        <p class="mod-title">[PLACEHOLDER — Student name]</p>
+        <p class="tiny" style="margin-bottom:8px;">[PLACEHOLDER — one-line label, e.g. "First campaign: March 2026"]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real student. Never invent this.]</p>
+      </div>
+      <div class="sidebar-card">
+        <img class="bio-photo" style="width:48px; height:48px; margin-bottom:12px;" src="/img/PLACEHOLDER-student-2.png" alt="[PLACEHOLDER — real student photo]" loading="lazy" />
+        <p class="mod-title">[PLACEHOLDER — Student name]</p>
+        <p class="tiny" style="margin-bottom:8px;">[PLACEHOLDER — one-line label]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real student. Never invent this.]</p>
+      </div>
+      <div class="sidebar-card">
+        <img class="bio-photo" style="width:48px; height:48px; margin-bottom:12px;" src="/img/PLACEHOLDER-student-3.png" alt="[PLACEHOLDER — real student photo]" loading="lazy" />
+        <p class="mod-title">[PLACEHOLDER — Student name]</p>
+        <p class="tiny" style="margin-bottom:8px;">[PLACEHOLDER — one-line label]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real student. Never invent this.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+)}
 
 <!-- MARKET SHIFT -->
 <section class="s-white">
@@ -560,6 +594,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Companies big and small, EU &amp; US</li>
             <li>Trained total beginners from zero</li>
           </ul>
+          <!-- TODO: substituir <<<YOUR_LINKEDIN_URL>>> pela URL real do LinkedIn do Davi -->
+          <a href="<<<YOUR_LINKEDIN_URL>>>" target="_blank" rel="noopener" class="small" style="display:inline-block; margin-top:12px; color:var(--accent-dark); text-decoration:underline; text-underline-offset:3px;">Verify my background on LinkedIn →</a>
+          <!-- TODO: logo strip VAHA / Pixformance / Bioniq / WorkMotion when logo files are available -->
         </div>
         <div class="sidebar-dark">
           <p class="cell-head">The rule</p>
@@ -610,7 +647,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="margin-top:28px;">
-      <button type="button" class="btn btn-sm" data-free-class>Watch lessons 1 &amp; 2 free →</button>
+      <button type="button" class="btn btn-sm" data-free-class>Watch the first 2 lessons → (no card needed)</button>
     </div>
   </div>
 </section>
@@ -684,6 +721,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 
+<!-- FAQ -->
+<section class="s-bg">
+  <div class="wrap pad">
+    <span class="eyebrow">Before you buy</span>
+    <h2 class="h2">Questions people ask before buying.</h2>
+    <div class="divide">
+      <div style="padding: 22px 0;">
+        <p class="mod-title" style="font-size:15px; margin-bottom:8px;">How long do I keep access?</p>
+        <p class="body">Forever. One payment, lifetime access to all 20 lessons and every future update.</p>
+      </div>
+      <div style="padding: 22px 0;">
+        <p class="mod-title" style="font-size:15px; margin-bottom:8px;">I don't have a product or business yet. Is this useless for me?</p>
+        <p class="body">No — the setup is identical whether you sell today or in six months. You'll build the account, tracking and skills once, and they'll be ready the day you launch. But if you want results this week and have nothing to promote yet, wait until you do.</p>
+      </div>
+      <div style="padding: 22px 0;">
+        <p class="mod-title" style="font-size:15px; margin-bottom:8px;">Does this work in my country?</p>
+        <p class="body">Yes. Meta Ads works the same across Europe and beyond — same Ads Manager, same setup, same principles. The course is in English.</p>
+      </div>
+      <div style="padding: 22px 0;">
+        <p class="mod-title" style="font-size:15px; margin-bottom:8px;">How does the refund actually work?</p>
+        <p class="body">Email me within 30 days of purchase. You get every cent back. No forms, no 'proof you did the work', no questions.</p>
+      </div>
+      <div style="padding: 22px 0;">
+        <p class="mod-title" style="font-size:15px; margin-bottom:8px;">Is this a subscription?</p>
+        <p class="body">No. €27 once. That's it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- PRICING -->
 <section class="s-white" id="pricing">
   <div class="wrap pad">
@@ -711,9 +779,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="cta-was">€197</span>
           </div>
           <p class="cta-sub">One-time payment. No subscription.</p>
+          <p class="tiny" style="color:#BCBAB5; margin-top:-16px; margin-bottom:24px;">Launch price for the first students. It goes to €197 once the first cohort of reviews is in.</p>
           <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Yes, give me the system →</a>
-          <p class="cta-note">Instant access after payment</p>
-          <button type="button" class="link-free" data-free-class style="display:block; width:100%; text-align:center; color:#BCBAB5;">Want a taste first? Watch the first 2 lessons free →</button>
+          <p class="cta-note">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+          <button type="button" class="link-free" data-free-class style="display:block; width:100%; text-align:center; color:#BCBAB5;">Watch the first 2 lessons → (no card needed)</button>
         </div>
 
         <div class="guarantee">
@@ -883,8 +952,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- State 1: capture -->
     <div id="fc-form-state">
       <span class="eyebrow">Free preview</span>
-      <h3 id="fc-title" class="h2" style="font-size:24px; margin-bottom:10px;">Watch the first two lessons. Free.</h3>
-      <p class="small" style="margin-bottom:22px;">Lessons 1 and 2 — <em style="color:var(--accent-dark);">Why most beginners fail</em> and <em style="color:var(--accent-dark);">Who the Meta Ads course is for</em> — are the exact lessons from inside the Blueprint. Tell me who you are and start watching right now.</p>
+      <h3 id="fc-title" class="h2" style="font-size:24px; margin-bottom:10px;">Two full lessons. Open.</h3>
+      <p class="small" style="margin-bottom:22px;">Lesson 1 shows you why most beginners fail. In lesson 2 we set up your Meta Business account together — step by step. Watch both, do the setup, then decide if you want the rest. Just tell me who you are.</p>
       <form id="fc-form" novalidate>
         <div class="fc-field">
           <label for="fc-name">Your name</label>
@@ -894,7 +963,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label for="fc-email">Your email</label>
           <input id="fc-email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
         </div>
-        <button type="submit" class="btn" id="fc-submit" style="display:block; width:100%; text-align:center;">Unlock lessons 1 &amp; 2 — free →</button>
+        <button type="submit" class="btn" id="fc-submit" style="display:block; width:100%; text-align:center;">Open lessons 1 &amp; 2 →</button>
         <p class="fc-error" id="fc-error">Please enter your name and a valid email.</p>
         <p class="tiny" style="margin-top:12px;">I'll also email you the lesson link plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
       </form>
@@ -902,13 +971,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- State 2: video -->
     <div id="fc-video-state" style="display:none;">
-      <span class="eyebrow" id="fc-eyebrow">Lesson 1 of 20 — free preview</span>
+      <span class="eyebrow" id="fc-eyebrow">Lessons 1 &amp; 2 of 20 — open preview</span>
       <h3 class="h2" id="fc-lesson-title" style="font-size:24px; margin-bottom:16px;">Why most beginners fail.</h3>
       <div class="fc-video">
         <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
       </div>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn" style="display:block; text-align:center; margin-top:16px;">Next lesson → Buy &amp; keep watching — €27</a>
-      <p class="tiny" style="text-align:center; margin-top:8px;">One-time payment · Instant access on Alfima · 30-day guarantee</p>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn" id="fc-next-cta" data-mode="free" style="display:block; text-align:center; margin-top:16px;">Next lesson → Watch lesson 2 (still free)</a>
+      <p class="tiny" style="text-align:center; margin-top:8px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
       <div class="fc-lessons">
         <div class="fc-lesson fc-playable" data-lesson="0"><span class="mono">01</span> Why most beginners fail <span class="fc-tag">▶ Watching now</span></div>
         <div class="fc-lesson fc-playable" data-lesson="1"><span class="mono">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Watch free</span></div>
@@ -924,9 +993,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="fc-lesson locked"><span class="mono">12</span> Master Facebook Ads audiences and targeting <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">13</span> Meta Advantage+ targeting controls explained <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">14</span> Facebook Ads setup: excluding key countries <span class="fc-tag">🔒</span></div>
-        <div class="fc-lesson locked"><span class="mono">15</span> Ads — part 1 <span class="fc-tag">🔒</span></div>
-        <div class="fc-lesson locked"><span class="mono">16</span> Ads — part 2 <span class="fc-tag">🔒</span></div>
-        <div class="fc-lesson locked"><span class="mono">17</span> Ads — final <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">15</span> Building your first ad: image <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">16</span> Building your first ad: video <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="mono">17</span> Final review before you hit publish <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">18</span> Wrapping up ads with some tips <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">19</span> Setting up events from Meta to optimise <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="mono">20</span> Testing the event and final class <span class="fc-tag">🔒</span></div>
@@ -936,14 +1005,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
       <div class="cta-block" id="fc-offer" style="margin-top:20px; padding:22px 22px 18px;">
-        <p class="tiny" style="color:#BCBAB5; letter-spacing:.08em; text-transform:uppercase; font-weight:500;">Ready for lesson 2?</p>
+        <p class="tiny" style="color:#BCBAB5; letter-spacing:.08em; text-transform:uppercase; font-weight:500;">Ready for lesson 3?</p>
         <div class="cta-price-row" style="margin:8px 0 4px;">
           <span class="cta-price" style="font-size:38px;">€27</span>
           <span class="cta-was" style="font-size:15px;">€197</span>
         </div>
+        <p class="cta-sub" style="margin-bottom:10px;">Next up: tracking. Installing your pixel is the step that decides whether Meta can optimise your ads at all — and it's where most beginners give up. I walk you through it click by click.</p>
         <p class="cta-sub" style="margin-bottom:16px;">One-time payment · Unlocks all 18 remaining lessons + bonuses, ready to watch on the Alfima platform</p>
         <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light" id="fc-next" style="text-align:center;">Next lesson → Buy &amp; keep watching on Alfima</a>
-        <p class="cta-note">Instant access after payment · 30-day money-back guarantee</p>
+        <p class="cta-note">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
       </div>
     </div>
   </div>
@@ -1089,8 +1159,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── Free lessons: player com aulas 1 e 2 ────────────────────────────
   var LESSONS = [
-    { label: "Lesson 1 of 20 — free preview", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
-    { label: "Lesson 2 of 20 — free preview", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
+    { label: "Lesson 1 of 20 — open preview", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
+    { label: "Lesson 2 of 20 — open preview", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
   ];
   var currentLesson = 0;
   var milestones = { 25: false, 50: false, 75: false, 95: false };
@@ -1100,6 +1170,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     milestones = { 25: false, 50: false, 75: false, 95: false };
     document.getElementById("fc-eyebrow").textContent = LESSONS[i].label;
     document.getElementById("fc-lesson-title").textContent = LESSONS[i].title;
+    // CTA abaixo do vídeo: na aula 1 leva à aula 2 (grátis); na aula 2 vira compra
+    var nextCta = document.getElementById("fc-next-cta");
+    if (nextCta) {
+      nextCta.dataset.mode = i === 0 ? "free" : "paid";
+      nextCta.textContent = i === 0
+        ? "Next lesson → Watch lesson 2 (still free)"
+        : "Next lesson → Buy & keep watching — €27";
+    }
     var rows = document.querySelectorAll(".fc-lesson.fc-playable");
     for (var r = 0; r < rows.length; r++) {
       var active = Number(rows[r].dataset.lesson) === i;
@@ -1113,6 +1191,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.querySelectorAll(".fc-lesson.fc-playable").forEach(function (row) {
     row.addEventListener("click", function () { playLesson(Number(row.dataset.lesson), true); });
   });
+
+  var nextCtaEl = document.getElementById("fc-next-cta");
+  if (nextCtaEl) {
+    nextCtaEl.addEventListener("click", function (e) {
+      if (nextCtaEl.dataset.mode === "free") { e.preventDefault(); playLesson(1, true); }
+    });
+  }
 
   // ── Aulas bloqueadas: clique mostra aviso + CTA de compra ────────────
   var lockNote = document.getElementById("fc-lock-note");
