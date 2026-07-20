@@ -357,14 +357,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     renderStep();
   });
 
-  function isUnlocked() {
-    try { return !!localStorage.getItem(UNLOCK_KEY); } catch (e) { return false; }
-  }
-
   function showGateOrResult() {
     dl("quiz_complete", { quiz_answers: answers });
     quizCard.style.display = "none";
-    if (isUnlocked()) { showResult(); return; }
+    // Gate sempre: o lead (nome+email) e as respostas do quiz precisam chegar
+    // ao n8n mesmo que a pessoa já tenha desbloqueado as aulas noutra página.
     setProgress((QUESTIONS.length / (QUESTIONS.length + 1)) * 100);
     gateCard.style.display = "block";
     gateCard.classList.add("fade-in");
