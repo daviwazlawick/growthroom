@@ -1,0 +1,1045 @@
+---
+const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
+// TODO: publish when real testimonials are collected. Never invent testimonials, names, or photos.
+const SHOW_TESTIMONIALS = false;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KL573474');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads for Local Business — Own Your Advertising Foundation | Launch Ads Blueprint</title>
+<meta name="description" content="Before you run Facebook & Instagram ads for your local business, build your Meta advertising foundation: Business Manager, ad account, pixel, events and your first campaign — set up correctly, by you. A step-by-step Meta Ads course for complete beginners. €27 one-time.">
+<link rel="canonical" href="https://growthroom.eu/local-ads-2">
+
+<!-- Meta Pixel: PageView dispara sempre no load; demais eventos exigem consentimento -->
+<script>
+  (function () {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1009429968103557');
+    fbq('track', 'PageView');
+  })();
+
+  var CONSENT_KEY = "gr_cookie_consent_v1";
+  try { window.__marketingConsent = localStorage.getItem(CONSENT_KEY) === "accepted"; }
+  catch (e) { window.__marketingConsent = false; }
+  window.trackMarketing = function (event, params, options) {
+    if (!window.__marketingConsent || typeof window.fbq !== "function") return;
+    window.fbq("track", event, params || {}, options || {});
+  };
+</script>
+<!-- End Meta Pixel -->
+
+<!-- Google tag (gtag.js): Analytics gated by consent via Consent Mode -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRFL8MQJ5R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('consent', 'default', { 'analytics_storage': 'denied' });
+  if (window.__marketingConsent) {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+  }
+  gtag('config', 'G-TRFL8MQJ5R');
+</script>
+<!-- End Google tag -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #FFFFFF;
+    --bg2:     #FAFAF9;
+    --ink:     #18181B;
+    --body:    #52525B;
+    --muted:   #A1A1AA;
+    --line:    #E4E4E7;
+    --line2:   #F4F4F5;
+    --accent:  #F59E0B;
+    --accent-ink: #B45309;
+    --accent-soft: #FFFBEB;
+    --green:   #15803D;
+  }
+
+  html, body { overflow-x: hidden; max-width: 100%; }
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    background: var(--bg);
+    color: var(--ink);
+    scroll-behavior: smooth;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* ── Layout ── */
+  .container { max-width: 1064px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .narrow { max-width: 640px; }
+  .sec { padding-top: 104px; padding-bottom: 104px; }
+  .sec-line { border-top: 1px solid var(--line); }
+  .bg2 { background: var(--bg2); }
+  @media (max-width: 640px) { .sec { padding-top: 72px; padding-bottom: 72px; } }
+
+  /* ── Type ── */
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid #FDE68A; border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+  .h1 { font-size: clamp(38px, 5.4vw, 62px); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; margin-bottom: 24px; }
+  .h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; letter-spacing: -.028em; line-height: 1.12; margin-bottom: 18px; }
+  .h3 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 8px; }
+  .sub { font-size: 19px; line-height: 1.65; color: var(--body); }
+  .p { font-size: 16px; line-height: 1.7; color: var(--body); }
+  .small { font-size: 14px; line-height: 1.6; color: var(--body); }
+  .tiny { font-size: 12.5px; line-height: 1.55; color: var(--muted); }
+  .sec-intro { max-width: 620px; margin-bottom: 56px; }
+  .sec-intro .p { font-size: 17px; }
+
+  /* ── Buttons ── */
+  .btn-dark {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--ink); color: #fff;
+    font-size: 15px; font-weight: 600; letter-spacing: -.005em;
+    padding: 15px 28px; border-radius: 10px; border: none; cursor: pointer;
+    transition: transform .12s, box-shadow .15s, background .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.12);
+    font-family: inherit;
+  }
+  .btn-dark:hover { background: #000; transform: translateY(-1px); box-shadow: 0 6px 16px -6px rgba(0,0,0,.35); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--bg); color: var(--ink);
+    font-size: 15px; font-weight: 600;
+    padding: 15px 28px; border-radius: 10px; border: 1px solid var(--line); cursor: pointer;
+    transition: border-color .15s, background .15s, transform .12s;
+    font-family: inherit;
+  }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  @media (max-width: 640px) {
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .btn-dark, .btn-ghost { width: 100%; }
+  }
+
+  /* ── Header ── */
+  .topbar { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.85); backdrop-filter: blur(8px); }
+  .topbar-in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-size: 15px; font-weight: 700; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+  .brand-dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); display: inline-block; }
+  .topbar .btn-dark { padding: 9px 18px; font-size: 13.5px; border-radius: 8px; }
+
+  /* ── Hero ── */
+  .hero { padding-top: 96px; padding-bottom: 88px; }
+  @media (max-width: 640px) { .hero { padding-top: 64px; padding-bottom: 56px; } }
+  .hero-sub { max-width: 600px; margin-bottom: 36px; }
+  .hero-trust { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+  .hero-trust span { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .hero-shot { margin-top: 64px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px -30px rgba(24,24,27,.25); }
+  .hero-shot img { width: 100%; }
+
+  /* ── Cards ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 820px) { .grid-3 { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
+  .card { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+  .card .icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); border: 1px solid #FDE68A; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .card .icon svg { width: 20px; height: 20px; stroke: var(--accent-ink); }
+
+  /* ── Callout ── */
+  .callout { background: var(--ink); color: #fff; border-radius: 16px; padding: 40px 44px; }
+  .callout p { font-size: clamp(19px, 2.4vw, 24px); font-weight: 600; letter-spacing: -.015em; line-height: 1.4; }
+  .callout span { color: var(--accent); }
+  @media (max-width: 640px) { .callout { padding: 28px 24px; } }
+
+  /* ── Is / Is not ── */
+  .isnot .card ul { list-style: none; }
+  .isnot .card li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; font-size: 15px; line-height: 1.55; color: var(--body); border-top: 1px solid var(--line2); }
+  .isnot .card li:first-of-type { border-top: none; }
+  .isnot .card li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+  .li-yes svg { stroke: var(--green); }
+  .li-no svg { stroke: var(--muted); }
+  .isnot .label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 14px; display: block; }
+
+  /* ── Build timeline ── */
+  .build { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; counter-reset: step; }
+  @media (max-width: 900px) { .build { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .build { grid-template-columns: 1fr; } }
+  .build-item { border: 1px solid var(--line); border-radius: 14px; padding: 22px; background: var(--bg); position: relative; }
+  .build-num { font-size: 12px; font-weight: 600; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid #FDE68A; border-radius: 999px; padding: 3px 10px; display: inline-block; margin-bottom: 14px; }
+  .build-item .h3 { margin-bottom: 6px; }
+  .build-item .small { color: var(--body); }
+
+  /* ── Comparison table ── */
+  .compare { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .compare-head, .compare-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; }
+  .compare-head { background: var(--bg2); border-bottom: 1px solid var(--line); }
+  .compare-head div { padding: 16px 20px; font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+  .compare-head .col-own { color: var(--accent-ink); }
+  .compare-row { border-top: 1px solid var(--line2); }
+  .compare-row:first-of-type { border-top: none; }
+  .compare-row div { padding: 16px 20px; font-size: 14px; line-height: 1.55; }
+  .compare-row .rowlab { font-weight: 600; color: var(--ink); font-size: 13.5px; }
+  .compare-row .blind { color: var(--muted); }
+  .compare-row .own { color: var(--ink); background: #FFFDF6; }
+  @media (max-width: 680px) {
+    .compare-head { display: none; }
+    .compare-row { grid-template-columns: 1fr; padding: 14px 0; }
+    .compare-row div { padding: 4px 20px; }
+    .compare-row .rowlab { padding-top: 8px; }
+    .compare-row .blind::before { content: "Outsourcing blind — "; font-weight: 600; color: var(--muted); }
+    .compare-row .own::before { content: "Owning it — "; font-weight: 600; color: var(--accent-ink); }
+    .compare-row .own { background: transparent; }
+  }
+
+  /* ── After checklist ── */
+  .after-list { list-style: none; max-width: 620px; }
+  .after-list li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--line2); font-size: 16px; line-height: 1.6; color: var(--body); }
+  .after-list li:first-child { border-top: none; }
+  .after-list svg { width: 20px; height: 20px; stroke: var(--green); flex-shrink: 0; margin-top: 3px; }
+
+  /* ── FAQ ── */
+  .faq { max-width: 720px; }
+  .faq details { border-top: 1px solid var(--line); }
+  .faq details:last-child { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 4px; font-size: 16.5px; font-weight: 600; letter-spacing: -.01em; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 20px; font-weight: 400; color: var(--muted); transition: transform .15s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .p { padding: 0 4px 24px; max-width: 640px; }
+
+  /* ── Pricing ── */
+  .price-card { border: 1px solid var(--line); border-radius: 20px; padding: 44px; background: var(--bg); box-shadow: 0 24px 60px -40px rgba(24,24,27,.3); max-width: 520px; }
+  .price-row { display: flex; align-items: baseline; gap: 12px; margin: 8px 0 4px; }
+  .price-big { font-size: 56px; font-weight: 700; letter-spacing: -.03em; }
+  .price-was { font-size: 20px; color: var(--muted); text-decoration: line-through; }
+  .price-inc { list-style: none; margin: 24px 0 28px; }
+  .price-inc li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; font-size: 14.5px; color: var(--body); }
+  .price-inc svg { width: 17px; height: 17px; stroke: var(--green); flex-shrink: 0; margin-top: 3px; }
+  @media (max-width: 640px) { .price-card { padding: 28px 22px; } }
+
+  /* ── Footer ── */
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; }
+  footer .tiny a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── Free lessons modal ── */
+  #fc-overlay { position: fixed; inset: 0; z-index: 10000; background: rgba(24,24,27,.5); backdrop-filter: blur(3px); display: none; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 24px; }
+  #fc-overlay.open { display: flex; }
+  .fc-modal { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; max-width: 640px; width: 100%; margin: auto; position: relative; padding: 36px 32px; }
+  @media (max-width: 480px) { .fc-modal { padding: 26px 20px; } #fc-overlay { padding: 12px; } }
+  .fc-close { position: absolute; top: 14px; right: 14px; background: none; border: none; font-size: 15px; color: var(--muted); cursor: pointer; padding: 6px; }
+  .fc-close:hover { color: var(--ink); }
+  .fc-kicker { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); display: block; margin-bottom: 12px; }
+  .fc-h { font-size: 26px; font-weight: 700; letter-spacing: -.025em; margin-bottom: 10px; }
+  .fc-field { margin-bottom: 14px; }
+  .fc-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .fc-field input { width: 100%; border: 1px solid var(--line); background: var(--bg2); padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--ink); border-radius: 10px; }
+  .fc-field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .fc-error { display: none; font-size: 13px; color: #B91C1C; margin-top: 10px; }
+  .fc-video video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; }
+  .fc-lessons { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 20px; }
+  .fc-lesson { display: flex; gap: 12px; align-items: center; padding: 11px 16px; border-top: 1px solid var(--line2); font-size: 13.5px; color: var(--body); }
+  .fc-lesson:first-child { border-top: none; }
+  .fc-lesson .num { font-size: 11.5px; font-weight: 600; color: var(--accent-ink); flex-shrink: 0; }
+  .fc-lesson .fc-tag { margin-left: auto; font-size: 11.5px; flex-shrink: 0; }
+  .fc-lesson.locked { color: var(--muted); background: var(--bg2); cursor: pointer; }
+  .fc-lesson.locked:hover { background: var(--accent-soft); }
+  .fc-lesson.fc-playable { cursor: pointer; transition: background .15s; }
+  .fc-lesson.fc-playable:hover { background: var(--accent-soft); }
+  .fc-lesson.fc-playable.active .fc-tag { color: var(--accent-ink); font-weight: 600; }
+  .fc-lock-note { display: none; padding: 16px; background: var(--accent-soft); border-top: 1px solid var(--line2); }
+  .fc-lock-note p { font-size: 13.5px; line-height: 1.55; color: var(--body); margin-bottom: 12px; }
+  .fc-lock-note strong { color: var(--ink); }
+  .fc-offer { background: var(--ink); color: #fff; border-radius: 14px; padding: 26px; margin-top: 20px; }
+  .fc-offer .btn-light { display: block; width: 100%; background: #fff; color: var(--ink); padding: 15px; font-size: 14.5px; font-weight: 600; text-align: center; border: none; border-radius: 10px; cursor: pointer; }
+  .fc-offer .btn-light:hover { background: var(--bg2); }
+  .fc-attn { animation: fcPulse 1.2s ease-in-out 3; }
+  @keyframes fcPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+    50%      { box-shadow: 0 0 0 6px rgba(245,158,11,.45); }
+  }
+  #fc-next-cta { display: block; text-align: center; margin-top: 16px; width: 100%; }
+</style>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "I'm not technical. Can I really do this?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If you can attach a file to an email, you can do this. Every lesson shows the exact screen and the exact click. Pause, click, continue." } },
+    { "@type": "Question", "name": "I'm too busy running my business.", "acceptedAnswer": { "@type": "Answer", "text": "The whole course is about two hours of short lessons. Most owners do the setup in a single weekend — and it's work you only do once." } },
+    { "@type": "Question", "name": "I've never run an ad in my life.", "acceptedAnswer": { "@type": "Answer", "text": "Perfect. The course assumes zero experience. It starts before step one: creating your Meta Business Portfolio from a blank screen." } },
+    { "@type": "Question", "name": "I've hired agencies before. Why would I need this?", "acceptedAnswer": { "@type": "Answer", "text": "Because after this you'll own your ad account, your pixel and your data — and you'll be able to read the reports you're paying for. Understanding the work makes you a better client." } },
+    { "@type": "Question", "name": "Will this get me customers?", "acceptedAnswer": { "@type": "Answer", "text": "This course builds your advertising foundation — the setup that has to be right before any ad can work. A correct foundation doesn't guarantee results; no honest person can promise that. It removes the expensive mistakes and gives you control over what happens next." } },
+    { "@type": "Question", "name": "Is this a subscription?", "acceptedAnswer": { "@type": "Answer", "text": "No. €27 once. Lifetime access to all 20 lessons and every future update." } },
+    { "@type": "Question", "name": "How does the refund work?", "acceptedAnswer": { "@type": "Answer", "text": "Email within 30 days of purchase and you get every cent back. No forms, no questions." } }
+  ]
+}
+</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL573474"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- HEADER -->
+<div class="topbar">
+  <div class="container topbar-in">
+    <span class="brand"><span class="brand-dot"></span> Growth Room</span>
+    <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Get the Blueprint — €27</a>
+  </div>
+</div>
+
+<!-- 1 · HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="kicker">For local business owners · No experience needed</span>
+    <h1 class="h1">Take back control<br>of your advertising.</h1>
+    <p class="sub hero-sub">Launch Ads Blueprint walks you through building your Meta advertising foundation from zero — Business Manager, ad account, pixel, tracking, your first campaign. Step by step, in plain English. So whether you run your own Facebook and Instagram ads or hire someone, you know exactly what's happening with your money.</p>
+    <div class="cta-row">
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Build my foundation — €27</a>
+      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+    </div>
+    <div class="hero-trust">
+      <span>✓ One-time payment</span>
+      <span>✓ 20 short lessons</span>
+      <span>✓ 30-day money-back guarantee</span>
+      <span>✓ Everything you build stays yours</span>
+    </div>
+    <div class="hero-shot">
+      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — step-by-step Meta Ads course for local businesses" />
+    </div>
+  </div>
+</section>
+
+<!-- 2 · PROBLEM -->
+<section class="sec sec-line bg2">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">Most local businesses don't lose money on ads.<br>They lose it before the ads even run.</h2>
+      <p class="p">Dentists, restaurants, gyms, salons, law firms — the pattern is the same. The money disappears in three places, and none of them is the ad itself.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M7 17l5-10 5 10M5 21h14"/></svg></div>
+        <h3 class="h3">The boost button</h3>
+        <p class="small">€50 on "Boost Post". 200 likes. Zero customers. Boosting feels like advertising — but without a real campaign behind it, it's a donation to Meta.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 8v4l3 3M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <h3 class="h3">The blind retainer</h3>
+        <p class="small">€400–1,000+ to an agency you can't evaluate. Good agencies exist. But you can't tell them apart from bad ones if you don't understand the work.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 3v18h18M9 17V9m4 8v-5m4 5V7"/></svg></div>
+        <h3 class="h3">The invisible tracking</h3>
+        <p class="small">Ads running with no pixel and no events. Meta can't optimise what it can't measure. Most local ad accounts run blind — and the owner never knows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · WHY THIS HAPPENS -->
+<section class="sec sec-line">
+  <div class="container">
+    <div class="narrow">
+      <h2 class="h2">You're not bad at this.<br>Nobody taught you the foundation.</h2>
+      <p class="p" style="margin-bottom:18px;">YouTube teaches hacks and "winning strategies" — for people who already have their accounts set up. Agencies do the setup for you, and take the understanding with them when the contract ends. And Ads Manager itself was built for professionals, not for someone running a clinic between patients.</p>
+      <p class="p" style="margin-bottom:18px;">So smart business owners — people who run restaurants, practices, firms — end up feeling lost in front of a dashboard. That's not a skill problem. It's a sequence problem.</p>
+      <p class="p" style="margin-bottom:36px;">Running Facebook ads has steps 1 through 9. Almost everyone starts at step 5.</p>
+      <div class="callout">
+        <p>Don't outsource what you don't understand. <span>Build your foundation first. Then decide who manages your ads.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · INTRODUCE -->
+<section class="sec sec-line bg2">
+  <div class="container">
+    <div class="sec-intro">
+      <span class="kicker">Launch Ads Blueprint</span>
+      <h2 class="h2">A guided setup.<br>Not another marketing course.</h2>
+      <p class="p">20 short video lessons. You watch, you click, you build. By the end, your Meta advertising foundation exists — in your accounts, under your logins, owned by you. Total video time: about two hours. Most owners finish the setup in a weekend.</p>
+    </div>
+    <div class="grid-2 isnot">
+      <div class="card">
+        <span class="label" style="color:var(--green);">What this is</span>
+        <ul>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>A step-by-step walkthrough of the complete Meta setup — from a blank screen to your first live campaign</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Built for complete beginners — every click shown on screen</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Real assets you keep: Business Manager, ad account, pixel, events</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Plain English. No jargon without an explanation</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>One payment. Lifetime access, including updates</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label" style="color:var(--muted);">What this is not</span>
+        <ul>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>An advanced media buying course</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A scaling or "7-figure agency" course</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A lead generation strategy course</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A promise of guaranteed leads, sales or ROI</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A subscription</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · EVERYTHING YOU'LL BUILD -->
+<section class="sec sec-line">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">Everything you'll build,<br>in the order it has to be built.</h2>
+      <p class="p">This is the build order professionals follow — the one nobody shows beginners. Each piece exists in your own Meta Business account when the lesson ends.</p>
+    </div>
+    <div class="build">
+      <div class="build-item">
+        <span class="build-num">Step 1</span>
+        <h3 class="h3">Meta Business Portfolio</h3>
+        <p class="small">Your business's official home on Meta. Created correctly, in your name — not an agency's.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 2</span>
+        <h3 class="h3">Business Manager</h3>
+        <p class="small">One place that owns your pages, ad accounts and permissions. Who can touch what, decided by you.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 3</span>
+        <h3 class="h3">Ad Account</h3>
+        <p class="small">Set up clean from day one. If you ever work with an agency, you grant access — you don't hand over keys.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 4</span>
+        <h3 class="h3">Billing</h3>
+        <p class="small">Payment configured correctly so spend never surprises you — and never stops a campaign mid-flight.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 5</span>
+        <h3 class="h3">Meta Pixel</h3>
+        <p class="small">The small piece of code that tells Meta what happens after the click. Installed and tested, together.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 6</span>
+        <h3 class="h3">Events</h3>
+        <p class="small">Define what counts for your business — calls, bookings, form fills — so Meta optimises for customers, not clicks.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 7</span>
+        <h3 class="h3">Campaigns</h3>
+        <p class="small">What campaign objectives actually mean, in plain words — and how to pick the right one on purpose.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 8</span>
+        <h3 class="h3">Ad Sets</h3>
+        <p class="small">Budgets, audiences and placements — the layer where most beginner money quietly leaks away.</p>
+      </div>
+      <div class="build-item">
+        <span class="build-num">Step 9</span>
+        <h3 class="h3">Your first ad, launched</h3>
+        <p class="small">Build the ad, run the pre-launch checks, and switch it on — correctly, with tracking that works.</p>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:24px;">Everything above is built inside your own accounts, with your own logins. Nothing is held by us, an agency, or anyone else.</p>
+  </div>
+</section>
+
+<!-- 6 · WHY THIS MATTERS -->
+<section class="sec sec-line bg2">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">The setup is technical.<br>The payoff isn't.</h2>
+      <p class="p">Every piece you build translates into something you feel every month you're in business.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4"/></svg></div>
+        <h3 class="h3">Control</h3>
+        <p class="small">Every asset in your name. Change agencies, pause ads, check your numbers — nothing is held hostage, ever.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.5 12C4.3 7.3 7.9 4.5 12 4.5s7.7 2.8 9.5 7.5c-1.8 4.7-5.4 7.5-9.5 7.5S4.3 16.7 2.5 12z"/></svg></div>
+        <h3 class="h3">Clarity</h3>
+        <p class="small">You'll read your own reports and know what you're paying for. "How are the ads doing?" stops being a question you're afraid to ask.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <h3 class="h3">Independence</h3>
+        <p class="small">Run ads yourself, or hire help — from a position of understanding, not hope. You decide, and you can change your mind.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · AGENCY VS UNDERSTANDING -->
+<section class="sec sec-line">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">This isn't anti-agency.<br>It's anti-blind.</h2>
+      <p class="p">Hiring experts can be a great decision — when you understand what you're buying. Here's what changes when you own your foundation first.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-head">
+        <div></div>
+        <div>Outsourcing blind</div>
+        <div class="col-own">Owning your foundation</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">Who owns the ad account</div>
+        <div class="blind">Often the agency</div>
+        <div class="own">You. Always.</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">When the contract ends</div>
+        <div class="blind">Assets and data can leave with them</div>
+        <div class="own">Everything stays with your business</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">Evaluating the work</div>
+        <div class="blind">You trust reports you can't read</div>
+        <div class="own">You read the numbers yourself</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">Cost to get started</div>
+        <div class="blind">€400–1,000+ setup, then a retainer</div>
+        <div class="own">€27, once</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">When something breaks</div>
+        <div class="blind">You wait for someone to reply</div>
+        <div class="own">You know where to look</div>
+      </div>
+      <div class="compare-row">
+        <div class="rowlab">Hiring an expert later</div>
+        <div class="blind">A leap of faith</div>
+        <div class="own">An informed decision</div>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:20px;">Good agencies will be glad you took this course. The best clients understand the work.</p>
+  </div>
+</section>
+
+<!-- 8 · AFTER THE COURSE -->
+<section class="sec sec-line bg2">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">Where you'll be<br>after the last lesson.</h2>
+    </div>
+    <ul class="after-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your Meta Business Portfolio and Business Manager exist — organised, in your name</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your ad account and billing are configured and ready to spend safely</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your pixel is installed, firing, and tested — with events that match your business</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>You understand campaigns, ad sets and ads well enough to hold a real conversation about them</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your first campaign is built and launched — correctly, with tracking that works</li>
+    </ul>
+    <div class="grid-2" style="margin-top:48px; max-width:820px;">
+      <div class="card">
+        <h3 class="h3">Path one: run it yourself</h3>
+        <p class="small">Keep going on your own, on your own budget, at your own pace. The foundation you built is exactly what your future campaigns will stand on.</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">Path two: hire help — informed</h3>
+        <p class="small">Bring in a freelancer or agency knowing exactly what you're buying, what they should deliver, and what stays yours. You'll never sign blind again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · TESTIMONIALS — oculto até haver depoimentos reais -->
+<!-- TODO: publish when real testimonials are collected. Never invent testimonials, names, or photos. -->
+{SHOW_TESTIMONIALS && (
+<section class="sec sec-line">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">Local owners who built their foundation.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <h3 class="h3">[PLACEHOLDER — Student name]</h3>
+        <p class="tiny" style="margin-bottom:10px;">[PLACEHOLDER — business type + city, e.g. "Physiotherapy clinic, Porto"]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real local business owner. Never invent this.]</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">[PLACEHOLDER — Student name]</h3>
+        <p class="tiny" style="margin-bottom:10px;">[PLACEHOLDER — business type + city]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real local business owner. Never invent this.]</p>
+      </div>
+      <div class="card">
+        <h3 class="h3">[PLACEHOLDER — Student name]</h3>
+        <p class="tiny" style="margin-bottom:10px;">[PLACEHOLDER — business type + city]</p>
+        <p class="small">[PLACEHOLDER — 2-sentence quote from a real local business owner. Never invent this.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+)}
+
+<!-- 10 · FAQ -->
+<section class="sec sec-line">
+  <div class="container">
+    <div class="sec-intro">
+      <h2 class="h2">Questions owners ask<br>before buying.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>I'm not technical. Can I really do this?</summary>
+        <p class="p">Yes. If you can attach a file to an email, you can do this. Every lesson shows the exact screen and the exact click. Pause, click, continue.</p>
+      </details>
+      <details>
+        <summary>I'm too busy running my business.</summary>
+        <p class="p">The whole course is about two hours of short lessons. Do it in a single weekend — and it's work you only do once. The foundation you build keeps working for as long as you advertise.</p>
+      </details>
+      <details>
+        <summary>I've never run an ad in my life.</summary>
+        <p class="p">Perfect. The course assumes zero experience. It starts before step one: creating your Meta Business Portfolio from a blank screen.</p>
+      </details>
+      <details>
+        <summary>I've hired agencies before. Why would I need this?</summary>
+        <p class="p">Because after this you'll own your ad account, your pixel and your data — and you'll be able to read the reports you're paying for. Understanding the work makes you a better client, and a harder one to overcharge.</p>
+      </details>
+      <details>
+        <summary>Will this get me customers?</summary>
+        <p class="p">Honest answer: this course builds your advertising foundation — the setup that has to be right before any ad can work. A correct foundation doesn't guarantee results; no honest person can promise that. What it does is remove the expensive mistakes and put you in control of what happens next.</p>
+      </details>
+      <details>
+        <summary>Is this a subscription?</summary>
+        <p class="p">No. €27 once. Lifetime access to all 20 lessons and every future update.</p>
+      </details>
+      <details>
+        <summary>How does the refund actually work?</summary>
+        <p class="p">Email me within 30 days of purchase. You get every cent back. No forms, no "proof you did the work", no questions.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · CTA -->
+<section class="sec sec-line bg2">
+  <div class="container" style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start; justify-content:space-between;">
+    <div style="max-width:440px;">
+      <h2 class="h2">Own your foundation.<br>Then decide who runs your ads.</h2>
+      <p class="p" style="margin-bottom:24px;">One weekend of setup. A lifetime of knowing exactly where your advertising money goes.</p>
+      <p class="tiny">Launch price for the first students. It goes to €197 once the first cohort of reviews is in.</p>
+    </div>
+    <div class="price-card">
+      <span class="kicker" style="margin-bottom:12px;">Launch Ads Blueprint</span>
+      <div class="price-row">
+        <span class="price-big">€27</span>
+        <span class="price-was">€197</span>
+      </div>
+      <p class="small">One-time payment. No subscription.</p>
+      <ul class="price-inc">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>All 20 lessons — from blank screen to launched campaign</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Meta Ads Launch Checklist</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Beginner Metrics Guide</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>ChatGPT Ad Copy Prompts</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Lifetime access + future updates</li>
+      </ul>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Build my foundation — €27</a>
+      <p class="tiny" style="text-align:center; margin-top:12px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+      <button type="button" class="btn-ghost" data-free-class style="width:100%; margin-top:10px;">Still deciding? Watch the first 2 lessons free →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="tiny" style="margin-bottom:8px;">Launch Ads Blueprint is an independent course by Growth Room. It teaches you to build your Meta advertising foundation; results from advertising depend on your offer, market and implementation.</p>
+    <p class="tiny"><a href="/privacy-policy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  </div>
+</footer>
+
+<!-- FREE FIRST LESSONS MODAL -->
+<div id="fc-overlay" role="dialog" aria-modal="true" aria-labelledby="fc-title">
+  <div class="fc-modal">
+    <button type="button" class="fc-close" id="fc-close" aria-label="Close">✕</button>
+
+    <!-- State 1: capture -->
+    <div id="fc-form-state">
+      <span class="fc-kicker">Open preview</span>
+      <h3 id="fc-title" class="fc-h">Two full lessons. Open.</h3>
+      <p class="small" style="margin-bottom:22px;">Lesson 1 shows you why most beginners waste money on ads. In lesson 2 we set up your Meta Business account together — step by step. Watch both, do the setup, then decide if you want the rest. Just tell me who you are.</p>
+      <form id="fc-form" novalidate>
+        <div class="fc-field">
+          <label for="fc-name">Your name</label>
+          <input id="fc-name" name="fullName" type="text" autocomplete="name" placeholder="Jane Smith" required />
+        </div>
+        <div class="fc-field">
+          <label for="fc-email">Your email</label>
+          <input id="fc-email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+        </div>
+        <button type="submit" class="btn-dark" id="fc-submit" style="display:flex; width:100%;">Open lessons 1 &amp; 2 →</button>
+        <p class="fc-error" id="fc-error">Please enter your name and a valid email.</p>
+        <p class="tiny" style="margin-top:12px;">I'll also email you the lesson link plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
+      </form>
+    </div>
+
+    <!-- State 2: video -->
+    <div id="fc-video-state" style="display:none;">
+      <span class="fc-kicker" id="fc-eyebrow">Lessons 1 &amp; 2 of 20 — open preview</span>
+      <h3 class="fc-h" id="fc-lesson-title">Why most beginners fail.</h3>
+      <div class="fc-video">
+        <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
+      </div>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" id="fc-next-cta" data-mode="free">Next lesson → Watch lesson 2 (still free)</a>
+      <p class="tiny" style="text-align:center; margin-top:8px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+      <div class="fc-lessons">
+        <div class="fc-lesson fc-playable" data-lesson="0"><span class="num">01</span> Why most beginners fail <span class="fc-tag">▶ Watching now</span></div>
+        <div class="fc-lesson fc-playable" data-lesson="1"><span class="num">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Watch free</span></div>
+        <div class="fc-lesson locked"><span class="num">03</span> Meta Ads setup checklist <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">04</span> Creating the Facebook page <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">05</span> Adding Ads Manager and payment <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">06</span> Connecting Instagram to your Facebook ads account <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">07</span> Meta Events setup for ad tracking <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">08</span> How to install the Meta Pixel and test events <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">09</span> Meta Ads campaign goals explained <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">10</span> Setting up a Meta lead campaign ad set <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">11</span> Setting up a Meta lead campaign ad set — part 2 <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">12</span> Master Facebook Ads audiences and targeting <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">13</span> Meta Advantage+ targeting controls explained <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">14</span> Facebook Ads setup: excluding key countries <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">15</span> Building your first ad: image <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">16</span> Building your first ad: video <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">17</span> Final review before you hit publish <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">18</span> Wrapping up ads with some tips <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">19</span> Setting up events from Meta to optimise <span class="fc-tag">🔒</span></div>
+        <div class="fc-lesson locked"><span class="num">20</span> Testing the event and final class <span class="fc-tag">🔒</span></div>
+        <div class="fc-lock-note" id="fc-lock-note">
+          <p id="fc-lock-text"></p>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Unlock the full course — €27 →</a>
+        </div>
+      </div>
+      <div class="fc-offer" id="fc-offer">
+        <p class="tiny" style="color:#A1A1AA; letter-spacing:.08em; text-transform:uppercase; font-weight:600;">Ready for lesson 3?</p>
+        <div class="price-row" style="margin:8px 0 4px;">
+          <span class="price-big" style="font-size:40px; color:#fff;">€27</span>
+          <span class="price-was" style="font-size:16px;">€197</span>
+        </div>
+        <p class="small" style="color:#D4D4D8; margin-bottom:8px;">Next up: tracking. Installing your pixel is the step that decides whether Meta can optimise your ads at all — and it's where most beginners give up. I walk you through it click by click.</p>
+        <p class="small" style="color:#D4D4D8; margin-bottom:18px;">One-time payment · Unlocks all 18 remaining lessons + bonuses, ready to watch on the Alfima platform.</p>
+        <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Next lesson → Buy &amp; keep watching on Alfima</a>
+        <p class="tiny" style="text-align:center; margin-top:10px; color:#A1A1AA;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var UNLOCK_KEY = "gr_free_class_v1";
+
+  var overlay    = document.getElementById("fc-overlay");
+  var formState  = document.getElementById("fc-form-state");
+  var videoState = document.getElementById("fc-video-state");
+  var form       = document.getElementById("fc-form");
+  var submitBtn  = document.getElementById("fc-submit");
+  var errorEl    = document.getElementById("fc-error");
+  var player     = document.getElementById("fc-player");
+
+  async function sha256(value) {
+    var normalized = (value || "").toLowerCase().trim();
+    if (!normalized) return "";
+    var buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(normalized));
+    return Array.from(new Uint8Array(buffer)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  }
+  function getCookie(name) {
+    var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return m ? m.pop() : "";
+  }
+  function getFbc() {
+    var fbc = getCookie("_fbc");
+    if (fbc) return fbc;
+    var m = window.location.search.match(/[?&]fbclid=([^&]+)/);
+    return m ? "fb.1." + Date.now() + "." + decodeURIComponent(m[1]) : "";
+  }
+  function getUrlParams() {
+    var params = {};
+    new URLSearchParams(window.location.search).forEach(function (v, k) { if (v) params[k] = v; });
+    return params;
+  }
+
+  function isUnlocked() {
+    try { return !!localStorage.getItem(UNLOCK_KEY); } catch (e) { return false; }
+  }
+  function renderState() {
+    var unlocked = isUnlocked();
+    formState.style.display  = unlocked ? "none" : "block";
+    videoState.style.display = unlocked ? "block" : "none";
+  }
+  function openModal() {
+    renderState();
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    if (player) player.pause();
+  }
+
+  var triggers = document.querySelectorAll("[data-free-class]");
+  for (var i = 0; i < triggers.length; i++) {
+    triggers[i].addEventListener("click", function (e) { e.preventDefault(); openModal(); });
+  }
+  document.getElementById("fc-close").addEventListener("click", closeModal);
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
+  });
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var fullName = document.getElementById("fc-name").value.trim();
+    var email    = document.getElementById("fc-email").value.trim().toLowerCase();
+
+    if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.textContent = "Please enter your name and a valid email.";
+      errorEl.style.display = "block";
+      return;
+    }
+    errorEl.style.display = "none";
+    submitBtn.disabled = true;
+    var originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Opening…";
+
+    var nameParts = fullName.split(/\s+/);
+    var eventId   = Date.now() + "_" + Math.floor(Math.random() * 1e15);
+    var emHash = await sha256(email);
+    var fnHash = await sha256(nameParts[0]);
+    var lnHash = await sha256(nameParts.slice(1).join(" "));
+    var fbp = getCookie("_fbp");
+    var fbc = getFbc();
+
+    try {
+      var res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leadType: "free_class",
+          product:  "launch-ads-blueprint",
+          fullName: fullName,
+          email:    email,
+          meta_event_id:         eventId,
+          meta_em:               emHash,
+          meta_fn:               fnHash,
+          meta_ln:               lnHash,
+          meta_fbp:              fbp,
+          meta_fbc:              fbc,
+          meta_user_agent:       navigator.userAgent,
+          meta_event_source_url: window.location.href,
+          submitted_at:          new Date().toISOString(),
+          marketing_consent:     !!window.__marketingConsent,
+          url_params:            getUrlParams(),
+        }),
+      });
+      if (!res.ok) throw new Error("bad status");
+
+      try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ email: email, at: new Date().toISOString() })); } catch (err) {}
+
+      if (typeof window.trackMarketing === "function") {
+        window.trackMarketing("Lead", { content_name: "Free Lesson 1", content_category: "free_class" }, { eventID: eventId });
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "free_class_lead",
+        event_id: eventId,
+        em: emHash, fn: fnHash, ln: lnHash,
+        fbp: fbp, fbc: fbc,
+      });
+
+      renderState();
+      if (player && player.play) player.play().catch(function () {});
+    } catch (err) {
+      errorEl.textContent = "Something went wrong. Please try again.";
+      errorEl.style.display = "block";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
+  // ── Free lessons: player com aulas 1 e 2 ────────────────────────────
+  var LESSONS = [
+    { label: "Lesson 1 of 20 — open preview", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
+    { label: "Lesson 2 of 20 — open preview", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
+  ];
+  var currentLesson = 0;
+  var milestones = { 25: false, 50: false, 75: false, 95: false };
+
+  function playLesson(i, autoplay) {
+    currentLesson = i;
+    milestones = { 25: false, 50: false, 75: false, 95: false };
+    document.getElementById("fc-eyebrow").textContent = LESSONS[i].label;
+    document.getElementById("fc-lesson-title").textContent = LESSONS[i].title;
+    var nextCta = document.getElementById("fc-next-cta");
+    if (nextCta) {
+      nextCta.dataset.mode = i === 0 ? "free" : "paid";
+      nextCta.textContent = i === 0
+        ? "Next lesson → Watch lesson 2 (still free)"
+        : "Next lesson → Buy & keep watching — €27";
+    }
+    var rows = document.querySelectorAll(".fc-lesson.fc-playable");
+    for (var r = 0; r < rows.length; r++) {
+      var active = Number(rows[r].dataset.lesson) === i;
+      rows[r].classList.toggle("active", active);
+      rows[r].querySelector(".fc-tag").textContent = active ? "▶ Watching now" : "▶ Watch free";
+    }
+    if (player.getAttribute("src") !== LESSONS[i].src) player.setAttribute("src", LESSONS[i].src);
+    if (autoplay && player.play) player.play().catch(function () {});
+  }
+
+  document.querySelectorAll(".fc-lesson.fc-playable").forEach(function (row) {
+    row.addEventListener("click", function () { playLesson(Number(row.dataset.lesson), true); });
+  });
+
+  var nextCtaEl = document.getElementById("fc-next-cta");
+  if (nextCtaEl) {
+    nextCtaEl.addEventListener("click", function (e) {
+      if (nextCtaEl.dataset.mode === "free") { e.preventDefault(); playLesson(1, true); }
+    });
+  }
+
+  // ── Aulas bloqueadas: clique mostra aviso + CTA de compra ────────────
+  var lockNote = document.getElementById("fc-lock-note");
+  document.querySelectorAll(".fc-lesson.locked").forEach(function (row) {
+    row.addEventListener("click", function () {
+      var num = row.querySelector(".num").textContent;
+      var title = Array.prototype.filter
+        .call(row.childNodes, function (n) { return n.nodeType === 3; })
+        .map(function (n) { return n.textContent; }).join("").trim();
+      document.getElementById("fc-lock-text").innerHTML =
+        "Lesson " + num + " — <strong>" + title + "</strong> — is part of the full course. " +
+        "Unlock all 18 remaining lessons + the bonuses for a one-time <strong>€27</strong> <s>€197</s>.";
+      row.after(lockNote);
+      lockNote.style.display = "block";
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "free_class_locked_click", lesson: Number(num) });
+    });
+  });
+
+  // ── Video progress → dataLayer (25/50/75/95%) ───────────────────────
+  if (player) {
+    player.addEventListener("ended", function () {
+      if (currentLesson === 0) { playLesson(1, true); return; }
+      var offer = document.getElementById("fc-offer");
+      if (!offer) return;
+      offer.scrollIntoView({ behavior: "smooth", block: "center" });
+      offer.classList.add("fc-attn");
+      setTimeout(function () { offer.classList.remove("fc-attn"); }, 4000);
+    });
+    player.addEventListener("timeupdate", function () {
+      if (!player.duration) return;
+      var pct = (player.currentTime / player.duration) * 100;
+      for (var mark in milestones) {
+        if (!milestones[mark] && pct >= Number(mark)) {
+          milestones[mark] = true;
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "free_class_progress", lesson: currentLesson + 1, video_percent: Number(mark) });
+          if (mark === "50" && typeof window.trackMarketing === "function") {
+            window.trackMarketing("ViewContent", { content_name: "Free Lesson " + (currentLesson + 1), content_category: "free_class" });
+          }
+        }
+      }
+    });
+  }
+})();
+</script>
+
+<!-- Cookie Banner -->
+<div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; z-index:9999; display:none; max-width:560px; margin:0 auto; background:#fff; color:var(--body); border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.12); padding:18px 20px;">
+  <p style="font-size:13px; line-height:1.5; margin-bottom:14px;">
+    We use cookies to improve your experience and measure our marketing. See our
+    <a href="/privacy-policy" style="color:var(--accent-ink); text-decoration:underline;">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px;">
+    <button id="cookie-reject" type="button" style="flex:1; background:transparent; color:var(--body); border:1px solid var(--line); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Reject</button>
+    <button id="cookie-accept" type="button" style="flex:1; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Accept</button>
+  </div>
+</div>
+<script>
+  (function () {
+    var KEY = "gr_cookie_consent_v1";
+    var banner = document.getElementById("cookie-banner");
+    if (!banner) return;
+    function hide() { banner.style.display = "none"; }
+    function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    var choice = null;
+    try { choice = localStorage.getItem(KEY); } catch (e) {}
+    if (!choice) {
+      banner.style.display = "block";
+    }
+    document.getElementById("cookie-accept").addEventListener("click", function () {
+      save("accepted");
+      window.__marketingConsent = true;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      hide();
+    });
+    document.getElementById("cookie-reject").addEventListener("click", function () {
+      save("rejected");
+      window.__marketingConsent = false;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'denied' });
+      hide();
+    });
+  })();
+</script>
+<!-- End Cookie Banner -->
+
+<!-- Passa atribuição (fbclid, utm_*, _fbp, _fbc) para o checkout (cross-domain) -->
+<script>
+  (function () {
+    function getCookie(name) {
+      var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+      return m ? m.pop() : "";
+    }
+    function buildCheckoutUrl(base) {
+      try {
+        var url = new URL(base, window.location.origin);
+        var current = new URLSearchParams(window.location.search);
+        current.forEach(function (value, key) { if (value) url.searchParams.set(key, value); });
+        var fbp = getCookie("_fbp");
+        var fbc = getCookie("_fbc");
+        if (fbp) url.searchParams.set("fbp", fbp);
+        if (fbc) {
+          url.searchParams.set("fbc", fbc);
+        } else if (current.get("fbclid")) {
+          url.searchParams.set("fbc", "fb.1." + Date.now() + "." + current.get("fbclid"));
+        }
+        url.searchParams.set("consent", window.__marketingConsent ? "granted" : "denied");
+        return url.toString();
+      } catch (e) { return base; }
+    }
+    function refreshLinks() {
+      var links = document.querySelectorAll("a[href*='alfima.com']");
+      for (var i = 0; i < links.length; i++) {
+        if (!links[i].dataset.base) links[i].dataset.base = links[i].getAttribute("href");
+        links[i].setAttribute("href", buildCheckoutUrl(links[i].dataset.base));
+      }
+    }
+    refreshLinks();
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest("a[href*='alfima.com']") : null;
+      if (a) a.setAttribute("href", buildCheckoutUrl(a.dataset.base || a.getAttribute("href")));
+    }, true);
+  })();
+</script>
+<!-- End attribution passthrough -->
+
+</body>
+</html>
