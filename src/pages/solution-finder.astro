@@ -1,0 +1,636 @@
+---
+const CHECKOUT_URL = "https://alfima.com/daviwazl/ads-blueprint/purchase";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KL573474');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Should Your Local Business Get More Customers? — 2-Minute Solution Finder</title>
+<meta name="description" content="Answer 5 quick questions about your local business and get an honest recommendation for how to take control of your customer acquisition with Facebook & Instagram ads.">
+<link rel="canonical" href="https://growthroom.eu/solution-finder">
+<meta name="robots" content="noindex">
+
+<!-- Meta Pixel: PageView dispara sempre no load; demais eventos exigem consentimento -->
+<script>
+  (function () {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1009429968103557');
+    fbq('track', 'PageView');
+  })();
+
+  var CONSENT_KEY = "gr_cookie_consent_v1";
+  try { window.__marketingConsent = localStorage.getItem(CONSENT_KEY) === "accepted"; }
+  catch (e) { window.__marketingConsent = false; }
+  window.trackMarketing = function (event, params, options) {
+    if (!window.__marketingConsent || typeof window.fbq !== "function") return;
+    window.fbq("track", event, params || {}, options || {});
+  };
+</script>
+<!-- End Meta Pixel -->
+
+<!-- Google tag (gtag.js): Analytics gated by consent via Consent Mode -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TRFL8MQJ5R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('consent', 'default', { 'analytics_storage': 'denied' });
+  if (window.__marketingConsent) {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+  }
+  gtag('config', 'G-TRFL8MQJ5R');
+</script>
+<!-- End Google tag -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style is:global>
+  /* is:global: parte do DOM desta página é criada via JS e não recebe o
+     atributo de escopo do Astro — estilos com escopo não a alcançariam */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #FFFFFF;
+    --bg2:     #FAFAF9;
+    --ink:     #18181B;
+    --body:    #52525B;
+    --muted:   #A1A1AA;
+    --line:    #E4E4E7;
+    --line2:   #F4F4F5;
+    --accent:  #F59E0B;
+    --accent-ink: #B45309;
+    --accent-soft: #FFFBEB;
+    --green:   #15803D;
+  }
+
+  html, body { overflow-x: hidden; max-width: 100%; min-height: 100%; }
+  html { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 16px; -webkit-font-smoothing: antialiased; background: var(--bg2); color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+
+  .topbar { background: rgba(255,255,255,.9); border-bottom: 1px solid var(--line); }
+  .topbar-in { max-width: 1064px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { font-size: 15px; font-weight: 700; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+  .brand-dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); display: inline-block; }
+  .topbar .tiny a { text-decoration: underline; text-underline-offset: 3px; }
+
+  .stage { max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; }
+  @media (max-width: 640px) { .stage { padding: 24px 16px 64px; } }
+
+  /* progress */
+  .progress { height: 4px; background: var(--line2); border-radius: 999px; overflow: hidden; margin-bottom: 28px; }
+  .progress-bar { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width .3s ease; }
+  .step-label { font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 14px; }
+
+  .qcard { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 36px 32px; box-shadow: 0 20px 50px -35px rgba(24,24,27,.3); }
+  @media (max-width: 640px) { .qcard { padding: 26px 20px; } }
+  .qtitle { font-size: clamp(22px, 3.4vw, 30px); font-weight: 700; letter-spacing: -.025em; line-height: 1.15; margin-bottom: 8px; }
+  .qsub { font-size: 15px; color: var(--body); line-height: 1.6; margin-bottom: 24px; }
+
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px; font-size: 15.5px; font-weight: 500; color: var(--ink);
+    cursor: pointer; text-align: left; font-family: inherit;
+    transition: border-color .12s, background .12s, transform .1s;
+  }
+  .opt:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .opt .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); flex-shrink: 0; }
+  .opt:hover .dot { border-color: var(--accent); }
+
+  .backlink { background: none; border: none; font-family: inherit; font-size: 13.5px; color: var(--muted); cursor: pointer; margin-top: 18px; text-decoration: underline; text-underline-offset: 3px; }
+  .backlink:hover { color: var(--ink); }
+
+  /* buttons */
+  .btn-dark {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--ink); color: #fff;
+    font-size: 15px; font-weight: 600;
+    padding: 15px 28px; border-radius: 10px; border: none; cursor: pointer;
+    transition: transform .12s, box-shadow .15s, background .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.12);
+    font-family: inherit;
+  }
+  .btn-dark:hover { background: #000; transform: translateY(-1px); box-shadow: 0 6px 16px -6px rgba(0,0,0,.35); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--bg); color: var(--ink);
+    font-size: 15px; font-weight: 600;
+    padding: 15px 28px; border-radius: 10px; border: 1px solid var(--line); cursor: pointer;
+    transition: border-color .15s, transform .12s; font-family: inherit;
+  }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  /* gate form */
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .field input { width: 100%; border: 1px solid var(--line); background: var(--bg2); padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--ink); border-radius: 10px; }
+  .field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .gate-error { display: none; font-size: 13px; color: #B91C1C; margin-top: 10px; }
+
+  /* result */
+  .r-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: .02em; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid #FDE68A; border-radius: 999px; padding: 6px 14px; margin-bottom: 18px; }
+  .r-title { font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.028em; line-height: 1.12; margin-bottom: 20px; }
+  .r-lines { margin-bottom: 8px; }
+  .r-line { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--line2); font-size: 15px; line-height: 1.6; color: var(--body); }
+  .r-line:first-child { border-top: none; }
+  .r-line svg { width: 18px; height: 18px; stroke: var(--accent-ink); flex-shrink: 0; margin-top: 3px; }
+  .r-honest { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-size: 13.5px; color: var(--body); line-height: 1.6; margin: 20px 0 24px; }
+  .r-honest strong { color: var(--ink); }
+
+  .lesson-tabs { display: flex; gap: 8px; margin: 20px 0 12px; }
+  .lesson-tab { flex: 1; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13.5px; font-weight: 600; color: var(--body); cursor: pointer; font-family: inherit; transition: border-color .12s, color .12s; }
+  .lesson-tab.active { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+  .r-video video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; }
+  .r-locked { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+  .r-locked a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  .fade-in { animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL573474"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="brand"><span class="brand-dot"></span> Growth Room</span>
+    <span class="tiny" style="font-size:12.5px; color:var(--muted);">2-minute check · <a href="/local-ads-2">skip to the course</a></span>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <!-- QUIZ -->
+  <div class="qcard" id="quiz-card">
+    <p class="step-label" id="step-label">Question 1 of 5</p>
+    <h1 class="qtitle" id="q-title">What kind of business do you run?</h1>
+    <p class="qsub" id="q-sub">Answer 5 quick questions and get an honest recommendation for how your business should approach getting customers with ads.</p>
+    <div class="opts" id="q-opts"></div>
+    <button type="button" class="backlink" id="q-back" style="display:none;">← Back</button>
+  </div>
+
+  <!-- GATE -->
+  <div class="qcard" id="gate-card" style="display:none;">
+    <p class="step-label">Last step</p>
+    <h2 class="qtitle">Your recommendation is ready.</h2>
+    <p class="qsub">Tell me where to send it — you'll also get instant access to the first 2 lessons of the recommended course, free.</p>
+    <form id="gate-form" novalidate>
+      <div class="field">
+        <label for="g-name">Your name</label>
+        <input id="g-name" type="text" autocomplete="name" placeholder="Jane Smith" required />
+      </div>
+      <div class="field">
+        <label for="g-email">Your email</label>
+        <input id="g-email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+      </div>
+      <button type="submit" class="btn-dark" id="g-submit" style="display:flex; width:100%;">Show my recommendation →</button>
+      <p class="gate-error" id="gate-error">Please enter your name and a valid email.</p>
+      <p style="font-size:12.5px; color:var(--muted); margin-top:12px; line-height:1.55;">I'll also email you the lessons plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
+    </form>
+    <button type="button" class="backlink" id="g-back">← Back</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="qcard" id="result-card" style="display:none;">
+    <span class="r-kicker">Your result</span>
+    <h2 class="r-title">Before you spend a euro on ads: own your foundation.</h2>
+    <div class="r-lines" id="r-lines"></div>
+    <div class="r-honest">
+      <strong>Our honest recommendation: Launch Ads Blueprint.</strong> A 20-lesson guided setup that builds your Meta advertising foundation — Business Manager, ad account, pixel, tracking, first campaign — in your accounts, owned by you. It's a beginner-focused setup course, not a magic lead machine: it won't promise you customers, it gives you the foundation every campaign needs and the control every owner deserves.
+    </div>
+    <div class="cta-row" style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="flex:1; min-width:200px;">Start my setup — €27</a>
+      <a href="/local-ads-2" class="btn-ghost" style="flex:1; min-width:200px;">See everything inside →</a>
+    </div>
+    <p style="font-size:12.5px; color:var(--muted); text-align:center; margin-top:10px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+
+    <h3 style="font-size:17px; font-weight:700; letter-spacing:-.01em; margin-top:32px;">Start free, right now: lessons 1 &amp; 2 are open.</h3>
+    <div class="lesson-tabs">
+      <button type="button" class="lesson-tab active" data-lesson="0">▶ 01 · Why most beginners fail</button>
+      <button type="button" class="lesson-tab" data-lesson="1">▶ 02 · Who this course is for</button>
+    </div>
+    <div class="r-video">
+      <video id="r-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
+    </div>
+    <p class="r-locked">Lessons 3–20 — the full setup, from Business Manager to your first launched campaign — unlock with the course. <a href={CHECKOUT_URL} target="_blank" rel="noopener">Start my setup — €27 →</a></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var UNLOCK_KEY = "gr_free_class_v1";
+  var CHECKOUT_FALLBACK = "/local-ads-2";
+
+  var QUESTIONS = [
+    {
+      key: "business",
+      title: "What kind of business do you run?",
+      sub: "Answer 5 quick questions and get an honest recommendation for how your business should approach getting customers with ads.",
+      opts: [
+        { v: "health",       label: "Health practice — dentist, physio, clinic" },
+        { v: "food",         label: "Restaurant or café" },
+        { v: "fitness",      label: "Gym or fitness studio" },
+        { v: "beauty",       label: "Salon, barber or beauty" },
+        { v: "professional", label: "Professional services — law, real estate, consulting" },
+        { v: "trades",       label: "Trades or home services" },
+        { v: "other",        label: "Another local business" }
+      ]
+    },
+    {
+      key: "acquisition",
+      title: "How do new customers find you today?",
+      sub: "",
+      opts: [
+        { v: "word_of_mouth", label: "Mostly word of mouth and referrals" },
+        { v: "social",        label: "Instagram / Facebook posts" },
+        { v: "google",        label: "Google — search or Maps" },
+        { v: "paid",          label: "Paid ads are already running" },
+        { v: "unsure",        label: "Honestly? I'm not sure" }
+      ]
+    },
+    {
+      key: "experience",
+      title: "Have you tried Facebook or Instagram ads?",
+      sub: "",
+      opts: [
+        { v: "never",    label: "Never — haven't touched them" },
+        { v: "boosted",  label: "I've boosted posts a few times" },
+        { v: "campaigns",label: "I've run real campaigns myself" },
+        { v: "agency",   label: "An agency or freelancer runs them for me" }
+      ]
+    },
+    {
+      key: "blocker",
+      title: "What's stopped you from running ads yourself?",
+      sub: "",
+      opts: [
+        { v: "technical",  label: "It feels too technical" },
+        { v: "waste",      label: "I'm afraid of wasting money" },
+        { v: "time",       label: "I don't have the time" },
+        { v: "where",      label: "I don't know where to start" },
+        { v: "nothing",    label: "Nothing — I'm ready to go" }
+      ]
+    },
+    {
+      key: "goal",
+      title: "If you could fix one thing this quarter, what would it be?",
+      sub: "",
+      opts: [
+        { v: "flow",         label: "A steadier flow of enquiries and bookings" },
+        { v: "independence", label: "Less dependence on an agency" },
+        { v: "clarity",      label: "Knowing where my marketing money goes" },
+        { v: "predictable",  label: "Making growth feel predictable, not lucky" }
+      ]
+    }
+  ];
+
+  var answers = {};
+  var step = 0;
+  var quizStarted = false;
+
+  var quizCard  = document.getElementById("quiz-card");
+  var gateCard  = document.getElementById("gate-card");
+  var resultCard= document.getElementById("result-card");
+  var bar       = document.getElementById("progress-bar");
+
+  function dl(ev, data) {
+    window.dataLayer = window.dataLayer || [];
+    var o = { event: ev };
+    for (var k in (data || {})) o[k] = data[k];
+    window.dataLayer.push(o);
+  }
+
+  function setProgress(pct) { bar.style.width = pct + "%"; }
+
+  function renderStep() {
+    var q = QUESTIONS[step];
+    document.getElementById("step-label").textContent = "Question " + (step + 1) + " of " + QUESTIONS.length;
+    document.getElementById("q-title").textContent = q.title;
+    var sub = document.getElementById("q-sub");
+    sub.textContent = q.sub;
+    sub.style.display = q.sub ? "block" : "none";
+    var wrap = document.getElementById("q-opts");
+    wrap.innerHTML = "";
+    q.opts.forEach(function (o) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt";
+      b.innerHTML = '<span class="dot"></span>' + o.label;
+      b.addEventListener("click", function () {
+        if (!quizStarted) { quizStarted = true; dl("quiz_start"); }
+        answers[q.key] = o.v;
+        dl("quiz_answer", { quiz_step: step + 1, quiz_key: q.key, quiz_value: o.v });
+        if (step < QUESTIONS.length - 1) { step++; renderStep(); }
+        else { showGateOrResult(); }
+      });
+      wrap.appendChild(b);
+    });
+    document.getElementById("q-back").style.display = step > 0 ? "inline" : "none";
+    setProgress((step / (QUESTIONS.length + 1)) * 100);
+    quizCard.classList.remove("fade-in"); void quizCard.offsetWidth; quizCard.classList.add("fade-in");
+  }
+
+  document.getElementById("q-back").addEventListener("click", function () {
+    if (step > 0) { step--; renderStep(); }
+  });
+  document.getElementById("g-back").addEventListener("click", function () {
+    gateCard.style.display = "none";
+    quizCard.style.display = "block";
+    renderStep();
+  });
+
+  function isUnlocked() {
+    try { return !!localStorage.getItem(UNLOCK_KEY); } catch (e) { return false; }
+  }
+
+  function showGateOrResult() {
+    dl("quiz_complete", { quiz_answers: answers });
+    quizCard.style.display = "none";
+    if (isUnlocked()) { showResult(); return; }
+    setProgress((QUESTIONS.length / (QUESTIONS.length + 1)) * 100);
+    gateCard.style.display = "block";
+    gateCard.classList.add("fade-in");
+  }
+
+  // ── Result personalisation (honest: reflects what they told us) ─────
+  var EXP_LINES = {
+    never:     "You haven't run ads yet. That's an advantage: you can build everything right from day one, with no bad setup to undo.",
+    boosted:   "You've boosted posts — that's where most owners lose their first euros. Real campaigns need a real foundation underneath them.",
+    campaigns: "You've already run campaigns yourself. The Blueprint's job in your case is making sure the foundation under them is complete, correct — and yours. If your setup is already solid, you may only need parts of it.",
+    agency:    "Someone else runs your ads today. The account, pixel and data they use should belong to your business — your first step is ownership, whoever manages the campaigns."
+  };
+  var BLOCKER_LINES = {
+    technical: "You said it feels too technical. Every lesson shows the exact screen and the exact click — if you can attach a file to an email, you can do this.",
+    waste:     "You're afraid of wasting money. The foundation is exactly what prevents the expensive mistakes — it's the part that makes every future euro accountable.",
+    time:      "You're short on time. The whole setup is about two hours of lessons, done once — less time than one month of wondering what your marketing is doing.",
+    where:     "You don't know where to start. This is literally the map: nine steps, in the right order, from a blank screen to a launched campaign.",
+    nothing:   "You're ready to go. Then start where professionals start: the foundation, built correctly, before the budget."
+  };
+  var GOAL_LINES = {
+    flow:         "A steadier flow of enquiries starts with an advertising system you understand and control — that's the part you build first.",
+    independence: "Independence from agencies doesn't mean firing them — it means owning your accounts and reading your own numbers, so hiring becomes a choice, not a dependency.",
+    clarity:      "Knowing where your money goes starts with owning the account it flows through and the tracking that measures it.",
+    predictable:  "Predictable growth needs a system, not luck. The system starts with a foundation that's set up correctly and owned by you."
+  };
+  var BIZ_LABEL = {
+    health: "practice", food: "restaurant", fitness: "gym", beauty: "salon",
+    professional: "firm", trades: "business", other: "business"
+  };
+
+  function showResult() {
+    setProgress(100);
+    gateCard.style.display = "none";
+    quizCard.style.display = "none";
+
+    var lines = [];
+    if (EXP_LINES[answers.experience]) lines.push(EXP_LINES[answers.experience]);
+    if (BLOCKER_LINES[answers.blocker]) lines.push(BLOCKER_LINES[answers.blocker]);
+    if (GOAL_LINES[answers.goal]) lines.push(GOAL_LINES[answers.goal]);
+    if (!lines.length) lines.push("Before spending money on ads, every local business needs its advertising foundation built correctly — and owned by the business.");
+
+    var wrap = document.getElementById("r-lines");
+    wrap.innerHTML = "";
+    lines.forEach(function (t) {
+      var d = document.createElement("div");
+      d.className = "r-line";
+      d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span>' + t + "</span>";
+      wrap.appendChild(d);
+    });
+
+    var biz = BIZ_LABEL[answers.business] || "business";
+    document.querySelector(".r-title").textContent = "Before your " + biz + " spends a euro on ads: own your foundation.";
+
+    resultCard.style.display = "block";
+    resultCard.classList.add("fade-in");
+    dl("quiz_result_shown", { quiz_answers: answers });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ── Gate submit → free_class lead com quiz answers ──────────────────
+  async function sha256(value) {
+    var normalized = (value || "").toLowerCase().trim();
+    if (!normalized) return "";
+    var buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(normalized));
+    return Array.from(new Uint8Array(buffer)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  }
+  function getCookie(name) {
+    var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return m ? m.pop() : "";
+  }
+  function getFbc() {
+    var fbc = getCookie("_fbc");
+    if (fbc) return fbc;
+    var m = window.location.search.match(/[?&]fbclid=([^&]+)/);
+    return m ? "fb.1." + Date.now() + "." + decodeURIComponent(m[1]) : "";
+  }
+  function getUrlParams() {
+    var params = {};
+    new URLSearchParams(window.location.search).forEach(function (v, k) { if (v) params[k] = v; });
+    return params;
+  }
+
+  document.getElementById("gate-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var fullName = document.getElementById("g-name").value.trim();
+    var email    = document.getElementById("g-email").value.trim().toLowerCase();
+    var errorEl  = document.getElementById("gate-error");
+    var btn      = document.getElementById("g-submit");
+
+    if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = "block";
+      return;
+    }
+    errorEl.style.display = "none";
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = "One moment…";
+
+    var nameParts = fullName.split(/\s+/);
+    var eventId   = Date.now() + "_" + Math.floor(Math.random() * 1e15);
+    var emHash = await sha256(email);
+    var fnHash = await sha256(nameParts[0]);
+    var lnHash = await sha256(nameParts.slice(1).join(" "));
+    var fbp = getCookie("_fbp");
+    var fbc = getFbc();
+
+    try {
+      var res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leadType: "free_class",
+          product:  "launch-ads-blueprint",
+          fullName: fullName,
+          email:    email,
+          quiz:     answers,
+          meta_event_id:         eventId,
+          meta_em:               emHash,
+          meta_fn:               fnHash,
+          meta_ln:               lnHash,
+          meta_fbp:              fbp,
+          meta_fbc:              fbc,
+          meta_user_agent:       navigator.userAgent,
+          meta_event_source_url: window.location.href,
+          submitted_at:          new Date().toISOString(),
+          marketing_consent:     !!window.__marketingConsent,
+          url_params:            getUrlParams(),
+        }),
+      });
+      if (!res.ok) throw new Error("bad status");
+
+      try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ email: email, at: new Date().toISOString() })); } catch (err) {}
+
+      if (typeof window.trackMarketing === "function") {
+        window.trackMarketing("Lead", { content_name: "Solution Finder", content_category: "free_class" }, { eventID: eventId });
+      }
+      dl("free_class_lead", { event_id: eventId, em: emHash, fn: fnHash, ln: lnHash, fbp: fbp, fbc: fbc });
+
+      showResult();
+    } catch (err) {
+      errorEl.textContent = "Something went wrong. Please try again.";
+      errorEl.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
+
+  // ── Result player: aulas 1 e 2 ──────────────────────────────────────
+  var player = document.getElementById("r-player");
+  var LESSON_SRC = ["/videos/lesson-1.mp4", "/videos/lesson-2.mp4"];
+  var currentLesson = 0;
+  var milestones = { 25: false, 50: false, 75: false, 95: false };
+
+  function playLesson(i, autoplay) {
+    currentLesson = i;
+    milestones = { 25: false, 50: false, 75: false, 95: false };
+    var tabs = document.querySelectorAll(".lesson-tab");
+    for (var t = 0; t < tabs.length; t++) tabs[t].classList.toggle("active", Number(tabs[t].dataset.lesson) === i);
+    if (player.getAttribute("src") !== LESSON_SRC[i]) player.setAttribute("src", LESSON_SRC[i]);
+    if (autoplay && player.play) player.play().catch(function () {});
+  }
+  document.querySelectorAll(".lesson-tab").forEach(function (tab) {
+    tab.addEventListener("click", function () { playLesson(Number(tab.dataset.lesson), true); });
+  });
+  if (player) {
+    player.addEventListener("ended", function () {
+      if (currentLesson === 0) playLesson(1, true);
+    });
+    player.addEventListener("timeupdate", function () {
+      if (!player.duration) return;
+      var pct = (player.currentTime / player.duration) * 100;
+      for (var mark in milestones) {
+        if (!milestones[mark] && pct >= Number(mark)) {
+          milestones[mark] = true;
+          dl("free_class_progress", { lesson: currentLesson + 1, video_percent: Number(mark) });
+          if (mark === "50" && typeof window.trackMarketing === "function") {
+            window.trackMarketing("ViewContent", { content_name: "Free Lesson " + (currentLesson + 1), content_category: "free_class" });
+          }
+        }
+      }
+    });
+  }
+
+  renderStep();
+})();
+</script>
+
+<!-- Cookie Banner -->
+<div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; z-index:9999; display:none; max-width:560px; margin:0 auto; background:#fff; color:var(--body); border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.12); padding:18px 20px;">
+  <p style="font-size:13px; line-height:1.5; margin-bottom:14px;">
+    We use cookies to improve your experience and measure our marketing. See our
+    <a href="/privacy-policy" style="color:var(--accent-ink); text-decoration:underline;">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px;">
+    <button id="cookie-reject" type="button" style="flex:1; background:transparent; color:var(--body); border:1px solid var(--line); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Reject</button>
+    <button id="cookie-accept" type="button" style="flex:1; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Accept</button>
+  </div>
+</div>
+<script>
+  (function () {
+    var KEY = "gr_cookie_consent_v1";
+    var banner = document.getElementById("cookie-banner");
+    if (!banner) return;
+    function hide() { banner.style.display = "none"; }
+    function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    var choice = null;
+    try { choice = localStorage.getItem(KEY); } catch (e) {}
+    if (!choice) { banner.style.display = "block"; }
+    document.getElementById("cookie-accept").addEventListener("click", function () {
+      save("accepted");
+      window.__marketingConsent = true;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      hide();
+    });
+    document.getElementById("cookie-reject").addEventListener("click", function () {
+      save("rejected");
+      window.__marketingConsent = false;
+      if (typeof gtag === "function") gtag('consent', 'update', { 'analytics_storage': 'denied' });
+      hide();
+    });
+  })();
+</script>
+<!-- End Cookie Banner -->
+
+<!-- Passa atribuição (fbclid, utm_*, _fbp, _fbc) para o checkout (cross-domain) -->
+<script>
+  (function () {
+    function getCookie(name) {
+      var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+      return m ? m.pop() : "";
+    }
+    function buildCheckoutUrl(base) {
+      try {
+        var url = new URL(base, window.location.origin);
+        var current = new URLSearchParams(window.location.search);
+        current.forEach(function (value, key) { if (value) url.searchParams.set(key, value); });
+        var fbp = getCookie("_fbp");
+        var fbc = getCookie("_fbc");
+        if (fbp) url.searchParams.set("fbp", fbp);
+        if (fbc) {
+          url.searchParams.set("fbc", fbc);
+        } else if (current.get("fbclid")) {
+          url.searchParams.set("fbc", "fb.1." + Date.now() + "." + current.get("fbclid"));
+        }
+        url.searchParams.set("consent", window.__marketingConsent ? "granted" : "denied");
+        return url.toString();
+      } catch (e) { return base; }
+    }
+    function refreshLinks() {
+      var links = document.querySelectorAll("a[href*='alfima.com']");
+      for (var i = 0; i < links.length; i++) {
+        if (!links[i].dataset.base) links[i].dataset.base = links[i].getAttribute("href");
+        links[i].setAttribute("href", buildCheckoutUrl(links[i].dataset.base));
+      }
+    }
+    refreshLinks();
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest("a[href*='alfima.com']") : null;
+      if (a) a.setAttribute("href", buildCheckoutUrl(a.dataset.base || a.getAttribute("href")));
+    }, true);
+  })();
+</script>
+<!-- End attribution passthrough -->
+
+</body>
+</html>

@@ -80,6 +80,7 @@ export const POST: APIRoute = async ({ request }) => {
 						submitted_at:          payload.submitted_at          ?? createdAt,
 						marketing_consent:     payload.marketing_consent     ?? false,
 						url_params:            payload.url_params            ?? {},
+						quiz:                  payload.quiz                  ?? {},
 						client_ip_address: clientIp,
 					}),
 				}).catch((err) => console.error("[leads] n8n webhook failed:", err));
