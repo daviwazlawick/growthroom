@@ -282,7 +282,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
     50%      { box-shadow: 0 0 0 6px rgba(245,158,11,.45); }
   }
-  #fc-next-cta { display: block; text-align: center; margin-top: 16px; width: 100%; }
 </style>
 
 <!-- FAQ structured data -->
@@ -404,6 +403,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="callout">
         <p>Don't outsource what you don't understand. <span>Build your foundation first. Then decide who manages your ads.</span></p>
       </div>
+      <div class="cta-row" style="margin-top:28px;">
+        <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+      </div>
     </div>
   </div>
 </section>
@@ -437,6 +439,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A subscription</li>
         </ul>
       </div>
+    </div>
+    <div class="cta-row" style="margin-top:36px;">
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
+      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
     </div>
   </div>
 </section>
@@ -496,6 +502,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <p class="tiny" style="margin-top:24px;">Everything above is built inside your own accounts, with your own logins. Nothing is held by us, an agency, or anyone else. Every customer your ads ever bring will flow through this system.</p>
+    <div class="cta-row" style="margin-top:28px;">
+      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free — set up your account with me →</button>
+    </div>
   </div>
 </section>
 
@@ -509,6 +518,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="p" style="margin-bottom:16px;">You know what's running, what it costs, and what it's bringing back. When an agency sends a proposal, you read it like someone who's done the work — because you have.</p>
       <p class="p" style="margin-bottom:16px;">Nothing about your marketing is a mystery you're paying someone else to keep.</p>
       <p class="p" style="font-weight:500; color:var(--ink);">That's not a promise of overnight customers. It's something quieter, and more valuable: never feeling lost with your own money again.</p>
+      <div class="cta-row" style="margin-top:28px;">
+        <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+      </div>
     </div>
   </div>
 </section>
@@ -610,6 +622,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3 class="h3">Path two: hire help — informed</h3>
         <p class="small">Bring in a freelancer or agency knowing exactly what you're buying, what they should deliver, and what stays yours. You'll never sign blind again.</p>
       </div>
+    </div>
+    <div class="cta-row" style="margin-top:36px;">
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
+      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
     </div>
   </div>
 </section>
@@ -751,8 +767,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="fc-video">
         <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
       </div>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" id="fc-next-cta" data-mode="free">Next lesson → Watch lesson 2 (still free)</a>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" id="fc-buy-top" style="display:flex; width:100%; margin-top:16px;">Start my setup — €27</a>
       <p class="tiny" style="text-align:center; margin-top:8px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+      <button type="button" class="btn-ghost" id="fc-next-cta" style="width:100%; margin-top:10px;">▶ Next lesson → Watch lesson 2 (still free)</button>
       <div class="fc-lessons">
         <div class="fc-lesson fc-playable" data-lesson="0"><span class="num">01</span> Why most beginners fail <span class="fc-tag">▶ Watching now</span></div>
         <div class="fc-lesson fc-playable" data-lesson="1"><span class="num">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Watch free</span></div>
@@ -942,12 +959,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById("fc-eyebrow").textContent = LESSONS[i].label;
     document.getElementById("fc-lesson-title").textContent = LESSONS[i].title;
     var nextCta = document.getElementById("fc-next-cta");
-    if (nextCta) {
-      nextCta.dataset.mode = i === 0 ? "free" : "paid";
-      nextCta.textContent = i === 0
-        ? "Next lesson → Watch lesson 2 (still free)"
-        : "Next lesson → Buy & keep watching — €27";
-    }
+    if (nextCta) nextCta.style.display = i === 0 ? "flex" : "none";
     var rows = document.querySelectorAll(".fc-lesson.fc-playable");
     for (var r = 0; r < rows.length; r++) {
       var active = Number(rows[r].dataset.lesson) === i;
@@ -964,9 +976,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   var nextCtaEl = document.getElementById("fc-next-cta");
   if (nextCtaEl) {
-    nextCtaEl.addEventListener("click", function (e) {
-      if (nextCtaEl.dataset.mode === "free") { e.preventDefault(); playLesson(1, true); }
-    });
+    nextCtaEl.addEventListener("click", function () { playLesson(1, true); });
   }
 
   // ── Aulas bloqueadas: clique mostra aviso + CTA de compra ────────────
