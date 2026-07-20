@@ -135,6 +135,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .btn-dark, .btn-ghost { width: 100%; }
   }
 
+  /* ── Who this is for ── */
+  .who { padding-top: 56px; padding-bottom: 64px; }
+  .who-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .who-badge { font-size: 13.5px; font-weight: 500; color: var(--body); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; }
+  @media (max-width: 640px) { .who { padding-top: 44px; padding-bottom: 52px; } }
+
   /* ── Header ── */
   .topbar { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.85); backdrop-filter: blur(8px); }
   .topbar-in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
@@ -150,6 +156,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .hero-trust span { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
   .hero-shot { margin-top: 64px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px -30px rgba(24,24,27,.25); }
   .hero-shot img { width: 100%; }
+  @media (max-width: 640px) {
+    .hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+    .hero-shot { margin-top: 40px; }
+    .sec-intro { margin-bottom: 40px; }
+  }
 
   /* ── Cards ── */
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -301,7 +312,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="topbar">
   <div class="container topbar-in">
     <span class="brand"><span class="brand-dot"></span> Growth Room</span>
-    <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Get the Blueprint — €27</a>
+    <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
   </div>
 </div>
 
@@ -309,10 +320,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="hero">
   <div class="container">
     <span class="kicker">For local business owners · No experience needed</span>
-    <h1 class="h1">Take back control<br>of your advertising.</h1>
-    <p class="sub hero-sub">Launch Ads Blueprint walks you through building your Meta advertising foundation from zero — Business Manager, ad account, pixel, tracking, your first campaign. Step by step, in plain English. So whether you run your own Facebook and Instagram ads or hire someone, you know exactly what's happening with your money.</p>
+    <h1 class="h1">Understand Meta Ads before<br>you spend another euro.</h1>
+    <p class="sub hero-sub" style="margin-bottom:16px;">Launch Ads Blueprint walks you through building your Meta advertising foundation from zero — Business Manager, ad account, pixel, your first campaign. Step by step, in plain English.</p>
+    <p class="sub hero-sub" style="font-weight:500; color:var(--ink);">Run your ads yourself or hire someone. Either way, you'll know exactly what's happening with your money.</p>
     <div class="cta-row">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Build my foundation — €27</a>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
       <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
     </div>
     <div class="hero-trust">
@@ -324,6 +336,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="hero-shot">
       <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — step-by-step Meta Ads course for local businesses" />
     </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="sec-line who">
+  <div class="container">
+    <h2 class="h2" style="font-size:clamp(24px,3vw,32px); margin-bottom:12px;">Built for owners, not marketers.</h2>
+    <div class="who-badges">
+      <span class="who-badge">Dentists</span>
+      <span class="who-badge">Doctors</span>
+      <span class="who-badge">Clinics</span>
+      <span class="who-badge">Physiotherapists</span>
+      <span class="who-badge">Chiropractors</span>
+      <span class="who-badge">Lawyers</span>
+      <span class="who-badge">Restaurants</span>
+      <span class="who-badge">Cafés</span>
+      <span class="who-badge">Gyms</span>
+      <span class="who-badge">Beauty salons</span>
+      <span class="who-badge">Barbers</span>
+      <span class="who-badge">Real estate</span>
+      <span class="who-badge">Home services</span>
+      <span class="who-badge">Contractors</span>
+      <span class="who-badge">Coaches</span>
+      <span class="who-badge">Consultants</span>
+      <span class="who-badge">Local services</span>
+    </div>
+    <p class="p" style="margin-top:20px; font-weight:500; color:var(--ink);">If your business depends on a steady flow of customers, this course was built for you.</p>
   </div>
 </section>
 
@@ -375,7 +414,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="sec-intro">
       <span class="kicker">Launch Ads Blueprint</span>
       <h2 class="h2">A guided setup.<br>Not another marketing course.</h2>
-      <p class="p">20 short video lessons. You watch, you click, you build. By the end, your Meta advertising foundation exists — in your accounts, under your logins, owned by you. Total video time: about two hours. Most owners finish the setup in a weekend.</p>
+      <p class="p">20 short video lessons. You watch, you click, you build. By the end, your Meta advertising foundation exists — in your accounts, under your logins, owned by you. Most owners finish the setup in a weekend.</p>
     </div>
     <div class="grid-2 isnot">
       <div class="card">
@@ -457,6 +496,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <p class="tiny" style="margin-top:24px;">Everything above is built inside your own accounts, with your own logins. Nothing is held by us, an agency, or anyone else.</p>
+  </div>
+</section>
+
+<!-- THREE MONTHS FROM NOW -->
+<section class="sec sec-line">
+  <div class="container">
+    <div class="narrow">
+      <span class="kicker">After the setup</span>
+      <h2 class="h2">Three months from now.</h2>
+      <p class="sub" style="margin-bottom:16px;">You open Ads Manager and nothing on the screen scares you.</p>
+      <p class="p" style="margin-bottom:16px;">You know what's running, what it costs, and what it's bringing back. When an agency sends a proposal, you read it like someone who's done the work — because you have.</p>
+      <p class="p" style="margin-bottom:16px;">Nothing about your marketing is a mystery you're paying someone else to keep.</p>
+      <p class="p" style="font-weight:500; color:var(--ink);">That's not a promise of overnight customers. It's something quieter, and more valuable: never feeling lost with your own money again.</p>
+    </div>
   </div>
 </section>
 
@@ -651,7 +704,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>ChatGPT Ad Copy Prompts</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Lifetime access + future updates</li>
       </ul>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Build my foundation — €27</a>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Start my setup — €27</a>
       <p class="tiny" style="text-align:center; margin-top:12px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
       <button type="button" class="btn-ghost" data-free-class style="width:100%; margin-top:10px;">Still deciding? Watch the first 2 lessons free →</button>
     </div>
