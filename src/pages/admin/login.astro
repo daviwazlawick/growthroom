@@ -1,0 +1,70 @@
+---
+// Página pública de login do admin — protegida contra indexação
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Growth Room — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF9; color: #18181B; -webkit-font-smoothing: antialiased; }
+  .wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card { background: #fff; border: 1px solid #E4E4E7; border-radius: 18px; padding: 36px 32px; width: 100%; max-width: 380px; box-shadow: 0 20px 50px -35px rgba(24,24,27,.3); }
+  .brand { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; background: #F59E0B; }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 20px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  input { width: 100%; border: 1px solid #E4E4E7; background: #FAFAF9; padding: 12px 14px; font-size: 15px; font-family: inherit; border-radius: 10px; margin-bottom: 14px; }
+  input:focus { outline: 2px solid #F59E0B; outline-offset: -1px; }
+  button { width: 100%; background: #18181B; color: #fff; border: none; border-radius: 10px; padding: 13px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; }
+  button:hover { background: #000; }
+  .err { display: none; font-size: 13px; color: #B91C1C; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="brand"><span class="dot"></span> Growth Room</div>
+    <h1>Admin login</h1>
+    <form id="f" novalidate>
+      <label for="u">Username</label>
+      <input id="u" type="text" autocomplete="username" required />
+      <label for="p">Password</label>
+      <input id="p" type="password" autocomplete="current-password" required />
+      <button type="submit" id="b">Sign in →</button>
+      <p class="err" id="e">Invalid credentials.</p>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById("f").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var b = document.getElementById("b"), e = document.getElementById("e");
+    b.disabled = true; b.textContent = "Signing in…"; e.style.display = "none";
+    try {
+      var res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: document.getElementById("u").value.trim(),
+          pass: document.getElementById("p").value,
+        }),
+      });
+      if (res.ok) { location.href = "/admin"; return; }
+      e.style.display = "block";
+    } catch (err) {
+      e.textContent = "Something went wrong. Try again.";
+      e.style.display = "block";
+    } finally {
+      b.disabled = false; b.textContent = "Sign in →";
+    }
+  });
+</script>
+</body>
+</html>

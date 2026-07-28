@@ -1,0 +1,248 @@
+---
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const dataDir = join(__dirname, "../../../data");
+
+// parser CSV simples com suporte a aspas ("" = aspas escapada)
+function parseCsv(text: string): string[][] {
+	const rows: string[][] = [];
+	let row: string[] = [], field = "", inQ = false;
+	for (let i = 0; i < text.length; i++) {
+		const c = text[i];
+		if (inQ) {
+			if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+			else if (c === '"') inQ = false;
+			else field += c;
+		} else if (c === '"') inQ = true;
+		else if (c === ",") { row.push(field); field = ""; }
+		else if (c === "\n") { row.push(field); field = ""; if (row.some(f => f !== "")) rows.push(row); row = []; }
+		else if (c !== "\r") field += c;
+	}
+	if (field !== "" || row.length) { row.push(field); if (row.some(f => f !== "")) rows.push(row); }
+	return rows;
+}
+
+async function loadCsv(file: string): Promise<string[][]> {
+	try { return parseCsv(await readFile(join(dataDir, file), "utf8")).slice(1); } // sem header
+	catch { return []; }
+}
+
+type Lead = { name: string; email: string; consent: string; createdAt: string; source: string };
+
+const freeRows = await loadCsv("free-class-leads.csv");
+const freeLeads: Lead[] = freeRows.map(r => ({
+	name: r[0] ?? "", email: r[1] ?? "", consent: r[2] ?? "", createdAt: r[3] ?? "", source: r[4] ?? "",
+})).reverse(); // mais recentes primeiro
+
+const salesRows = await loadCsv("leads.csv");
+const salesLeads = salesRows.map(r => ({
+	name: r[0] ?? "", email: r[1] ?? "", phone: r[2] ?? "", channels: r[3] ?? "",
+	spend: r[4] ?? "", blocker: r[5] ?? "", createdAt: r[6] ?? "",
+})).reverse();
+
+// ── stats ──
+const now = new Date();
+const dayKey = (d: Date) => d.toISOString().slice(0, 10);
+const todayKey = dayKey(now);
+const since7 = new Date(now.getTime() - 7 * 864e5);
+
+const total = freeLeads.length;
+const today = freeLeads.filter(l => l.createdAt.slice(0, 10) === todayKey).length;
+const last7 = freeLeads.filter(l => new Date(l.createdAt) >= since7).length;
+const consentYes = freeLeads.filter(l => l.consent === "true").length;
+const consentPct = total ? Math.round((consentYes / total) * 100) : 0;
+
+// leads por dia — últimos 14 dias
+const byDay: { day: string; label: string; count: number }[] = [];
+for (let i = 13; i >= 0; i--) {
+	const d = new Date(now.getTime() - i * 864e5);
+	const key = dayKey(d);
+	byDay.push({
+		day: key,
+		label: d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }),
+		count: freeLeads.filter(l => l.createdAt.slice(0, 10) === key).length,
+	});
+}
+const maxDay = Math.max(1, ...byDay.map(d => d.count));
+
+const fmtDate = (iso: string) => {
+	if (!iso) return "—";
+	const d = new Date(iso);
+	return isNaN(d.getTime()) ? iso : d.toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+};
+const shortSource = (s: string) => {
+	if (!s) return "—";
+	try { return new URL(s, "https://growthroom.eu").pathname; } catch { return s; }
+};
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Leads — Growth Room Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF9; color: #18181B; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .top { background: #fff; border-bottom: 1px solid #E4E4E7; }
+  .top-in { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; background: #F59E0B; }
+  .btn-sm { background: #fff; border: 1px solid #E4E4E7; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; }
+  .btn-sm:hover { border-color: #18181B; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 20px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  @media (max-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: #fff; border: 1px solid #E4E4E7; border-radius: 14px; padding: 18px 20px; }
+  .card .n { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+  .card .l { font-size: 12.5px; color: #A1A1AA; margin-top: 2px; }
+  .chart { background: #fff; border: 1px solid #E4E4E7; border-radius: 14px; padding: 20px; margin-bottom: 24px; }
+  .chart h2, .panel h2 { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; }
+  .bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar .fill { width: 100%; background: #F59E0B; border-radius: 4px 4px 0 0; min-height: 2px; }
+  .bar .bl { font-size: 9.5px; color: #A1A1AA; white-space: nowrap; }
+  .bar .bc { font-size: 10.5px; font-weight: 600; }
+  .panel { background: #fff; border: 1px solid #E4E4E7; border-radius: 14px; padding: 20px; margin-bottom: 24px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .panel-head input { border: 1px solid #E4E4E7; background: #FAFAF9; border-radius: 8px; padding: 9px 12px; font-size: 13.5px; font-family: inherit; width: 240px; }
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: #A1A1AA; font-weight: 600; padding: 8px 10px; border-bottom: 1px solid #E4E4E7; white-space: nowrap; }
+  td { padding: 10px; border-bottom: 1px solid #F4F4F5; vertical-align: top; }
+  tr:hover td { background: #FAFAF9; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 999px; padding: 3px 10px; }
+  .b-yes { background: #DCFCE7; color: #15803D; }
+  .b-no { background: #F4F4F5; color: #A1A1AA; }
+  .mail { color: #B45309; text-decoration: underline; text-underline-offset: 2px; }
+  .copy { background: none; border: none; cursor: pointer; font-size: 12px; color: #A1A1AA; padding: 0 4px; }
+  .copy:hover { color: #18181B; }
+  .muted { color: #A1A1AA; }
+  .future { border: 1px dashed #E4E4E7; border-radius: 14px; padding: 20px; font-size: 13px; color: #A1A1AA; }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-in">
+    <span class="brand"><span class="dot"></span> Growth Room · Admin</span>
+    <div style="display:flex; gap:8px;">
+      <a class="btn-sm" href="/api/admin/export?file=free">Export CSV</a>
+      <button class="btn-sm" id="logout">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Leads</h1>
+
+  <div class="cards">
+    <div class="card"><div class="n">{total}</div><div class="l">Free-class leads (total)</div></div>
+    <div class="card"><div class="n">{last7}</div><div class="l">Last 7 days</div></div>
+    <div class="card"><div class="n">{today}</div><div class="l">Today</div></div>
+    <div class="card"><div class="n">{consentPct}%</div><div class="l">Marketing consent</div></div>
+  </div>
+
+  <div class="chart">
+    <h2>Leads per day — last 14 days</h2>
+    <div class="bars">
+      {byDay.map(d => (
+        <div class="bar">
+          <span class="bc">{d.count > 0 ? d.count : ""}</span>
+          <div class="fill" style={`height:${Math.round((d.count / maxDay) * 70)}px`}></div>
+          <span class="bl">{d.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2 style="margin:0;">Free-class leads ({total})</h2>
+      <input id="q" type="search" placeholder="Search name, email, source…" />
+    </div>
+    <div class="tbl-wrap">
+      <table id="tbl">
+        <thead><tr><th>Name</th><th>Email</th><th>Consent</th><th>Source</th><th>When</th><th></th></tr></thead>
+        <tbody>
+          {freeLeads.map(l => (
+            <tr>
+              <td>{l.name}</td>
+              <td><a class="mail" href={`mailto:${l.email}`}>{l.email}</a></td>
+              <td>{l.consent === "true"
+                ? <span class="badge b-yes">yes</span>
+                : <span class="badge b-no">no</span>}</td>
+              <td class="muted">{shortSource(l.source)}</td>
+              <td class="muted">{fmtDate(l.createdAt)}</td>
+              <td><button class="copy" data-copy={l.email} title="Copy email">⧉</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {total === 0 && <p class="muted" style="padding:16px 10px;">No leads yet.</p>}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2 style="margin:0;">Sales-form leads ({salesLeads.length})</h2>
+      <a class="btn-sm" href="/api/admin/export?file=sales">Export CSV</a>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Channels</th><th>Spend</th><th>Blocker</th><th>When</th></tr></thead>
+        <tbody>
+          {salesLeads.map(l => (
+            <tr>
+              <td>{l.name}</td>
+              <td><a class="mail" href={`mailto:${l.email}`}>{l.email}</a></td>
+              <td class="muted">{l.phone}</td>
+              <td class="muted">{l.channels}</td>
+              <td class="muted">{l.spend}</td>
+              <td class="muted">{l.blocker}</td>
+              <td class="muted">{fmtDate(l.createdAt)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {salesLeads.length === 0 && <p class="muted" style="padding:16px 10px;">No leads yet.</p>}
+    </div>
+  </div>
+
+  <div class="future">
+    Coming next: revenue report (Alfima), free-lesson watch-through funnel, quiz answers breakdown, per-page conversion. Ping Davi's assistant to add them.
+  </div>
+</div>
+
+<script>
+  document.getElementById("logout").addEventListener("click", async function () {
+    await fetch("/api/admin/logout", { method: "POST" });
+    location.href = "/admin/login";
+  });
+  // busca client-side na tabela principal
+  var q = document.getElementById("q");
+  q.addEventListener("input", function () {
+    var term = q.value.toLowerCase();
+    document.querySelectorAll("#tbl tbody tr").forEach(function (tr) {
+      tr.style.display = tr.textContent.toLowerCase().includes(term) ? "" : "none";
+    });
+  });
+  // copiar e-mail
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      navigator.clipboard.writeText(b.dataset.copy).then(function () {
+        b.textContent = "✓"; setTimeout(function () { b.textContent = "⧉"; }, 1200);
+      });
+    });
+  });
+</script>
+</body>
+</html>

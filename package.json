@@ -16,6 +16,10 @@
     "@astrojs/node": "^10.0.6",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.1.10",
+    "nodemailer": "^9.0.3",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.1"
   }
 }

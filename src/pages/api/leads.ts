@@ -2,6 +2,7 @@ import { mkdir, appendFile, access } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { APIRoute } from "astro";
+import nodemailer from "nodemailer";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir   = join(__dirname, "../../../data");
@@ -9,9 +10,28 @@ const leadsFile = join(dataDir, "leads.csv");
 const csvHeader = "fullName,email,phone,channels,monthlySpend,biggestBlocker,createdAt\n";
 
 const freeClassFile   = join(dataDir, "free-class-leads.csv");
-const freeClassHeader = "fullName,email,marketingConsent,createdAt\n";
+const freeClassHeader = "fullName,email,marketingConsent,createdAt,sourcePage\n";
 
 const toCsvValue = (v: string) => `"${v.replace(/"/g, '""')}"`;
+
+// ── Notificação por e-mail (ativa quando SMTP_* estiver no .env) ──────
+async function notifyLeadByEmail(subject: string, fields: Record<string, unknown>) {
+	const host = import.meta.env.SMTP_HOST;
+	const user = import.meta.env.SMTP_USER;
+	const pass = import.meta.env.SMTP_PASS;
+	if (!host || !user || !pass) return; // sem SMTP configurado → silenciosamente não envia
+	const to = import.meta.env.LEAD_NOTIFY_TO || "contact@growthroom.eu";
+	const transporter = nodemailer.createTransport({
+		host,
+		port: Number(import.meta.env.SMTP_PORT ?? 465),
+		secure: Number(import.meta.env.SMTP_PORT ?? 465) === 465,
+		auth: { user, pass },
+	});
+	const text = Object.entries(fields)
+		.map(([k, v]) => `${k}: ${typeof v === "object" ? JSON.stringify(v) : String(v ?? "")}`)
+		.join("\n");
+	await transporter.sendMail({ from: `"Growth Room Leads" <${user}>`, to, subject, text });
+}
 
 const json = (status: number, body: Record<string, unknown>) =>
 	new Response(JSON.stringify(body), {
@@ -39,11 +59,14 @@ export const POST: APIRoute = async ({ request }) => {
 			}
 
 			const createdAt = new Date().toISOString();
+			let sourcePage = "";
+			try { sourcePage = new URL(String(payload?.meta_event_source_url ?? ""), "https://growthroom.eu").pathname; } catch {}
 			const line = [
 				toCsvValue(fullName),
 				toCsvValue(email),
 				toCsvValue(String(payload?.marketing_consent ?? false)),
 				toCsvValue(createdAt),
+				toCsvValue(sourcePage),
 			].join(",") + "\n";
 
 			await mkdir(dataDir, { recursive: true });
@@ -85,6 +108,17 @@ export const POST: APIRoute = async ({ request }) => {
 					}),
 				}).catch((err) => console.error("[leads] n8n webhook failed:", err));
 			}
+
+			notifyLeadByEmail(`Novo lead (aulas grátis): ${fullName}`, {
+				nome: fullName,
+				email,
+				consentimento_marketing: payload.marketing_consent ?? false,
+				pagina_origem: sourcePage,
+				url_completa: payload.meta_event_source_url ?? "",
+				utms: payload.url_params ?? {},
+				quiz: payload.quiz ?? {},
+				data: createdAt,
+			}).catch((err) => console.error("[leads] email notify failed:", err));
 
 			return json(200, { ok: true });
 		}
@@ -157,6 +191,17 @@ export const POST: APIRoute = async ({ request }) => {
 				}),
 			}).catch((err) => console.error("[leads] n8n webhook failed:", err));
 		}
+
+		notifyLeadByEmail(`Novo lead (formulário): ${fullName}`, {
+			nome: fullName,
+			email,
+			telefone: phone,
+			canais: channels,
+			verba_mensal: monthlySpend,
+			maior_bloqueio: biggestBlocker,
+			utms: payload.url_params ?? {},
+			data: createdAt,
+		}).catch((err) => console.error("[leads] email notify failed:", err));
 
 		return json(200, { ok: true });
 	} catch {
