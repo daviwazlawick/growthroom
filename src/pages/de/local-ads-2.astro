@@ -5,7 +5,7 @@ const SHOW_TESTIMONIALS = false;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <!-- Google Tag Manager -->
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -16,17 +16,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meta Ads for Local Business — Own Your Advertising Foundation | Launch Ads Blueprint</title>
-<meta name="description" content="Before you run Facebook & Instagram ads for your local business, build your Meta advertising foundation: Business Manager, ad account, pixel, events and your first campaign — set up correctly, by you. A step-by-step Meta Ads course for complete beginners. €27 one-time.">
-<link rel="canonical" href="https://growthroom.eu/local-ads-2">
+<title>Meta Ads für lokale Unternehmen — Bauen Sie Ihr Werbe-Fundament selbst | Launch Ads Blueprint</title>
+<meta name="description" content="Bevor Sie Facebook- und Instagram-Anzeigen für Ihr lokales Unternehmen schalten: Bauen Sie Ihr Meta-Werbe-Fundament auf — Business Manager, Werbekonto, Pixel, Events und Ihre erste Kampagne. Schritt für Schritt, für komplette Einsteiger. Einmalig 27 €.">
+<link rel="canonical" href="https://growthroom.eu/de/local-ads-2">
 <link rel="alternate" hreflang="en" href="https://growthroom.eu/local-ads-2">
 <link rel="alternate" hreflang="de" href="https://growthroom.eu/de/local-ads-2">
 <link rel="alternate" hreflang="x-default" href="https://growthroom.eu/local-ads-2">
 <script is:inline>
 (function(){try{
-  var l = localStorage.getItem("gr_lang");
-  var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || "").toLowerCase();
-  if (l === "de" || (!l && nav.indexOf("de") === 0)) location.replace("/de" + location.pathname + location.search);
+  if (localStorage.getItem("gr_lang") === "en") location.replace(location.pathname.replace(/^\/de/, "") + location.search);
 }catch(e){}})();
 </script>
 
@@ -225,8 +223,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .compare-row { grid-template-columns: 1fr; padding: 14px 0; }
     .compare-row div { padding: 4px 20px; }
     .compare-row .rowlab { padding-top: 8px; }
-    .compare-row .blind::before { content: "Outsourcing blind — "; font-weight: 600; color: var(--muted); }
-    .compare-row .own::before { content: "Owning it — "; font-weight: 600; color: var(--accent-ink); }
+    .compare-row .blind::before { content: "Blind auslagern — "; font-weight: 600; color: var(--muted); }
+    .compare-row .own::before { content: "Selbst besitzen — "; font-weight: 600; color: var(--accent-ink); }
     .compare-row .own { background: transparent; }
   }
 
@@ -304,13 +302,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "I'm not technical. Can I really do this?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If you can attach a file to an email, you can do this. Every lesson shows the exact screen and the exact click. Pause, click, continue." } },
-    { "@type": "Question", "name": "I'm too busy running my business.", "acceptedAnswer": { "@type": "Answer", "text": "The whole course is about two hours of short lessons. Most owners do the setup in a single weekend — and it's work you only do once." } },
-    { "@type": "Question", "name": "I've never run an ad in my life.", "acceptedAnswer": { "@type": "Answer", "text": "Perfect. The course assumes zero experience. It starts before step one: creating your Meta Business Portfolio from a blank screen." } },
-    { "@type": "Question", "name": "I've hired agencies before. Why would I need this?", "acceptedAnswer": { "@type": "Answer", "text": "Because after this you'll own your ad account, your pixel and your data — and you'll be able to read the reports you're paying for. Understanding the work makes you a better client." } },
-    { "@type": "Question", "name": "Will this get me customers?", "acceptedAnswer": { "@type": "Answer", "text": "This course builds your advertising foundation — the setup that has to be right before any ad can work. A correct foundation doesn't guarantee results; no honest person can promise that. It removes the expensive mistakes and gives you control over what happens next." } },
-    { "@type": "Question", "name": "Is this a subscription?", "acceptedAnswer": { "@type": "Answer", "text": "No. €27 once. Lifetime access to all 20 lessons and every future update." } },
-    { "@type": "Question", "name": "How does the refund work?", "acceptedAnswer": { "@type": "Answer", "text": "Email within 30 days of purchase and you get every cent back. No forms, no questions." } }
+    { "@type": "Question", "name": "Ich bin nicht technisch. Schaffe ich das wirklich?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Wenn Sie eine Datei an eine E-Mail anhängen können, können Sie das. Jede Lektion zeigt den genauen Bildschirm und den genauen Klick. Pausieren, klicken, weiter." } },
+    { "@type": "Question", "name": "Ich habe keine Zeit — ich führe ein Unternehmen.", "acceptedAnswer": { "@type": "Answer", "text": "Der ganze Kurs besteht aus rund zwei Stunden kurzer Lektionen. Die meisten Inhaber schaffen das Setup an einem Wochenende — und diese Arbeit machen Sie nur einmal." } },
+    { "@type": "Question", "name": "Ich habe noch nie eine Anzeige geschaltet.", "acceptedAnswer": { "@type": "Answer", "text": "Perfekt. Der Kurs setzt null Erfahrung voraus. Er beginnt vor Schritt eins: Ihr Meta Business Portfolio, von einem leeren Bildschirm aus." } },
+    { "@type": "Question", "name": "Ich hatte schon Agenturen. Warum sollte ich das brauchen?", "acceptedAnswer": { "@type": "Answer", "text": "Weil Ihnen danach Ihr Werbekonto, Ihr Pixel und Ihre Daten gehören — und Sie die Berichte lesen können, für die Sie bezahlen. Wer die Arbeit versteht, ist ein besserer Kunde." } },
+    { "@type": "Question", "name": "Bringt mir das Kunden?", "acceptedAnswer": { "@type": "Answer", "text": "Dieser Kurs baut Ihr Werbe-Fundament — das Setup, das stimmen muss, bevor irgendeine Anzeige funktionieren kann. Ein korrektes Fundament garantiert keine Ergebnisse; das kann ehrlicherweise niemand versprechen. Es verhindert die teuren Fehler und gibt Ihnen die Kontrolle über alles Weitere." } },
+    { "@type": "Question", "name": "Ist der Kurs auf Deutsch?", "acceptedAnswer": { "@type": "Answer", "text": "Der Kurs ist auf Englisch — in einfacher, klarer Sprache, und jeder Klick wird am Bildschirm gezeigt. Der Meta-Werbeanzeigenmanager funktioniert überall gleich; Sie können Ihre Meta-Oberfläche auf Deutsch nutzen, während Sie den Lektionen folgen." } },
+    { "@type": "Question", "name": "Ist das ein Abo?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. Einmal 27 €. Lebenslanger Zugriff auf alle 20 Lektionen und jedes künftige Update." } },
+    { "@type": "Question", "name": "Wie funktioniert die Rückerstattung?", "acceptedAnswer": { "@type": "Answer", "text": "Schreiben Sie innerhalb von 30 Tagen nach dem Kauf eine E-Mail — Sie erhalten jeden Cent zurück. Keine Formulare, keine Fragen." } }
   ]
 }
 </script>
@@ -326,8 +325,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container topbar-in">
     <span class="brand"><span class="brand-dot"></span> Growth Room</span>
     <div style="display:flex; align-items:center; gap:14px;">
-      <div class="lang-switch"><span class="active" title="English">🇬🇧</span><a href="/de/local-ads-2" data-setlang="de" title="Deutsch">🇩🇪</a></div>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
+      <div class="lang-switch"><a href="/local-ads-2" data-setlang="en" title="English">🇬🇧</a><span class="active" title="Deutsch">🇩🇪</span></div>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Setup starten — 27 €</a>
     </div>
   </div>
 </div>
@@ -335,22 +334,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- 1 · HERO -->
 <section class="hero">
   <div class="container">
-    <span class="kicker">For local business owners · No experience needed</span>
-    <h1 class="h1">Take control of how your<br>business gets customers.</h1>
-    <p class="sub hero-sub" style="margin-bottom:16px;">Launch Ads Blueprint walks you through building the advertising foundation behind every Facebook and Instagram campaign — from zero to your first launched ad. Step by step, in plain English.</p>
-    <p class="sub hero-sub" style="font-weight:500; color:var(--ink);">Run your ads yourself or hire someone. Either way, you'll know exactly what's happening with your money.</p>
+    <span class="kicker">Für lokale Unternehmer · Keine Vorkenntnisse nötig</span>
+    <h1 class="h1">Bestimmen Sie selbst, wie Ihr<br>Unternehmen Kunden gewinnt.</h1>
+    <p class="sub hero-sub" style="margin-bottom:16px;">Launch Ads Blueprint führt Sie durch den Aufbau des Werbe-Fundaments hinter jeder Facebook- und Instagram-Kampagne — von null bis zu Ihrer ersten geschalteten Anzeige. Schritt für Schritt, Klick für Klick.</p>
+    <p class="sub hero-sub" style="font-weight:500; color:var(--ink);">Ob Sie Ihre Anzeigen selbst schalten oder jemanden beauftragen: Sie wissen genau, was mit Ihrem Geld passiert.</p>
     <div class="cta-row">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
-      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Setup starten — 27 €</a>
+      <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos ansehen →</button>
     </div>
     <div class="hero-trust">
-      <span>✓ One-time payment</span>
-      <span>✓ 20 short lessons</span>
-      <span>✓ 30-day money-back guarantee</span>
-      <span>✓ Everything you build stays yours</span>
+      <span>✓ Einmalzahlung</span>
+      <span>✓ 20 kurze Lektionen</span>
+      <span>✓ 30 Tage Geld-zurück-Garantie</span>
+      <span>✓ Alles, was Sie aufbauen, gehört Ihnen</span>
     </div>
     <div class="hero-shot">
-      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — step-by-step Meta Ads course for local businesses" />
+      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — Meta-Ads-Kurs für lokale Unternehmen, Schritt für Schritt" />
     </div>
   </div>
 </section>
@@ -358,27 +357,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- WHO THIS IS FOR -->
 <section class="sec-line who">
   <div class="container">
-    <h2 class="h2" style="font-size:clamp(24px,3vw,32px); margin-bottom:12px;">Built for owners, not marketers.</h2>
+    <h2 class="h2" style="font-size:clamp(24px,3vw,32px); margin-bottom:12px;">Gemacht für Unternehmer, nicht für Marketer.</h2>
     <div class="who-badges">
-      <span class="who-badge">Dentists</span>
-      <span class="who-badge">Doctors</span>
-      <span class="who-badge">Clinics</span>
-      <span class="who-badge">Physiotherapists</span>
-      <span class="who-badge">Chiropractors</span>
-      <span class="who-badge">Lawyers</span>
+      <span class="who-badge">Zahnärzte</span>
+      <span class="who-badge">Ärzte</span>
+      <span class="who-badge">Praxen &amp; Kliniken</span>
+      <span class="who-badge">Physiotherapeuten</span>
+      <span class="who-badge">Chiropraktiker</span>
+      <span class="who-badge">Anwälte</span>
       <span class="who-badge">Restaurants</span>
       <span class="who-badge">Cafés</span>
-      <span class="who-badge">Gyms</span>
-      <span class="who-badge">Beauty salons</span>
-      <span class="who-badge">Barbers</span>
-      <span class="who-badge">Real estate</span>
-      <span class="who-badge">Home services</span>
-      <span class="who-badge">Contractors</span>
+      <span class="who-badge">Fitnessstudios</span>
+      <span class="who-badge">Beauty-Salons</span>
+      <span class="who-badge">Barbershops</span>
+      <span class="who-badge">Immobilien</span>
+      <span class="who-badge">Hausservices</span>
+      <span class="who-badge">Handwerksbetriebe</span>
       <span class="who-badge">Coaches</span>
-      <span class="who-badge">Consultants</span>
-      <span class="who-badge">Local services</span>
+      <span class="who-badge">Berater</span>
+      <span class="who-badge">Lokale Dienstleister</span>
     </div>
-    <p class="p" style="margin-top:20px; font-weight:500; color:var(--ink);">If your business depends on a steady flow of customers, this course was built for you.</p>
+    <p class="p" style="margin-top:20px; font-weight:500; color:var(--ink);">Wenn Ihr Unternehmen von einem stetigen Strom neuer Kunden lebt, wurde dieser Kurs für Sie gebaut.</p>
   </div>
 </section>
 
@@ -386,24 +385,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line bg2">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">Most local businesses don't lose money on ads.<br>They lose it before the ads even run.</h2>
-      <p class="p">Dentists, restaurants, gyms, salons, law firms — the pattern is the same. The money disappears in three places, and none of them is the ad itself.</p>
+      <h2 class="h2">Die meisten lokalen Unternehmen verlieren kein Geld mit Anzeigen.<br>Sie verlieren es, bevor die Anzeigen überhaupt laufen.</h2>
+      <p class="p">Zahnarztpraxis, Restaurant, Fitnessstudio, Salon, Kanzlei — das Muster ist immer gleich. Das Geld verschwindet an drei Stellen, und keine davon ist die Anzeige selbst.</p>
     </div>
     <div class="grid-3">
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M7 17l5-10 5 10M5 21h14"/></svg></div>
-        <h3 class="h3">The boost button</h3>
-        <p class="small">€50 on "Boost Post". 200 likes. Zero customers. Boosting feels like advertising — but without a real campaign behind it, it's a donation to Meta.</p>
+        <h3 class="h3">Der Boost-Button</h3>
+        <p class="small">50 € für „Beitrag bewerben“. 200 Likes. Null Kunden. Boosten fühlt sich wie Werbung an — aber ohne echte Kampagne dahinter ist es eine Spende an Meta.</p>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 8v4l3 3M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-        <h3 class="h3">The blind retainer</h3>
-        <p class="small">€400–1,000+ to an agency you can't evaluate. Good agencies exist. But you can't tell them apart from bad ones if you don't understand the work.</p>
+        <h3 class="h3">Die blinde Agentur-Pauschale</h3>
+        <p class="small">Über 400–1.000 € an eine Agentur, deren Arbeit Sie nicht beurteilen können. Gute Agenturen gibt es. Aber Sie erkennen sie nicht, wenn Sie die Arbeit nicht verstehen.</p>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 3v18h18M9 17V9m4 8v-5m4 5V7"/></svg></div>
-        <h3 class="h3">The invisible tracking</h3>
-        <p class="small">Ads running with no pixel and no events. Meta can't optimise what it can't measure. Most local ad accounts run blind — and the owner never knows.</p>
+        <h3 class="h3">Das unsichtbare Tracking</h3>
+        <p class="small">Anzeigen laufen ohne Pixel und ohne Events. Meta kann nicht optimieren, was es nicht messen kann. Die meisten lokalen Werbekonten laufen blind — und der Inhaber merkt es nie.</p>
       </div>
     </div>
   </div>
@@ -413,15 +412,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line">
   <div class="container">
     <div class="narrow">
-      <h2 class="h2">You're not bad at this.<br>Nobody taught you the foundation.</h2>
-      <p class="p" style="margin-bottom:18px;">YouTube teaches hacks and "winning strategies" — for people who already have their accounts set up. Agencies do the setup for you, and take the understanding with them when the contract ends. And Ads Manager itself was built for professionals, not for someone running a clinic between patients.</p>
-      <p class="p" style="margin-bottom:18px;">So smart business owners — people who run restaurants, practices, firms — end up feeling lost in front of a dashboard. That's not a skill problem. It's a sequence problem.</p>
-      <p class="p" style="margin-bottom:36px;">Running Facebook ads has steps 1 through 9. Almost everyone starts at step 5.</p>
+      <h2 class="h2">Sie sind nicht schlecht darin.<br>Ihnen hat nur niemand das Fundament gezeigt.</h2>
+      <p class="p" style="margin-bottom:18px;">YouTube lehrt Hacks und „Gewinner-Strategien“ — für Leute, deren Konten längst eingerichtet sind. Agenturen machen das Setup für Sie und nehmen das Verständnis mit, wenn der Vertrag endet. Und der Werbeanzeigenmanager selbst wurde für Profis gebaut — nicht für jemanden, der zwischen zwei Patienten eine Praxis führt.</p>
+      <p class="p" style="margin-bottom:18px;">So stehen kluge Unternehmer — Menschen, die Restaurants, Praxen und Kanzleien führen — verloren vor einem Dashboard. Das ist kein Kompetenzproblem. Es ist ein Reihenfolge-Problem.</p>
+      <p class="p" style="margin-bottom:36px;">Facebook-Werbung hat die Schritte 1 bis 9. Fast alle beginnen bei Schritt 5.</p>
       <div class="callout">
-        <p>Don't outsource what you don't understand. <span>Build your foundation first. Then decide who manages your ads.</span></p>
+        <p>Lagern Sie nichts aus, was Sie nicht verstehen. <span>Bauen Sie zuerst Ihr Fundament. Entscheiden Sie dann, wer Ihre Anzeigen betreut.</span></p>
       </div>
       <div class="cta-row" style="margin-top:28px;">
-        <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+        <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos ansehen →</button>
       </div>
     </div>
   </div>
@@ -432,34 +431,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="sec-intro">
       <span class="kicker">Launch Ads Blueprint</span>
-      <h2 class="h2">A guided setup.<br>Not another marketing course.</h2>
-      <p class="p">20 short video lessons. You watch, you click, you build. By the end, your advertising foundation exists — in your accounts, under your logins, owned by you. Most owners finish the setup in a weekend.</p>
+      <h2 class="h2">Ein geführtes Setup.<br>Kein weiterer Marketing-Kurs.</h2>
+      <p class="p">20 kurze Videolektionen. Sie schauen, Sie klicken, Sie bauen. Am Ende existiert Ihr Werbe-Fundament — in Ihren Konten, unter Ihren Logins, in Ihrem Besitz. Die meisten Inhaber schaffen das Setup an einem Wochenende.</p>
     </div>
     <div class="grid-2 isnot">
       <div class="card">
-        <span class="label" style="color:var(--green);">What this is</span>
+        <span class="label" style="color:var(--green);">Was das ist</span>
         <ul>
-          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>A step-by-step walkthrough of the complete Meta setup — from a blank screen to your first live campaign</li>
-          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Built for complete beginners — every click shown on screen</li>
-          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Real assets you keep: Business Manager, ad account, pixel, events</li>
-          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Plain English. No jargon without an explanation</li>
-          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>One payment. Lifetime access, including updates</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Eine Schritt-für-Schritt-Anleitung durch das komplette Meta-Setup — vom leeren Bildschirm bis zur ersten laufenden Kampagne</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Gemacht für komplette Einsteiger — jeder Klick wird am Bildschirm gezeigt</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Echte Werte, die Ihnen bleiben: Business Manager, Werbekonto, Pixel, Events</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Auf Englisch — in einfacher, klarer Sprache. Kein Fachbegriff ohne Erklärung</li>
+          <li class="li-yes"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Eine Zahlung. Lebenslanger Zugriff, inklusive Updates</li>
         </ul>
       </div>
       <div class="card">
-        <span class="label" style="color:var(--muted);">What this is not</span>
+        <span class="label" style="color:var(--muted);">Was das nicht ist</span>
         <ul>
-          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>An advanced media buying course</li>
-          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A scaling or "7-figure agency" course</li>
-          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A lead generation strategy course</li>
-          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A promise of guaranteed leads, sales or ROI</li>
-          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>A subscription</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>Ein Kurs für fortgeschrittenes Media Buying</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>Ein Skalierungs- oder „7-stellige Agentur“-Kurs</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>Ein Strategie-Kurs für Leadgenerierung</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>Ein Versprechen garantierter Leads, Verkäufe oder ROI</li>
+          <li class="li-no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>Ein Abo</li>
         </ul>
       </div>
     </div>
     <div class="cta-row" style="margin-top:36px;">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
-      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Setup starten — 27 €</a>
+      <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos ansehen →</button>
     </div>
   </div>
 </section>
@@ -468,59 +467,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">Everything you'll build,<br>in the order it has to be built.</h2>
-      <p class="p">This is the build order professionals follow — the one nobody shows beginners. Each piece exists in your own Meta Business account when the lesson ends.</p>
+      <h2 class="h2">Alles, was Sie aufbauen —<br>in der Reihenfolge, in der es sein muss.</h2>
+      <p class="p">Das ist die Reihenfolge, der Profis folgen — die, die Einsteigern niemand zeigt. Jedes Teil existiert in Ihrem eigenen Meta-Business-Konto, wenn die Lektion endet.</p>
     </div>
     <div class="build">
       <div class="build-item">
-        <span class="build-num">Step 1</span>
+        <span class="build-num">Schritt 1</span>
         <h3 class="h3">Meta Business Portfolio</h3>
-        <p class="small">Your business's official home on Meta. Created correctly, in your name — not an agency's.</p>
+        <p class="small">Das offizielle Zuhause Ihres Unternehmens bei Meta. Korrekt angelegt, auf Ihren Namen — nicht auf den einer Agentur.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 2</span>
+        <span class="build-num">Schritt 2</span>
         <h3 class="h3">Business Manager</h3>
-        <p class="small">One place that owns your pages, ad accounts and permissions. Who can touch what, decided by you.</p>
+        <p class="small">Ein Ort, dem Ihre Seiten, Werbekonten und Berechtigungen gehören. Wer worauf zugreifen darf, entscheiden Sie.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 3</span>
-        <h3 class="h3">Ad Account</h3>
-        <p class="small">Set up clean from day one. If you ever work with an agency, you grant access — you don't hand over keys.</p>
+        <span class="build-num">Schritt 3</span>
+        <h3 class="h3">Werbekonto</h3>
+        <p class="small">Von Tag eins sauber aufgesetzt. Wenn Sie je mit einer Agentur arbeiten, vergeben Sie Zugriff — Sie geben keine Schlüssel ab.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 4</span>
-        <h3 class="h3">Billing</h3>
-        <p class="small">Payment configured correctly so spend never surprises you — and never stops a campaign mid-flight.</p>
+        <span class="build-num">Schritt 4</span>
+        <h3 class="h3">Abrechnung</h3>
+        <p class="small">Zahlung korrekt konfiguriert, damit Ausgaben Sie nie überraschen — und keine Kampagne mitten im Lauf stoppt.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 5</span>
+        <span class="build-num">Schritt 5</span>
         <h3 class="h3">Meta Pixel</h3>
-        <p class="small">The small piece of code that shows you what's actually working after the click. Installed and tested, together.</p>
+        <p class="small">Das kleine Stück Code, das Ihnen zeigt, was nach dem Klick wirklich funktioniert. Gemeinsam installiert und getestet.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 6</span>
+        <span class="build-num">Schritt 6</span>
         <h3 class="h3">Events</h3>
-        <p class="small">Define what counts for your business — calls, bookings, form fills — so Meta optimises for customers, not clicks.</p>
+        <p class="small">Definieren Sie, was für Ihr Unternehmen zählt — Anrufe, Termine, Anfragen — damit Meta auf Kunden optimiert, nicht auf Klicks.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 7</span>
-        <h3 class="h3">Campaigns</h3>
-        <p class="small">What campaign objectives actually mean, in plain words — so you pick the right one on purpose and launch with confidence.</p>
+        <span class="build-num">Schritt 7</span>
+        <h3 class="h3">Kampagnen</h3>
+        <p class="small">Was Kampagnenziele wirklich bedeuten, in einfachen Worten — damit Sie bewusst das richtige wählen und mit Sicherheit starten.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 8</span>
-        <h3 class="h3">Ad Sets</h3>
-        <p class="small">Budgets, audiences and placements — the layer where most beginner money quietly leaks away.</p>
+        <span class="build-num">Schritt 8</span>
+        <h3 class="h3">Anzeigengruppen</h3>
+        <p class="small">Budgets, Zielgruppen und Platzierungen — die Ebene, auf der Einsteiger-Budgets leise versickern.</p>
       </div>
       <div class="build-item">
-        <span class="build-num">Step 9</span>
-        <h3 class="h3">Your first ad, launched</h3>
-        <p class="small">Build the ad, run the pre-launch checks, and switch it on — correctly, with tracking that works.</p>
+        <span class="build-num">Schritt 9</span>
+        <h3 class="h3">Ihre erste Anzeige, live</h3>
+        <p class="small">Anzeige bauen, Checkliste durchgehen, einschalten — korrekt, mit funktionierendem Tracking.</p>
       </div>
     </div>
-    <p class="tiny" style="margin-top:24px;">Everything above is built inside your own accounts, with your own logins. Nothing is held by us, an agency, or anyone else. Every customer your ads ever bring will flow through this system.</p>
+    <p class="tiny" style="margin-top:24px;">Alles oben entsteht in Ihren eigenen Konten, mit Ihren eigenen Logins. Nichts liegt bei uns, einer Agentur oder sonst jemandem. Jeder Kunde, den Ihre Anzeigen je bringen, läuft durch dieses System.</p>
     <div class="cta-row" style="margin-top:28px;">
-      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free — set up your account with me →</button>
+      <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos — richten Sie Ihr Konto mit mir ein →</button>
     </div>
   </div>
 </section>
@@ -529,14 +528,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line">
   <div class="container">
     <div class="narrow">
-      <span class="kicker">After the setup</span>
-      <h2 class="h2">Three months from now.</h2>
-      <p class="sub" style="margin-bottom:16px;">You open Ads Manager and nothing on the screen scares you.</p>
-      <p class="p" style="margin-bottom:16px;">You know what's running, what it costs, and what it's bringing back. When an agency sends a proposal, you read it like someone who's done the work — because you have.</p>
-      <p class="p" style="margin-bottom:16px;">Nothing about your marketing is a mystery you're paying someone else to keep.</p>
-      <p class="p" style="font-weight:500; color:var(--ink);">That's not a promise of overnight customers. It's something quieter, and more valuable: never feeling lost with your own money again.</p>
+      <span class="kicker">Nach dem Setup</span>
+      <h2 class="h2">In drei Monaten.</h2>
+      <p class="sub" style="margin-bottom:16px;">Sie öffnen den Werbeanzeigenmanager — und nichts auf dem Bildschirm macht Ihnen mehr Angst.</p>
+      <p class="p" style="margin-bottom:16px;">Sie wissen, was läuft, was es kostet und was es zurückbringt. Wenn eine Agentur ein Angebot schickt, lesen Sie es wie jemand, der die Arbeit selbst gemacht hat — weil Sie es haben.</p>
+      <p class="p" style="margin-bottom:16px;">Nichts an Ihrem Marketing ist ein Geheimnis, für dessen Bewahrung Sie jemand anderen bezahlen.</p>
+      <p class="p" style="font-weight:500; color:var(--ink);">Das ist kein Versprechen von Kunden über Nacht. Es ist etwas Leiseres — und Wertvolleres: sich mit dem eigenen Geld nie wieder verloren zu fühlen.</p>
       <div class="cta-row" style="margin-top:28px;">
-        <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+        <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos ansehen →</button>
       </div>
     </div>
   </div>
@@ -546,24 +545,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line bg2">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">The setup is technical.<br>The payoff isn't.</h2>
-      <p class="p">Every piece you build translates into something you feel every month you're in business.</p>
+      <h2 class="h2">Das Setup ist technisch.<br>Der Gewinn ist es nicht.</h2>
+      <p class="p">Jedes Teil, das Sie aufbauen, übersetzt sich in etwas, das Sie jeden Monat spüren, in dem Sie Ihr Unternehmen führen.</p>
     </div>
     <div class="grid-3">
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4"/></svg></div>
-        <h3 class="h3">Control</h3>
-        <p class="small">Every asset in your name. Change agencies, pause ads, check your numbers — nothing is held hostage, ever.</p>
+        <h3 class="h3">Kontrolle</h3>
+        <p class="small">Jedes Konto auf Ihren Namen. Agentur wechseln, Anzeigen pausieren, Zahlen prüfen — nichts wird je als Geisel gehalten.</p>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.5 12C4.3 7.3 7.9 4.5 12 4.5s7.7 2.8 9.5 7.5c-1.8 4.7-5.4 7.5-9.5 7.5S4.3 16.7 2.5 12z"/></svg></div>
-        <h3 class="h3">Clarity</h3>
-        <p class="small">You'll read your own reports and know what you're paying for. "How are the ads doing?" stops being a question you're afraid to ask.</p>
+        <h3 class="h3">Klarheit</h3>
+        <p class="small">Sie lesen Ihre eigenen Berichte und wissen, wofür Sie bezahlen. „Wie laufen die Anzeigen?“ ist keine Frage mehr, vor der Sie sich fürchten.</p>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-        <h3 class="h3">Independence</h3>
-        <p class="small">Run ads yourself, or hire help — from a position of understanding, not hope. You decide, and you can change your mind.</p>
+        <h3 class="h3">Unabhängigkeit</h3>
+        <p class="small">Selbst schalten oder Hilfe holen — aus einer Position des Verstehens, nicht des Hoffens. Sie entscheiden, und Sie können Ihre Meinung ändern.</p>
       </div>
     </div>
   </div>
@@ -573,47 +572,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">This isn't anti-agency.<br>It's anti-blind.</h2>
-      <p class="p">Hiring experts can be a great decision — when you understand what you're buying. Here's what changes when you own your foundation first.</p>
+      <h2 class="h2">Das ist nicht gegen Agenturen.<br>Es ist gegen Blindflug.</h2>
+      <p class="p">Experten zu beauftragen kann eine großartige Entscheidung sein — wenn Sie verstehen, was Sie kaufen. Das ändert sich, wenn Ihnen zuerst Ihr Fundament gehört.</p>
     </div>
     <div class="compare">
       <div class="compare-head">
         <div></div>
-        <div>Outsourcing blind</div>
-        <div class="col-own">Owning your foundation</div>
+        <div>Blind auslagern</div>
+        <div class="col-own">Ihr Fundament besitzen</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">Who owns the ad account</div>
-        <div class="blind">Often the agency</div>
-        <div class="own">You. Always.</div>
+        <div class="rowlab">Wem das Werbekonto gehört</div>
+        <div class="blind">Oft der Agentur</div>
+        <div class="own">Ihnen. Immer.</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">When the contract ends</div>
-        <div class="blind">Assets and data can leave with them</div>
-        <div class="own">Everything stays with your business</div>
+        <div class="rowlab">Wenn der Vertrag endet</div>
+        <div class="blind">Konten und Daten können mitgehen</div>
+        <div class="own">Alles bleibt bei Ihrem Unternehmen</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">Evaluating the work</div>
-        <div class="blind">You trust reports you can't read</div>
-        <div class="own">You read the numbers yourself</div>
+        <div class="rowlab">Die Arbeit beurteilen</div>
+        <div class="blind">Sie vertrauen Berichten, die Sie nicht lesen können</div>
+        <div class="own">Sie lesen die Zahlen selbst</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">Cost to get started</div>
-        <div class="blind">€400–1,000+ setup, then a retainer</div>
-        <div class="own">€27, once</div>
+        <div class="rowlab">Kosten für den Start</div>
+        <div class="blind">400–1.000 €+ Setup, dann Pauschale</div>
+        <div class="own">27 €, einmal</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">When something breaks</div>
-        <div class="blind">You wait for someone to reply</div>
-        <div class="own">You know where to look</div>
+        <div class="rowlab">Wenn etwas kaputtgeht</div>
+        <div class="blind">Sie warten auf eine Antwort</div>
+        <div class="own">Sie wissen, wo Sie nachsehen</div>
       </div>
       <div class="compare-row">
-        <div class="rowlab">Hiring an expert later</div>
-        <div class="blind">A leap of faith</div>
-        <div class="own">An informed decision</div>
+        <div class="rowlab">Später Experten beauftragen</div>
+        <div class="blind">Ein Blindflug</div>
+        <div class="own">Eine informierte Entscheidung</div>
       </div>
     </div>
-    <p class="tiny" style="margin-top:20px;">Good agencies will be glad you took this course. The best clients understand the work.</p>
+    <p class="tiny" style="margin-top:20px;">Gute Agenturen werden sich freuen, dass Sie diesen Kurs gemacht haben. Die besten Kunden verstehen die Arbeit.</p>
   </div>
 </section>
 
@@ -621,28 +620,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line bg2">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">Where you'll be<br>after the last lesson.</h2>
+      <h2 class="h2">Wo Sie stehen —<br>nach der letzten Lektion.</h2>
     </div>
     <ul class="after-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your Meta Business Portfolio and Business Manager exist — organised, in your name</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your ad account and billing are configured and ready to spend safely</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your pixel is installed, firing, and tested — with events that match your business</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>You understand campaigns, ad sets and ads well enough to hold a real conversation about them</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Your first campaign is built and launched — correctly, with tracking that works</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Ihr Meta Business Portfolio und Business Manager existieren — aufgeräumt, auf Ihren Namen</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Werbekonto und Abrechnung sind konfiguriert und bereit, sicher Budget auszugeben</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Ihr Pixel ist installiert, feuert und ist getestet — mit Events, die zu Ihrem Unternehmen passen</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Sie verstehen Kampagnen, Anzeigengruppen und Anzeigen gut genug, um ein echtes Gespräch darüber zu führen</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Ihre erste Kampagne ist gebaut und live — korrekt, mit funktionierendem Tracking</li>
     </ul>
     <div class="grid-2" style="margin-top:48px; max-width:820px;">
       <div class="card">
-        <h3 class="h3">Path one: run it yourself</h3>
-        <p class="small">Keep going on your own, on your own budget, at your own pace. The foundation you built is exactly what your future campaigns will stand on.</p>
+        <h3 class="h3">Weg eins: selbst weitermachen</h3>
+        <p class="small">Machen Sie allein weiter, mit Ihrem Budget, in Ihrem Tempo. Das Fundament, das Sie gebaut haben, ist genau das, worauf Ihre künftigen Kampagnen stehen.</p>
       </div>
       <div class="card">
-        <h3 class="h3">Path two: hire help — informed</h3>
-        <p class="small">Bring in a freelancer or agency knowing exactly what you're buying, what they should deliver, and what stays yours. You'll never sign blind again.</p>
+        <h3 class="h3">Weg zwei: Hilfe holen — informiert</h3>
+        <p class="small">Holen Sie Freelancer oder Agentur an Bord — und wissen Sie genau, was Sie kaufen, was geliefert werden muss und was Ihnen gehört. Sie unterschreiben nie wieder blind.</p>
       </div>
     </div>
     <div class="cta-row" style="margin-top:36px;">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Start my setup — €27</a>
-      <button type="button" class="btn-ghost" data-free-class>Watch the first 2 lessons free →</button>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark">Setup starten — 27 €</a>
+      <button type="button" class="btn-ghost" data-free-class>Die ersten 2 Lektionen kostenlos ansehen →</button>
     </div>
   </div>
 </section>
@@ -680,36 +679,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line">
   <div class="container">
     <div class="sec-intro">
-      <h2 class="h2">Questions owners ask<br>before buying.</h2>
+      <h2 class="h2">Fragen, die Unternehmer<br>vor dem Kauf stellen.</h2>
     </div>
     <div class="faq">
       <details>
-        <summary>I'm not technical. Can I really do this?</summary>
-        <p class="p">Yes. If you can attach a file to an email, you can do this. Every lesson shows the exact screen and the exact click. Pause, click, continue.</p>
+        <summary>Ich bin nicht technisch. Schaffe ich das wirklich?</summary>
+        <p class="p">Ja. Wenn Sie eine Datei an eine E-Mail anhängen können, können Sie das. Jede Lektion zeigt den genauen Bildschirm und den genauen Klick. Pausieren, klicken, weiter.</p>
       </details>
       <details>
-        <summary>I'm too busy running my business.</summary>
-        <p class="p">The whole course is about two hours of short lessons. Do it in a single weekend — and it's work you only do once. The foundation you build keeps working for as long as you advertise.</p>
+        <summary>Ich habe keine Zeit — ich führe ein Unternehmen.</summary>
+        <p class="p">Der ganze Kurs besteht aus rund zwei Stunden kurzer Lektionen. Ein Wochenende — und diese Arbeit machen Sie nur einmal. Das Fundament arbeitet weiter, solange Sie werben.</p>
       </details>
       <details>
-        <summary>I've never run an ad in my life.</summary>
-        <p class="p">Perfect. The course assumes zero experience. It starts before step one: creating your Meta Business Portfolio from a blank screen.</p>
+        <summary>Ich habe noch nie eine Anzeige geschaltet.</summary>
+        <p class="p">Perfekt. Der Kurs setzt null Erfahrung voraus. Er beginnt vor Schritt eins: Ihr Meta Business Portfolio, von einem leeren Bildschirm aus.</p>
       </details>
       <details>
-        <summary>I've hired agencies before. Why would I need this?</summary>
-        <p class="p">Because after this you'll own your ad account, your pixel and your data — and you'll be able to read the reports you're paying for. Understanding the work makes you a better client, and a harder one to overcharge.</p>
+        <summary>Ich hatte schon Agenturen. Warum sollte ich das brauchen?</summary>
+        <p class="p">Weil Ihnen danach Ihr Werbekonto, Ihr Pixel und Ihre Daten gehören — und Sie die Berichte lesen können, für die Sie bezahlen. Wer die Arbeit versteht, ist ein besserer Kunde — und schwerer zu überteuern.</p>
       </details>
       <details>
-        <summary>Will this get me customers?</summary>
-        <p class="p">Honest answer: this course builds your advertising foundation — the setup that has to be right before any ad can work. A correct foundation doesn't guarantee results; no honest person can promise that. What it does is remove the expensive mistakes and put you in control of what happens next.</p>
+        <summary>Bringt mir das Kunden?</summary>
+        <p class="p">Ehrliche Antwort: Dieser Kurs baut Ihr Werbe-Fundament — das Setup, das stimmen muss, bevor irgendeine Anzeige funktionieren kann. Ein korrektes Fundament garantiert keine Ergebnisse; das kann ehrlicherweise niemand versprechen. Es verhindert die teuren Fehler und gibt Ihnen die Kontrolle über alles Weitere.</p>
       </details>
       <details>
-        <summary>Is this a subscription?</summary>
-        <p class="p">No. €27 once. Lifetime access to all 20 lessons and every future update.</p>
+        <summary>Ist der Kurs auf Deutsch?</summary>
+        <p class="p">Der Kurs ist auf Englisch — in einfacher, klarer Sprache, und jeder Klick wird am Bildschirm gezeigt. Der Meta-Werbeanzeigenmanager funktioniert überall gleich; Sie können Ihre Meta-Oberfläche auf Deutsch nutzen, während Sie den Lektionen folgen.</p>
       </details>
       <details>
-        <summary>How does the refund actually work?</summary>
-        <p class="p">Email me within 30 days of purchase. You get every cent back. No forms, no "proof you did the work", no questions.</p>
+        <summary>Ist das ein Abo?</summary>
+        <p class="p">Nein. Einmal 27 €. Lebenslanger Zugriff auf alle 20 Lektionen und jedes künftige Update.</p>
+      </details>
+      <details>
+        <summary>Wie funktioniert die Rückerstattung?</summary>
+        <p class="p">Schreiben Sie mir innerhalb von 30 Tagen nach dem Kauf eine E-Mail. Sie bekommen jeden Cent zurück. Keine Formulare, kein „Nachweis, dass Sie es durchgearbeitet haben“, keine Fragen.</p>
       </details>
     </div>
   </div>
@@ -719,27 +722,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec sec-line bg2">
   <div class="container" style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start; justify-content:space-between;">
     <div style="max-width:440px;">
-      <h2 class="h2">Own your foundation.<br>Then decide who runs your ads.</h2>
-      <p class="p" style="margin-bottom:24px;">One weekend of setup. A lifetime of knowing exactly where your advertising money goes.</p>
-      <p class="tiny">Launch price for the first students. It goes to €197 once the first cohort of reviews is in.</p>
+      <h2 class="h2">Besitzen Sie Ihr Fundament.<br>Entscheiden Sie dann, wer Ihre Anzeigen betreut.</h2>
+      <p class="p" style="margin-bottom:24px;">Ein Wochenende Setup. Ein Unternehmerleben lang wissen, wohin jeder Werbe-Euro fließt.</p>
+      <p class="tiny">Einführungspreis für die ersten Teilnehmer. Er steigt auf 197 €, sobald die ersten Bewertungen da sind.</p>
     </div>
     <div class="price-card">
       <span class="kicker" style="margin-bottom:12px;">Launch Ads Blueprint</span>
       <div class="price-row">
-        <span class="price-big">€27</span>
-        <span class="price-was">€197</span>
+        <span class="price-big">27 €</span>
+        <span class="price-was">197 €</span>
       </div>
-      <p class="small">One-time payment. No subscription.</p>
+      <p class="small">Einmalzahlung. Kein Abo.</p>
       <ul class="price-inc">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>All 20 lessons — from blank screen to launched campaign</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Meta Ads Launch Checklist</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Beginner Metrics Guide</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>ChatGPT Ad Copy Prompts</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Lifetime access + future updates</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Alle 20 Lektionen — vom leeren Bildschirm zur laufenden Kampagne</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Meta Ads Launch-Checkliste</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Kennzahlen-Guide für Einsteiger</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>ChatGPT-Prompts für Anzeigentexte</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Lebenslanger Zugriff + alle Updates</li>
       </ul>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Start my setup — €27</a>
-      <p class="tiny" style="text-align:center; margin-top:12px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
-      <button type="button" class="btn-ghost" data-free-class style="width:100%; margin-top:10px;">Still deciding? Watch the first 2 lessons free →</button>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Setup starten — 27 €</a>
+      <p class="tiny" style="text-align:center; margin-top:12px;">Sicherer Checkout über Alfima · Karte &amp; PayPal · Sofortiger Zugriff · 30 Tage Geld-zurück-Garantie</p>
+      <button type="button" class="btn-ghost" data-free-class style="width:100%; margin-top:10px;">Noch unsicher? Die ersten 2 Lektionen kostenlos ansehen →</button>
     </div>
   </div>
 </section>
@@ -747,8 +750,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p class="tiny" style="margin-bottom:8px;">Launch Ads Blueprint is an independent course by Growth Room. It teaches you to build your Meta advertising foundation; results from advertising depend on your offer, market and implementation.</p>
-    <p class="tiny"><a href="/privacy-policy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+    <p class="tiny" style="margin-bottom:8px;">Launch Ads Blueprint ist ein unabhängiger Kurs von Growth Room. Er zeigt Ihnen, wie Sie Ihr Meta-Werbe-Fundament aufbauen; Ergebnisse aus Werbung hängen von Ihrem Angebot, Markt und Ihrer Umsetzung ab.</p>
+    <p class="tiny"><a href="/privacy-policy">Datenschutz</a> · <a href="/terms">AGB</a></p>
   </div>
 </footer>
 
@@ -759,37 +762,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- State 1: capture -->
     <div id="fc-form-state">
-      <span class="fc-kicker">Open preview</span>
-      <h3 id="fc-title" class="fc-h">Two full lessons. Open.</h3>
-      <p class="small" style="margin-bottom:22px;">Lesson 1 shows you why most beginners waste money on ads. In lesson 2 we set up your Meta Business account together — step by step. Watch both, do the setup, then decide if you want the rest. Just tell me who you are.</p>
+      <span class="fc-kicker">Offene Vorschau</span>
+      <h3 id="fc-title" class="fc-h">Zwei komplette Lektionen. Offen.</h3>
+      <p class="small" style="margin-bottom:22px;">Lektion 1 zeigt, warum die meisten Einsteiger Geld mit Anzeigen verlieren. In Lektion 2 richten wir gemeinsam Ihr Meta-Business-Konto ein — Schritt für Schritt. Schauen Sie beide, machen Sie das Setup, entscheiden Sie dann. Sagen Sie mir nur, wer Sie sind. (Die Lektionen sind auf Englisch.)</p>
       <form id="fc-form" novalidate>
         <div class="fc-field">
-          <label for="fc-name">Your name</label>
+          <label for="fc-name">Ihr Name</label>
           <input id="fc-name" name="fullName" type="text" autocomplete="name" placeholder="Jane Smith" required />
         </div>
         <div class="fc-field">
-          <label for="fc-email">Your email</label>
+          <label for="fc-email">Ihre E-Mail</label>
           <input id="fc-email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
         </div>
-        <button type="submit" class="btn-dark" id="fc-submit" style="display:flex; width:100%;">Open lessons 1 &amp; 2 →</button>
-        <p class="fc-error" id="fc-error">Please enter your name and a valid email.</p>
-        <p class="tiny" style="margin-top:12px;">I'll also email you the lesson link plus occasional ads tips. Unsubscribe anytime. <a href="/privacy-policy" style="text-decoration:underline;">Privacy Policy</a>.</p>
+        <button type="submit" class="btn-dark" id="fc-submit" style="display:flex; width:100%;">Lektionen 1 &amp; 2 öffnen →</button>
+        <p class="fc-error" id="fc-error">Bitte geben Sie Ihren Namen und eine gültige E-Mail an.</p>
+        <p class="tiny" style="margin-top:12px;">Ich schicke Ihnen den Lektions-Link auch per E-Mail, plus gelegentliche Ads-Tipps. Jederzeit abbestellbar. <a href="/privacy-policy" style="text-decoration:underline;">Datenschutzerklärung</a>.</p>
       </form>
     </div>
 
     <!-- State 2: video -->
     <div id="fc-video-state" style="display:none;">
-      <span class="fc-kicker" id="fc-eyebrow">Lessons 1 &amp; 2 of 20 — open preview</span>
+      <span class="fc-kicker" id="fc-eyebrow">Lektionen 1 &amp; 2 von 20 — offene Vorschau</span>
       <h3 class="fc-h" id="fc-lesson-title">Why most beginners fail.</h3>
       <div class="fc-video">
         <video id="fc-player" src="/videos/lesson-1.mp4" controls controlsList="nodownload" preload="none" playsinline></video>
       </div>
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" id="fc-buy-top" style="display:flex; width:100%; margin-top:16px;">Start my setup — €27</a>
-      <p class="tiny" style="text-align:center; margin-top:8px;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
-      <button type="button" class="btn-ghost" id="fc-next-cta" style="width:100%; margin-top:10px;">▶ Next lesson → Watch lesson 2 (still free)</button>
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" id="fc-buy-top" style="display:flex; width:100%; margin-top:16px;">Setup starten — 27 €</a>
+      <p class="tiny" style="text-align:center; margin-top:8px;">Sicherer Checkout über Alfima · Karte &amp; PayPal · Sofortiger Zugriff · 30 Tage Geld-zurück-Garantie</p>
+      <button type="button" class="btn-ghost" id="fc-next-cta" style="width:100%; margin-top:10px;">▶ Nächste Lektion → Lektion 2 ansehen (weiter kostenlos)</button>
       <div class="fc-lessons">
-        <div class="fc-lesson fc-playable" data-lesson="0"><span class="num">01</span> Why most beginners fail <span class="fc-tag">▶ Watching now</span></div>
-        <div class="fc-lesson fc-playable" data-lesson="1"><span class="num">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Watch free</span></div>
+        <div class="fc-lesson fc-playable" data-lesson="0"><span class="num">01</span> Why most beginners fail <span class="fc-tag">▶ Läuft gerade</span></div>
+        <div class="fc-lesson fc-playable" data-lesson="1"><span class="num">02</span> Who the Meta Ads course is for <span class="fc-tag">▶ Kostenlos ansehen</span></div>
         <div class="fc-lesson locked"><span class="num">03</span> Meta Ads setup checklist <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="num">04</span> Creating the Facebook page <span class="fc-tag">🔒</span></div>
         <div class="fc-lesson locked"><span class="num">05</span> Adding Ads Manager and payment <span class="fc-tag">🔒</span></div>
@@ -810,19 +813,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="fc-lesson locked"><span class="num">20</span> Testing the event and final class <span class="fc-tag">🔒</span></div>
         <div class="fc-lock-note" id="fc-lock-note">
           <p id="fc-lock-text"></p>
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Start my setup — €27 →</a>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-dark" style="display:flex; width:100%;">Setup starten — 27 € →</a>
         </div>
       </div>
       <div class="fc-offer" id="fc-offer">
-        <p class="tiny" style="color:#A1A1AA; letter-spacing:.08em; text-transform:uppercase; font-weight:600;">Ready for lesson 3?</p>
+        <p class="tiny" style="color:#A1A1AA; letter-spacing:.08em; text-transform:uppercase; font-weight:600;">Bereit für Lektion 3?</p>
         <div class="price-row" style="margin:8px 0 4px;">
           <span class="price-big" style="font-size:40px; color:#fff;">€27</span>
           <span class="price-was" style="font-size:16px;">€197</span>
         </div>
-        <p class="small" style="color:#D4D4D8; margin-bottom:8px;">Next up: tracking. Installing your pixel is the step that decides whether Meta can optimise your ads at all — and it's where most beginners give up. I walk you through it click by click.</p>
-        <p class="small" style="color:#D4D4D8; margin-bottom:18px;">One-time payment · Unlocks all 18 remaining lessons + bonuses, ready to watch on the Alfima platform.</p>
-        <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Next lesson → Buy &amp; keep watching on Alfima</a>
-        <p class="tiny" style="text-align:center; margin-top:10px; color:#A1A1AA;">Secure checkout via Alfima · Card &amp; PayPal · Instant access · 30-day money-back guarantee</p>
+        <p class="small" style="color:#D4D4D8; margin-bottom:8px;">Als Nächstes: Tracking. Die Pixel-Installation entscheidet, ob Meta Ihre Anzeigen überhaupt optimieren kann — und genau hier geben die meisten Einsteiger auf. Ich führe Sie Klick für Klick hindurch.</p>
+        <p class="small" style="color:#D4D4D8; margin-bottom:18px;">Einmalzahlung · Schaltet alle 18 übrigen Lektionen + Boni frei — sofort auf der Alfima-Plattform.</p>
+        <a href={CHECKOUT_URL} target="_blank" rel="noopener" class="btn-light">Nächste Lektion → Kaufen &amp; auf Alfima weiterschauen</a>
+        <p class="tiny" style="text-align:center; margin-top:10px; color:#A1A1AA;">Sicherer Checkout über Alfima · Karte &amp; PayPal · Sofortiger Zugriff · 30 Tage Geld-zurück-Garantie</p>
       </div>
     </div>
   </div>
@@ -897,14 +900,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var email    = document.getElementById("fc-email").value.trim().toLowerCase();
 
     if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errorEl.textContent = "Please enter your name and a valid email.";
+      errorEl.textContent = "Bitte geben Sie Ihren Namen und eine gültige E-Mail an.";
       errorEl.style.display = "block";
       return;
     }
     errorEl.style.display = "none";
     submitBtn.disabled = true;
     var originalLabel = submitBtn.textContent;
-    submitBtn.textContent = "Opening…";
+    submitBtn.textContent = "Wird geöffnet…";
 
     var nameParts = fullName.split(/\s+/);
     var eventId   = Date.now() + "_" + Math.floor(Math.random() * 1e15);
@@ -954,7 +957,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       renderState();
       if (player && player.play) player.play().catch(function () {});
     } catch (err) {
-      errorEl.textContent = "Something went wrong. Please try again.";
+      errorEl.textContent = "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.";
       errorEl.style.display = "block";
     } finally {
       submitBtn.disabled = false;
@@ -964,8 +967,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── Free lessons: player com aulas 1 e 2 ────────────────────────────
   var LESSONS = [
-    { label: "Lesson 1 of 20 — open preview", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
-    { label: "Lesson 2 of 20 — open preview", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
+    { label: "Lektion 1 von 20 — offene Vorschau", title: "Why most beginners fail.",        src: "/videos/lesson-1.mp4" },
+    { label: "Lektion 2 von 20 — offene Vorschau", title: "Who the Meta Ads course is for.", src: "/videos/lesson-2.mp4" },
   ];
   var currentLesson = 0;
   var milestones = { 25: false, 50: false, 75: false, 95: false };
@@ -981,7 +984,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     for (var r = 0; r < rows.length; r++) {
       var active = Number(rows[r].dataset.lesson) === i;
       rows[r].classList.toggle("active", active);
-      rows[r].querySelector(".fc-tag").textContent = active ? "▶ Watching now" : "▶ Watch free";
+      rows[r].querySelector(".fc-tag").textContent = active ? "▶ Läuft gerade" : "▶ Kostenlos ansehen";
     }
     if (player.getAttribute("src") !== LESSONS[i].src) player.setAttribute("src", LESSONS[i].src);
     if (autoplay && player.play) player.play().catch(function () {});
@@ -1005,8 +1008,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         .call(row.childNodes, function (n) { return n.nodeType === 3; })
         .map(function (n) { return n.textContent; }).join("").trim();
       document.getElementById("fc-lock-text").innerHTML =
-        "Lesson " + num + " — <strong>" + title + "</strong> — is part of the full course. " +
-        "Unlock all 18 remaining lessons + the bonuses for a one-time <strong>€27</strong> <s>€197</s>.";
+        "Lektion " + num + " — <strong>" + title + "</strong> — ist Teil des vollständigen Kurses. " +
+        "Schalten Sie alle 18 übrigen Lektionen + Boni frei — einmalig <strong>27 €</strong> <s>197 €</s>.";
       row.after(lockNote);
       lockNote.style.display = "block";
       window.dataLayer = window.dataLayer || [];
@@ -1045,12 +1048,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Cookie Banner -->
 <div id="cookie-banner" style="position:fixed; left:16px; right:16px; bottom:16px; z-index:9999; display:none; max-width:560px; margin:0 auto; background:#fff; color:var(--body); border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.12); padding:18px 20px;">
   <p style="font-size:13px; line-height:1.5; margin-bottom:14px;">
-    We use cookies to improve your experience and measure our marketing. See our
-    <a href="/privacy-policy" style="color:var(--accent-ink); text-decoration:underline;">Privacy Policy</a>.
+    Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und unser Marketing zu messen. Siehe unsere
+    <a href="/privacy-policy" style="color:var(--accent-ink); text-decoration:underline;">Datenschutzerklärung</a>.
   </p>
   <div style="display:flex; gap:10px;">
-    <button id="cookie-reject" type="button" style="flex:1; background:transparent; color:var(--body); border:1px solid var(--line); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Reject</button>
-    <button id="cookie-accept" type="button" style="flex:1; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Accept</button>
+    <button id="cookie-reject" type="button" style="flex:1; background:transparent; color:var(--body); border:1px solid var(--line); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Ablehnen</button>
+    <button id="cookie-accept" type="button" style="flex:1; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;">Akzeptieren</button>
   </div>
 </div>
 <script>
