@@ -84,9 +84,19 @@ export const POST: APIRoute = async ({ request }) => {
 
 				fetch(webhookUrl, {
 					method: "POST",
-					headers: { "Content-Type": "application/json" },
+					headers: { "Content-Type": "application/json", "X-Forwarded-For": clientIp },
 					body: JSON.stringify({
 						lead_type:  "free_class",
+						// aliases no formato que o Normalize do n8n espera (CAPI/dedup)
+						event_id:         payload.meta_event_id         ?? "",
+						fbp:              payload.meta_fbp              ?? "",
+						fbc:              payload.meta_fbc              ?? "",
+						user_agent:       payload.meta_user_agent       ?? "",
+						event_source_url: payload.meta_event_source_url ?? "",
+						content_name:     "Launch Ads Blueprint — Free Lessons",
+						content_category: "free_class",
+						value:            0,
+						currency:         "EUR",
 						full_name:  fullName,
 						first_name: nameParts[0] ?? "",
 						last_name:  nameParts.slice(1).join(" "),
@@ -161,8 +171,18 @@ export const POST: APIRoute = async ({ request }) => {
 			// Fire-and-forget — não bloqueia a resposta ao browser
 			fetch(webhookUrl, {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": "application/json", "X-Forwarded-For": clientIp },
 				body: JSON.stringify({
+					// aliases no formato que o Normalize do n8n espera (CAPI/dedup)
+					event_id:         payload.meta_event_id         ?? "",
+					fbp:              payload.meta_fbp              ?? "",
+					fbc:              payload.meta_fbc              ?? "",
+					user_agent:       payload.meta_user_agent       ?? "",
+					event_source_url: payload.meta_event_source_url ?? "",
+					content_name:     "Growth Room — Lead Form",
+					content_category: "sales_form",
+					value:            0,
+					currency:         "EUR",
 					// Dados do formulário
 					full_name:       fullName,
 					first_name:      firstName,
