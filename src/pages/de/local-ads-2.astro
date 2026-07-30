@@ -294,6 +294,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
     50%      { box-shadow: 0 0 0 6px rgba(245,158,11,.45); }
   }
+
+  /* ── Boost popup ── */
+  #bp-overlay { position: fixed; inset: 0; z-index: 9990; background: rgba(24,24,27,.5); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 24px; }
+  #bp-overlay.open { display: flex; }
+  .bp-modal { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; max-width: 470px; width: 100%; padding: 34px 30px 28px; position: relative; box-shadow: 0 30px 80px -30px rgba(0,0,0,.45); animation: bpIn .3s ease; }
+  @keyframes bpIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .bp-close { position: absolute; top: 12px; right: 12px; background: none; border: none; font-size: 15px; color: var(--muted); cursor: pointer; padding: 6px; }
+  .bp-close:hover { color: var(--ink); }
+  .bp-kicker { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid #FDE68A; border-radius: 999px; padding: 5px 12px; margin-bottom: 16px; }
+  .bp-h { font-size: 24px; font-weight: 700; letter-spacing: -.025em; line-height: 1.15; margin-bottom: 12px; }
+  .bp-p { font-size: 14.5px; line-height: 1.65; color: var(--body); margin-bottom: 20px; }
+  .bp-p strong { color: var(--ink); }
+  .bp-sub { font-size: 12px; color: var(--muted); text-align: center; margin-top: 10px; }
+  .bp-later { display: block; margin: 14px auto 0; background: none; border: none; font-family: inherit; font-size: 12.5px; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .bp-later:hover { color: var(--ink); }
 </style>
 
 <!-- FAQ structured data -->
@@ -831,6 +846,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
+<!-- BOOST POPUP -->
+<div id="bp-overlay" role="dialog" aria-modal="true" aria-labelledby="bp-h">
+  <div class="bp-modal">
+    <button type="button" class="bp-close" id="bp-close" aria-label="Close">✕</button>
+    <span class="bp-kicker">Kurze Frage</span>
+    <h3 class="bp-h" id="bp-h">Schon mal „Boosten“ gedrückt — und nichts bekommen?</h3>
+    <p class="bp-p">50 €. 200 Likes. Null neue Kunden. Das war keine Anzeige — <strong>das war eine Spende an Meta</strong>. Es gibt ein Basis-Setup, das aus Boosts echte Kampagnen macht — und die ersten 2 Lektionen sind offen.</p>
+    <button type="button" class="btn-dark" id="bp-cta" data-free-class style="display:flex; width:100%; justify-content:center; text-align:center;">Die ersten 2 Lektionen kostenlos ansehen →</button>
+    <p class="bp-sub">Keine Karte nötig · Nach Lektion 2 ist Ihr Meta-Business-Konto live</p>
+    <button type="button" class="bp-later" id="bp-later">Vielleicht später</button>
+  </div>
+</div>
+
 <script>
 (function () {
   var UNLOCK_KEY = "gr_free_class_v1";
@@ -1137,5 +1165,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   })();
 </script>
 
+<script>
+(function () {
+  var SEEN_KEY = "gr_boost_pop_v1";
+  var overlay = document.getElementById("bp-overlay");
+  if (!overlay) return;
+  function seen() { try { return !!localStorage.getItem(SEEN_KEY); } catch (e) { return true; } }
+  function mark() { try { localStorage.setItem(SEEN_KEY, "1"); } catch (e) {} }
+  function isLead() { try { return !!localStorage.getItem("gr_free_class_v1"); } catch (e) { return false; } }
+  function close() { overlay.classList.remove("open"); }
+
+  setTimeout(function () {
+    if (seen() || isLead()) return;
+    var fc = document.getElementById("fc-overlay");
+    if (fc && fc.classList.contains("open")) return; // funil já aberto
+    overlay.classList.add("open");
+    mark(); // uma vez por visitante
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "boost_popup_shown" });
+  }, 10000);
+
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+  document.getElementById("bp-close").addEventListener("click", close);
+  document.getElementById("bp-later").addEventListener("click", close);
+  document.getElementById("bp-cta").addEventListener("click", function () {
+    close();
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "boost_popup_cta" });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && overlay.classList.contains("open")) close();
+  });
+})();
+</script>
 </body>
 </html>
