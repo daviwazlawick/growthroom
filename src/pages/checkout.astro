@@ -1,0 +1,267 @@
+---
+// Checkout próprio via Stripe. Preview mode: sem STRIPE_* no .env, mostra
+// placeholder no lugar do Payment Element. Preços espelhados em api/checkout/intent.ts
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Checkout — Launch Ads Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FFFFFF; --bg2: #FAFAF9; --ink: #18181B; --body: #52525B; --muted: #A1A1AA;
+    --line: #E4E4E7; --line2: #F4F4F5; --accent: #F59E0B; --accent-ink: #B45309;
+    --accent-soft: #FFFBEB; --green: #15803D;
+  }
+  html { font-family: 'Inter', system-ui, sans-serif; background: var(--bg2); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+
+  .top { background: rgba(255,255,255,.9); border-bottom: 1px solid var(--line); }
+  .top-in { max-width: 1020px; margin: 0 auto; padding: 0 20px; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-size: 15px; font-weight: 700; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+  .secure { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .secure svg { width: 13px; height: 13px; stroke: var(--green); }
+
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 36px 20px 80px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px; }
+  .card h2 { font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 18px; }
+
+  /* resumo do pedido */
+  .prod { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid var(--line2); }
+  .prod-thumb { width: 56px; height: 56px; border-radius: 12px; background: var(--ink); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+  .prod-name { font-size: 15px; font-weight: 600; }
+  .prod-desc { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+  .prod-price { margin-left: auto; text-align: right; flex-shrink: 0; }
+  .prod-price .now { font-size: 16px; font-weight: 700; }
+  .prod-price .was { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+
+  .includes { list-style: none; padding: 16px 0; border-bottom: 1px solid var(--line2); }
+  .includes li { display: flex; gap: 9px; font-size: 13px; color: var(--body); padding: 4px 0; }
+  .includes svg { width: 15px; height: 15px; stroke: var(--green); flex-shrink: 0; margin-top: 2px; }
+
+  /* bump */
+  .bump { border: 2px dashed var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 16px; margin: 18px 0; cursor: pointer; display: flex; gap: 12px; align-items: flex-start; transition: background .15s; }
+  .bump:hover { background: #FEF3C7; }
+  .bump input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent-ink); flex-shrink: 0; cursor: pointer; }
+  .bump-title { font-size: 13.5px; font-weight: 700; }
+  .bump-title .chip { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 8px; margin-left: 6px; }
+  .bump-desc { font-size: 12.5px; color: var(--body); line-height: 1.55; margin-top: 4px; }
+
+  .totals { padding-top: 4px; }
+  .trow { display: flex; justify-content: space-between; font-size: 13.5px; color: var(--body); padding: 5px 0; }
+  .trow.total { font-size: 16px; font-weight: 700; color: var(--ink); border-top: 1px solid var(--line2); margin-top: 8px; padding-top: 12px; }
+  #row-bump { display: none; }
+
+  .guarantee { display: flex; gap: 10px; margin-top: 18px; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 12.5px; color: var(--body); line-height: 1.5; }
+  .guarantee svg { width: 18px; height: 18px; stroke: var(--green); flex-shrink: 0; margin-top: 1px; }
+
+  /* pagamento */
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; }
+  .field input { width: 100%; border: 1px solid var(--line); background: var(--bg2); padding: 12px 14px; font-size: 14.5px; font-family: inherit; border-radius: 10px; }
+  .field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  #payment-element { margin: 16px 0 4px; min-height: 120px; }
+  .demo-box { border: 1px dashed var(--line); border-radius: 12px; background: var(--bg2); padding: 26px 20px; text-align: center; font-size: 13px; color: var(--muted); line-height: 1.6; margin: 16px 0 4px; }
+
+  .pay { width: 100%; background: var(--ink); color: #fff; border: none; border-radius: 12px; padding: 16px; font-size: 15.5px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 14px; transition: background .15s, transform .12s; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .pay:hover { background: #000; transform: translateY(-1px); }
+  .pay:disabled { opacity: .55; cursor: default; transform: none; }
+  .pay-err { display: none; font-size: 13px; color: #B91C1C; margin-top: 10px; }
+  .trust { font-size: 11.5px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.6; }
+  .powered { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 10px; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-in">
+    <span class="brand"><span class="dot"></span> Growth Room</span>
+    <span class="secure"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4"/></svg> Secure checkout</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+
+    <!-- Resumo -->
+    <div class="card">
+      <h2>Your order</h2>
+      <div class="prod">
+        <div class="prod-thumb">LB</div>
+        <div>
+          <p class="prod-name">Launch Ads Blueprint</p>
+          <p class="prod-desc">20 lessons · from blank screen to your first launched campaign · lifetime access</p>
+        </div>
+        <div class="prod-price"><div class="now">€27</div><div class="was">€197</div></div>
+      </div>
+      <ul class="includes">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>All 20 lessons + every future update</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Meta Ads Launch Checklist</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Beginner Metrics Guide</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>ChatGPT Ad Copy Prompts</li>
+      </ul>
+
+      <!-- BUMP (placeholder de produto — validar com Davi antes de ativar) -->
+      <label class="bump" for="bump-check">
+        <input type="checkbox" id="bump-check" />
+        <span>
+          <span class="bump-title">Add the Local Ads Copy Vault <span class="chip">+€19</span></span>
+          <span class="bump-desc">50 ready-to-use ad copy templates for local businesses — dentists, gyms, restaurants, salons &amp; more. Fill in your name, launch today. One-time offer, only on this page.</span>
+        </span>
+      </label>
+
+      <div class="totals">
+        <div class="trow"><span>Launch Ads Blueprint</span><span>€27.00</span></div>
+        <div class="trow" id="row-bump"><span>Local Ads Copy Vault</span><span>€19.00</span></div>
+        <div class="trow total"><span>Total</span><span id="total">€27.00</span></div>
+      </div>
+
+      <div class="guarantee">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 12l2 2 4-4m5.6 2A9 9 0 1 1 12 3a9 9 0 0 1 8.6 9z"/></svg>
+        <span><strong>30-day money-back guarantee.</strong> Go through the course — if you don't feel ready to run your first campaign, email us and get every cent back.</span>
+      </div>
+    </div>
+
+    <!-- Pagamento -->
+    <div class="card">
+      <h2>Payment</h2>
+      <div class="field">
+        <label for="co-name">Full name</label>
+        <input id="co-name" type="text" autocomplete="name" placeholder="Jane Smith" required />
+      </div>
+      <div class="field">
+        <label for="co-email">Email — your access will be sent here</label>
+        <input id="co-email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+      </div>
+
+      <div id="payment-element"></div>
+      <div class="demo-box" id="demo-box" style="display:none;">
+        🔒 Payment form appears here<br>
+        <span style="font-size:12px;">(Stripe keys not configured yet — preview mode. Card, Apple&nbsp;Pay, Google&nbsp;Pay, PayPal &amp; Klarna will show in this box.)</span>
+      </div>
+
+      <button class="pay" id="pay-btn" disabled>Pay €27 — get instant access</button>
+      <p class="pay-err" id="pay-err"></p>
+      <p class="trust">Instant access after payment · 30-day money-back guarantee · VAT included</p>
+      <div class="powered">Powered by <strong>Stripe</strong> — your card details never touch our servers</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var PRODUCT = 27, BUMP = 19;
+  var bump = false, stripe = null, elements = null, intentId = null, demo = false;
+
+  var bumpCheck = document.getElementById("bump-check");
+  var payBtn = document.getElementById("pay-btn");
+  var errEl = document.getElementById("pay-err");
+
+  function getCookie(name) {
+    var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return m ? m.pop() : "";
+  }
+  function attribution() {
+    var q = new URLSearchParams(location.search);
+    return {
+      fbp: getCookie("_fbp"), fbc: getCookie("_fbc") || (q.get("fbclid") ? "fb.1." + Date.now() + "." + q.get("fbclid") : ""),
+      utm_source: q.get("utm_source") || "", utm_campaign: q.get("utm_campaign") || "",
+      url: location.href,
+    };
+  }
+  function total() { return PRODUCT + (bump ? BUMP : 0); }
+  function renderTotals() {
+    document.getElementById("row-bump").style.display = bump ? "flex" : "none";
+    document.getElementById("total").textContent = "€" + total() + ".00";
+    payBtn.textContent = "Pay €" + total() + " — get instant access";
+  }
+  function fail(msg) { errEl.textContent = msg; errEl.style.display = "block"; }
+
+  async function init() {
+    try {
+      var res = await fetch("/api/checkout/intent", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bump: bump, attribution: attribution() }),
+      });
+      var data = await res.json();
+      if (data.demo) {
+        demo = true;
+        document.getElementById("demo-box").style.display = "block";
+        payBtn.disabled = false; // permite "testar" o clique no preview
+        return;
+      }
+      if (!data.ok) throw new Error("init");
+      intentId = data.intent_id;
+      stripe = Stripe(data.pk);
+      elements = stripe.elements({
+        clientSecret: data.client_secret,
+        appearance: {
+          theme: "stripe",
+          variables: { colorPrimary: "#18181B", borderRadius: "10px", fontFamily: "Inter, system-ui, sans-serif" },
+        },
+      });
+      elements.create("payment", { layout: "tabs" }).mount("#payment-element");
+      payBtn.disabled = false;
+    } catch (e) {
+      fail("Could not load the payment form. Refresh the page or try again in a minute.");
+    }
+  }
+
+  bumpCheck.addEventListener("change", async function () {
+    bump = bumpCheck.checked;
+    renderTotals();
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: bump ? "bump_added" : "bump_removed" });
+    if (intentId) {
+      fetch("/api/checkout/intent", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ intent_id: intentId, bump: bump }),
+      }).catch(function () {});
+    }
+  });
+
+  payBtn.addEventListener("click", async function () {
+    errEl.style.display = "none";
+    var name = document.getElementById("co-name").value.trim();
+    var email = document.getElementById("co-email").value.trim().toLowerCase();
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return fail("Please fill in your name and a valid email — your access is delivered there.");
+    }
+    if (demo) return fail("Preview mode: payments are disabled until Stripe keys are configured.");
+    payBtn.disabled = true; payBtn.textContent = "Processing…";
+    try {
+      await fetch("/api/checkout/intent", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ intent_id: intentId, bump: bump, email: email, name: name }),
+      });
+      try { localStorage.setItem("gr_last_total", String(total())); } catch (e) {}
+      var result = await stripe.confirmPayment({
+        elements: elements,
+        confirmParams: { return_url: location.origin + "/checkout/success" },
+      });
+      if (result.error) { fail(result.error.message || "Payment failed. Please try again."); }
+    } catch (e) {
+      fail("Something went wrong. Please try again.");
+    } finally {
+      payBtn.disabled = false; renderTotals();
+    }
+  });
+
+  renderTotals();
+  init();
+})();
+</script>
+</body>
+</html>

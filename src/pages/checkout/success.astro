@@ -1,0 +1,66 @@
+---
+// Página de retorno do Stripe após pagamento
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>You're in — Launch Ads Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel (Purchase browser-side com dedup pelo payment_intent) -->
+<script>
+  (function () {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1009429968103557');
+    fbq('track', 'PageView');
+  })();
+</script>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF9; color: #18181B; -webkit-font-smoothing: antialiased; }
+  .wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card { background: #fff; border: 1px solid #E4E4E7; border-radius: 20px; padding: 44px 36px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 30px 80px -40px rgba(0,0,0,.3); }
+  .check { width: 64px; height: 64px; border-radius: 50%; background: #DCFCE7; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+  .check svg { width: 30px; height: 30px; stroke: #15803D; stroke-width: 2.5; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -.025em; margin-bottom: 12px; }
+  p { font-size: 15px; line-height: 1.65; color: #52525B; margin-bottom: 10px; }
+  .hint { font-size: 12.5px; color: #A1A1AA; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h1>You're in. 🎉</h1>
+    <p><strong>Check your email</strong> — your access to Launch Ads Blueprint is on its way to your inbox right now.</p>
+    <p>Block one weekend, follow the lessons click by click, and your advertising foundation will be live.</p>
+    <p class="hint">Nothing arrived after 10 minutes? Check spam, or write to contact@growthroom.eu — we reply fast.</p>
+  </div>
+</div>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get("redirect_status") !== "succeeded") return;
+    var value = 27;
+    try { value = Number(localStorage.getItem("gr_last_total")) || 27; } catch (e) {}
+    var eventId = q.get("payment_intent") || undefined;
+    if (typeof fbq === "function") {
+      fbq("track", "Purchase", { value: value, currency: "EUR", content_name: "Launch Ads Blueprint" },
+        eventId ? { eventID: eventId } : {});
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "purchase", value: value, currency: "EUR", payment_intent: eventId || "" });
+  })();
+</script>
+</body>
+</html>
