@@ -3,7 +3,7 @@ import Stripe from "stripe";
 
 // Preços em centavos — manter em sincronia com o front (/checkout)
 const PRODUCT_PRICE = 2700;   // Launch Ads Blueprint — €27
-const BUMP_PRICE    = 1900;   // Bump offer — €19 (placeholder até o Davi validar o produto)
+const BUMP_PRICE    = 1900;   // AI Ads Blueprint (bump) — €19
 
 const json = (status: number, body: Record<string, unknown>) =>
 	new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
 			amount,
 			currency: "eur",
 			automatic_payment_methods: { enabled: true },
-			description: "Launch Ads Blueprint" + (bump ? " + Bump" : ""),
+			description: "Launch Ads Blueprint" + (bump ? " + AI Ads Blueprint" : ""),
 			metadata: {
 				product: "launch-ads-blueprint",
 				bump: String(bump),
