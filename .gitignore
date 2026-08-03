@@ -24,3 +24,4 @@ pnpm-debug.log*
 .idea/
 data/leads.csv
 exports/
+cursos-online
