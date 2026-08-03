@@ -11,6 +11,7 @@ const dataDir = join(__dirname, "../../../data");
 const FILES: Record<string, string> = {
 	free: "free-class-leads.csv",
 	sales: "leads.csv",
+	alfima: "alfima-leads-import.csv",
 };
 
 export const GET: APIRoute = async ({ url }) => {
