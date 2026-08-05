@@ -195,6 +195,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .video-cap { font-size: 12px; color: var(--muted); margin-top: 12px; }
 
+  /* ── Hero video (self-hosted) ── */
+  .hero-video { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--border); background: #000; overflow: hidden; }
+  .hero-video video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; background: #000; }
+  .hv-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; width: 100%; border: 0; padding: 0; background: rgba(26,26,26,.30); cursor: pointer; transition: background .18s ease; }
+  .hv-play:hover { background: rgba(26,26,26,.42); }
+  .hv-play span { display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--ink); font-size: 15px; font-weight: 600; padding: 13px 22px; border-radius: 999px; box-shadow: 0 12px 34px -12px rgba(0,0,0,.55); }
+  .hero-video.is-playing .hv-play { display: none; }
+  @media (max-width: 600px) { .hv-play span { font-size: 13px; padding: 11px 18px; } }
+
   /* ── Inline figures ── */
   .figure { margin: 28px 0 0; }
   .figure img { width: 100%; display: block; border: 1px solid var(--border); }
@@ -376,8 +385,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="tiny" style="margin-top:-16px; margin-bottom:24px;">Launch price for the first students. It goes to €197 once the first cohort of reviews is in.</p>
     <h1 class="h1">Stop donating money to Facebook <br>&amp; Instagram by boosting posts!</h1>
     <p class="lead">The complete blueprint for creating ads and running them yourself — from your very first campaign to your first real results.</p>
-    <div style="margin: 36px -24px 36px;">
-      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — product mockup" style="width:100%; display:block;" />
+    <div class="hero-video" data-hero-video style="margin: 36px 0;">
+      <video
+        src="/videos/whylabp.mp4"
+        poster="/img/launch-ads-mockup.png"
+        preload="none"
+        playsinline
+        controls
+        controlsList="nodownload"
+        aria-label="Watch This Before You Buy"></video>
+      <button type="button" class="hv-play" aria-label="Play video"><span>&#9654; Watch This Before You Buy (4 min)</span></button>
     </div>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
@@ -1417,6 +1434,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (e.key === "Escape" && overlay.classList.contains("open")) close();
   });
 })();
+</script>
+<script>
+  // Hero video: click-to-play (preload="none" keeps the file off the initial page load)
+  document.querySelectorAll('[data-hero-video]').forEach(function (box) {
+    var video = box.querySelector('video');
+    var btn = box.querySelector('.hv-play');
+    if (!video || !btn) return;
+    btn.addEventListener('click', function () {
+      box.classList.add('is-playing');
+      video.play();
+    });
+    video.addEventListener('pause', function () {
+      if (video.currentTime === 0) box.classList.remove('is-playing');
+    });
+  });
 </script>
 </body>
 </html>

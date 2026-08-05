@@ -168,6 +168,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .hero-trust span { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
   .hero-shot { margin-top: 64px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px -30px rgba(24,24,27,.25); }
   .hero-shot img { width: 100%; }
+  /* hero video — capped so the 640px-wide source isn't upscaled too far */
+  .hero-video { position: relative; margin: 64px auto 0; max-width: 820px; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #000; box-shadow: 0 24px 60px -30px rgba(24,24,27,.25); }
+  .hero-video video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; background: #000; }
+  .hv-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; width: 100%; border: 0; padding: 0; background: rgba(24,24,27,.30); cursor: pointer; transition: background .18s ease; }
+  .hv-play:hover { background: rgba(24,24,27,.42); }
+  .hv-play span { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: var(--ink); font-size: 15px; font-weight: 600; padding: 13px 22px; border-radius: 999px; box-shadow: 0 12px 34px -12px rgba(0,0,0,.55); }
+  .hero-video.is-playing .hv-play { display: none; }
   @media (max-width: 640px) {
     .hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
     .hero-shot { margin-top: 40px; }
@@ -363,8 +370,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span>✓ 30-Tage-Geld-zurück-Garantie</span>
       <span>✓ Alles, was Sie aufbauen, gehört Ihnen</span>
     </div>
-    <div class="hero-shot">
-      <img src="/img/launch-ads-mockup.png" alt="Launch Ads Blueprint — Meta-Ads-Kurs für lokale Unternehmen, Schritt für Schritt" />
+    <div class="hero-video" data-hero-video>
+      <video
+        src="/videos/whylabp.mp4"
+        poster="/img/launch-ads-mockup.png"
+        preload="none"
+        playsinline
+        controls
+        controlsList="nodownload"
+        aria-label="Watch This Before You Buy"></video>
+      <button type="button" class="hv-play" aria-label="Play video"><span>&#9654; Watch This Before You Buy (4 min)</span></button>
     </div>
   </div>
 </section>
@@ -1197,6 +1212,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (e.key === "Escape" && overlay.classList.contains("open")) close();
   });
 })();
+</script>
+<script>
+  // Hero video: click-to-play (preload="none" keeps the file off the initial page load)
+  document.querySelectorAll('[data-hero-video]').forEach(function (box) {
+    var video = box.querySelector('video');
+    var btn = box.querySelector('.hv-play');
+    if (!video || !btn) return;
+    btn.addEventListener('click', function () {
+      box.classList.add('is-playing');
+      video.play();
+    });
+    video.addEventListener('pause', function () {
+      if (video.currentTime === 0) box.classList.remove('is-playing');
+    });
+  });
 </script>
 </body>
 </html>
