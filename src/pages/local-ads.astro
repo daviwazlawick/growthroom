@@ -202,6 +202,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .hv-play:hover { background: rgba(26,26,26,.42); }
   .hv-play span { display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--ink); font-size: 15px; font-weight: 600; padding: 13px 22px; border-radius: 999px; box-shadow: 0 12px 34px -12px rgba(0,0,0,.55); }
   .hero-video.is-playing .hv-play { display: none; }
+  .hv-unmute { position: absolute; top: 12px; right: 12px; z-index: 2; border: 0; padding: 0; background: transparent; cursor: pointer; }
+  .hv-unmute[hidden] { display: none; }
+  .hv-unmute span { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 999px; box-shadow: 0 12px 34px -12px rgba(0,0,0,.55); }
   @media (max-width: 600px) { .hv-play span { font-size: 13px; padding: 11px 18px; } }
 
   /* ── Inline figures ── */
@@ -395,6 +398,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         controlsList="nodownload"
         aria-label="Watch This Before You Buy"></video>
       <button type="button" class="hv-play" aria-label="Play video"><span>&#9654; Watch This Before You Buy (4 min)</span></button>
+      <button type="button" class="hv-unmute" hidden aria-label="Turn sound on"><span>&#128266; Tap for sound</span></button>
     </div>
     <p class="body" style="max-width:520px; margin-bottom:36px;">No agency. No freelancer. No guessing. Just a clear, step-by-step system anyone can follow.</p>
     <p class="tiny" style="max-width:520px; margin-top:-20px; margin-bottom:36px; color:var(--muted);">Built by someone who managed millions in ad spend at venture-backed startups — distilled into a system simple enough for a total beginner.</p>
@@ -1440,43 +1444,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 <script>
   // Hero video: click-to-play, plus an autoplay attempt 5s after load.
-  // Autoplay is unmuted by design. Browsers refuse sound-on playback until the
-  // page has had a user gesture, so when the attempt is refused we arm the next
-  // interaction anywhere on the page to start it. We never fall back to muted.
+  // Browsers refuse unmuted autoplay until the page has had a user gesture, so
+  // we try sound-on first (some visitors qualify) and otherwise play muted and
+  // offer a "tap for sound" pill. Only that pill or the native controls unmute,
+  // so an unrelated click elsewhere on the page never starts audio.
   document.querySelectorAll('[data-hero-video]').forEach(function (box) {
     var video = box.querySelector('video');
     var btn = box.querySelector('.hv-play');
     if (!video || !btn) return;
+    var unmute = box.querySelector('.hv-unmute');
     var started = false;
-    var armed = false;
-    var GESTURES = ['click', 'touchend', 'keydown'];
 
-    function start() {
+    function withSound() {
+      video.muted = false;
+      if (unmute) unmute.hidden = true;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+
+    function start(userInitiated) {
       if (started) return;
       started = true;
       box.classList.add('is-playing');
       var attempt = video.play();
-      if (attempt && attempt.catch) attempt.catch(function () {
-        // Refused for want of a user gesture — restore the poster and wait for one.
-        started = false;
-        box.classList.remove('is-playing');
-        arm();
+      if (!attempt || !attempt.catch) return;
+      attempt.catch(function () {
+        // Sound-on refused for want of a gesture — play muted and offer sound.
+        video.muted = true;
+        video.play().then(function () {
+          if (unmute && !userInitiated) unmute.hidden = false;
+        }).catch(function () {
+          // Even muted playback refused — restore the poster and play button.
+          started = false;
+          video.muted = false;
+          box.classList.remove('is-playing');
+        });
       });
     }
 
-    function arm() {
-      if (armed) return;
-      armed = true;
-      GESTURES.forEach(function (e) { document.addEventListener(e, start, true); });
-    }
+    btn.addEventListener('click', function () { start(true); });
+    if (unmute) unmute.addEventListener('click', function () { withSound(); });
 
-    // Only tear the listeners down once sound-on playback has actually begun.
-    video.addEventListener('playing', function () {
-      GESTURES.forEach(function (e) { document.removeEventListener(e, start, true); });
-      armed = false;
+    // Covers unmuting through the native control bar too.
+    video.addEventListener('volumechange', function () {
+      if (unmute && !video.muted) unmute.hidden = true;
     });
-
-    btn.addEventListener('click', function () { start(); });
 
     video.addEventListener('pause', function () {
       if (video.currentTime === 0) { started = false; box.classList.remove('is-playing'); }
@@ -1486,12 +1498,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // buffer at 2s so playback can actually begin at the 5s mark.
     setTimeout(function () { if (!started) { video.preload = 'auto'; video.load(); } }, 2000);
     setTimeout(function () {
-      if (!document.hidden) return start();
+      if (!document.hidden) return start(false);
       // Background tab: don't burn the intro, wait until it's actually on screen.
       document.addEventListener('visibilitychange', function onVisible() {
         if (document.hidden) return;
         document.removeEventListener('visibilitychange', onVisible);
-        start();
+        start(false);
       });
     }, 5000);
   });
