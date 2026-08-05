@@ -1436,18 +1436,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 <script>
-  // Hero video: click-to-play (preload="none" keeps the file off the initial page load)
+  // Hero video: click-to-play, plus an autoplay attempt 5s after load.
+  // Autoplay is unmuted by design. Browsers refuse sound-on playback until the
+  // page has had a user gesture, so when the attempt is refused we arm the next
+  // interaction anywhere on the page to start it. We never fall back to muted.
   document.querySelectorAll('[data-hero-video]').forEach(function (box) {
     var video = box.querySelector('video');
     var btn = box.querySelector('.hv-play');
     if (!video || !btn) return;
-    btn.addEventListener('click', function () {
+    var started = false;
+    var armed = false;
+    var GESTURES = ['click', 'touchend', 'keydown'];
+
+    function start() {
+      if (started) return;
+      started = true;
       box.classList.add('is-playing');
-      video.play();
+      var attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(function () {
+        // Refused for want of a user gesture — restore the poster and wait for one.
+        started = false;
+        box.classList.remove('is-playing');
+        arm();
+      });
+    }
+
+    function arm() {
+      if (armed) return;
+      armed = true;
+      GESTURES.forEach(function (e) { document.addEventListener(e, start, true); });
+    }
+
+    // Only tear the listeners down once sound-on playback has actually begun.
+    video.addEventListener('playing', function () {
+      GESTURES.forEach(function (e) { document.removeEventListener(e, start, true); });
+      armed = false;
     });
+
+    btn.addEventListener('click', function () { start(); });
+
     video.addEventListener('pause', function () {
-      if (video.currentTime === 0) box.classList.remove('is-playing');
+      if (video.currentTime === 0) { started = false; box.classList.remove('is-playing'); }
     });
+
+    // preload="none" keeps the 60MB file off the initial page load; warm the
+    // buffer at 2s so playback can actually begin at the 5s mark.
+    setTimeout(function () { if (!started) { video.preload = 'auto'; video.load(); } }, 2000);
+    setTimeout(function () {
+      if (!document.hidden) return start();
+      // Background tab: don't burn the intro, wait until it's actually on screen.
+      document.addEventListener('visibilitychange', function onVisible() {
+        if (document.hidden) return;
+        document.removeEventListener('visibilitychange', onVisible);
+        start();
+      });
+    }, 5000);
   });
 </script>
 </body>
