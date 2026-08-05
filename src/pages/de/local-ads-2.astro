@@ -361,7 +361,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <span class="kicker">Für lokale Unternehmer · Keine Vorkenntnisse nötig</span>
     <h1 class="h1">Hören Sie auf, mit „Boosten“ Geld <br>an Facebook &amp; Instagram zu spenden.</h1>
-    <div class="hero-video" data-hero-video>
+    <div class="hero-video" data-hero-video data-video-id="whylabp-cc" data-video-placement="hero" data-autoplay-on-load>
       <video
         src="/videos/whylabp-cc.mp4"
         poster="/img/launch-ads-mockup.png"
@@ -794,6 +794,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="fc-modal">
     <button type="button" class="fc-close" id="fc-close" aria-label="Close">✕</button>
 
+    <h3 class="fc-h" style="margin-bottom:12px;">Don&apos;t Buy Before Watching This Video</h3>
+    <div class="hero-video" data-hero-video data-video-id="whylabp-cc" data-video-placement="fc-popup"
+         style="margin:0 0 22px; border-radius:12px; overflow:hidden;">
+      <video
+        src="/videos/whylabp-cc.mp4"
+        poster="/img/launch-ads-mockup.png"
+        preload="none"
+        playsinline
+        controls
+        controlsList="nodownload"
+        aria-label="Don&apos;t Buy Before Watching This Video"></video>
+      <button type="button" class="hv-play" aria-label="Play video"><span>&#9654; Watch This Before You Buy (4 min)</span></button>
+      <button type="button" class="hv-unmute" hidden aria-label="Turn sound on"><span>&#128266; Tap for sound</span></button>
+    </div>
+
     <!-- State 1: capture -->
     <div id="fc-form-state">
       <span class="fc-kicker">Offene Vorschau</span>
@@ -872,6 +887,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="bp-kicker">Kurze Frage</span>
     <h3 class="bp-h" id="bp-h">Schon mal „Boosten“ gedrückt — und nichts bekommen?</h3>
     <p class="bp-p">50 €. 200 Likes. Null neue Kunden. Das war keine Anzeige — <strong>das war eine Spende an Meta</strong>. Es gibt ein Basis-Setup, das aus Boosts echte Kampagnen macht — und die ersten 2 Lektionen sind offen.</p>
+    <h3 class="bp-h" style="font-size:19px; margin-bottom:12px;">Don&apos;t Buy Before Watching This Video</h3>
+    <div class="hero-video" data-hero-video data-video-id="whylabp-cc" data-video-placement="bp-popup"
+         style="margin:0 0 22px; border-radius:12px; overflow:hidden;">
+      <video
+        src="/videos/whylabp-cc.mp4"
+        poster="/img/launch-ads-mockup.png"
+        preload="none"
+        playsinline
+        controls
+        controlsList="nodownload"
+        aria-label="Don&apos;t Buy Before Watching This Video"></video>
+      <button type="button" class="hv-play" aria-label="Play video"><span>&#9654; Watch This Before You Buy (4 min)</span></button>
+      <button type="button" class="hv-unmute" hidden aria-label="Turn sound on"><span>&#128266; Tap for sound</span></button>
+    </div>
     <button type="button" class="btn-dark" id="bp-cta" data-free-class style="display:flex; width:100%; justify-content:center; text-align:center;">Die ersten 2 Lektionen kostenlos ansehen →</button>
     <p class="bp-sub">Keine Karte nötig · Nach Lektion 2 ist Ihr Meta-Business-Konto live</p>
     <button type="button" class="bp-later" id="bp-later">Vielleicht später</button>
@@ -924,12 +953,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     renderState();
     overlay.classList.add("open");
     document.body.style.overflow = "hidden";
+    promoVideo("gr:video-open");
   }
   function closeModal() {
     overlay.classList.remove("open");
     document.body.style.overflow = "";
     if (player) player.pause();
+    promoVideo("gr:video-close");
   }
+
+  // O vídeo de topo do popup arranca quando o popup abre e pára ao fechar;
+  // se o visitante começar uma lição, cala-se para não haver dois áudios.
+  function promoVideo(type) {
+    var promo = overlay.querySelector('[data-video-placement="fc-popup"]');
+    if (promo) promo.dispatchEvent(new CustomEvent(type));
+  }
+  if (player) player.addEventListener("play", function () { promoVideo("gr:video-close"); });
 
   var triggers = document.querySelectorAll("[data-free-class]");
   for (var i = 0; i < triggers.length; i++) {
@@ -1195,13 +1234,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function seen() { try { return !!localStorage.getItem(SEEN_KEY); } catch (e) { return true; } }
   function mark() { try { localStorage.setItem(SEEN_KEY, "1"); } catch (e) {} }
   function isLead() { try { return !!localStorage.getItem("gr_free_class_v1"); } catch (e) { return false; } }
-  function close() { overlay.classList.remove("open"); }
+  function close() {
+    overlay.classList.remove("open");
+    var promo = overlay.querySelector('[data-video-placement="bp-popup"]');
+    if (promo) promo.dispatchEvent(new CustomEvent("gr:video-close"));
+  }
 
   setTimeout(function () {
     if (seen() || isLead()) return;
     var fc = document.getElementById("fc-overlay");
     if (fc && fc.classList.contains("open")) return; // funil já aberto
     overlay.classList.add("open");
+    var promo = overlay.querySelector('[data-video-placement="bp-popup"]');
+    if (promo) promo.dispatchEvent(new CustomEvent("gr:video-open"));
     mark(); // uma vez por visitante
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: "boost_popup_shown" });
@@ -1221,11 +1266,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 <script>
-  // Hero video: click-to-play, plus an autoplay attempt 5s after load.
+  // Vídeo (hero + os dois popups): click-to-play mais autoplay — 5s depois do
+  // load no hero, na abertura nos popups.
   // Browsers refuse unmuted autoplay until the page has had a user gesture, so
   // we try sound-on first (some visitors qualify) and otherwise play muted and
   // offer a "tap for sound" pill. Only that pill or the native controls unmute,
   // so an unrelated click elsewhere on the page never starts audio.
+  var VIEW_SECONDS = 30; // só conta como visualização a partir daqui (admin)
   document.querySelectorAll('[data-hero-video]').forEach(function (box) {
     var video = box.querySelector('video');
     var btn = box.querySelector('.hv-play');
@@ -1238,6 +1285,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (unmute) unmute.hidden = true;
       var p = video.play();
       if (p && p.catch) p.catch(function () {});
+    }
+
+    function warm() {
+      // preload="none" mantém o ficheiro de 60MB fora do load inicial.
+      if (!started) { video.preload = 'auto'; video.load(); }
     }
 
     function start(userInitiated) {
@@ -1272,9 +1324,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (video.currentTime === 0) { started = false; box.classList.remove('is-playing'); }
     });
 
-    // preload="none" keeps the 60MB file off the initial page load; warm the
-    // buffer at 2s so playback can actually begin at the 5s mark.
-    setTimeout(function () { if (!started) { video.preload = 'auto'; video.load(); } }, 2000);
+    // ── Contagem de visualizações ────────────────────────────────────────
+    // Soma só o tempo realmente reproduzido: saltos na barra não contam, por
+    // isso arrastar até ao fim não gera uma visualização.
+    var watched = 0, lastTime = 0, reported = false;
+    video.addEventListener('seeked', function () { lastTime = video.currentTime; });
+    video.addEventListener('timeupdate', function () {
+      var t = video.currentTime, delta = t - lastTime;
+      lastTime = t;
+      if (delta > 0 && delta < 1.5) watched += delta;
+      if (reported || watched < VIEW_SECONDS) return;
+      reported = true;
+      try {
+        var body = JSON.stringify({
+          videoId: box.getAttribute('data-video-id') || '',
+          placement: box.getAttribute('data-video-placement') || '',
+          seconds: Math.round(watched),
+          sourceUrl: window.location.href,
+          referrer: document.referrer || ''
+        });
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/api/video-view', new Blob([body], { type: 'application/json' }));
+        } else {
+          fetch('/api/video-view', {
+            method: 'POST', keepalive: true,
+            headers: { 'Content-Type': 'application/json' }, body: body
+          }).catch(function () {});
+        }
+      } catch (e) {}
+    });
+
+    // Os vídeos dos popups arrancam na abertura, não ao carregar a página.
+    box.addEventListener('gr:video-open', function () { warm(); start(false); });
+    box.addEventListener('gr:video-close', function () { video.pause(); });
+
+    if (!box.hasAttribute('data-autoplay-on-load')) return;
+    setTimeout(warm, 2000);
     setTimeout(function () {
       if (!document.hidden) return start(false);
       // Background tab: don't burn the intro, wait until it's actually on screen.

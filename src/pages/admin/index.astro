@@ -2,6 +2,7 @@
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readVideoViews, PLACEMENTS } from "../../lib/video-views";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(__dirname, "../../../data");
@@ -67,6 +68,32 @@ for (let i = 13; i >= 0; i--) {
 	});
 }
 const maxDay = Math.max(1, ...byDay.map(d => d.count));
+
+// ── visualizações do vídeo (só contadas a partir de 30s realmente vistos) ──
+const videoRows = await readVideoViews();
+const videoTotal = videoRows.length;
+const videoToday = videoRows.filter(v => v.createdAt.slice(0, 10) === todayKey).length;
+const videoLast7 = videoRows.filter(v => new Date(v.createdAt) >= since7).length;
+
+const placementLabels: Record<string, string> = {
+	"hero": "Page hero",
+	"fc-popup": "Free-lessons popup",
+	"bp-popup": "“Ever hit Boost” popup",
+};
+const byPlacement = PLACEMENTS.map(key => ({
+	key,
+	label: placementLabels[key] ?? key,
+	count: videoRows.filter(v => v.placement === key).length,
+})).sort((a, b) => b.count - a.count);
+
+const videoByPage = [...new Set(videoRows.map(v => v.page).filter(Boolean))]
+	.map(page => ({ page, count: videoRows.filter(v => v.page === page).length }))
+	.sort((a, b) => b.count - a.count);
+
+const avgSeconds = videoTotal
+	? Math.round(videoRows.reduce((s, v) => s + (Number(v.seconds) || 0), 0) / videoTotal)
+	: 0;
+const fmtDuration = (s: number) => `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, "0")}s`;
 
 const fmtDate = (iso: string) => {
 	if (!iso) return "—";
@@ -164,6 +191,54 @@ const shortSource = (s: string) => {
       ))}
     </div>
   </div>
+
+  <h1 style="margin-top:8px;">Video</h1>
+  <p style="font-size:12.5px; color:#A1A1AA; margin:-14px 0 16px;">
+    “Don’t Buy Before Watching This Video” — one view = 30s or more actually watched. Seeking ahead doesn’t count.
+  </p>
+
+  <div class="cards">
+    <div class="card"><div class="n">{videoTotal}</div><div class="l">Video views (total)</div></div>
+    <div class="card"><div class="n">{videoLast7}</div><div class="l">Last 7 days</div></div>
+    <div class="card"><div class="n">{videoToday}</div><div class="l">Today</div></div>
+    <div class="card"><div class="n">{fmtDuration(avgSeconds)}</div><div class="l">Avg. watched</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Views by placement</h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Placement</th><th>Views</th><th>Share</th></tr></thead>
+        <tbody>
+          {byPlacement.map(p => (
+            <tr>
+              <td>{p.label}</td>
+              <td>{p.count}</td>
+              <td>{videoTotal ? Math.round((p.count / videoTotal) * 100) : 0}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {videoByPage.length > 0 && (
+    <div class="panel">
+      <h2>Views by page</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Page</th><th>Views</th></tr></thead>
+          <tbody>
+            {videoByPage.map(p => (
+              <tr><td>{p.page}</td><td>{p.count}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <h1 style="margin-top:8px;">Leads</h1>
 
   <div class="panel">
     <div class="panel-head">
