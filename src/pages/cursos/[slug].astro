@@ -1,0 +1,22 @@
+---
+import PresalePage from "../../components/PresalePage.astro";
+import { presaleProducts } from "../../content/presale";
+import { logView } from "../../lib/presale-store";
+
+const { slug } = Astro.params;
+const product = slug ? presaleProducts[slug] : undefined;
+
+if (!product) return new Response("Not found", { status: 404 });
+
+// Registro de visita: sem cookie, sem IP, sem identificador. Só o suficiente
+// para dividir leads por visitas quando o teste terminar.
+await logView({
+  product: product.slug,
+  path: Astro.url.pathname,
+  referrer: Astro.request.headers.get("referer") ?? "",
+  userAgent: Astro.request.headers.get("user-agent"),
+  params: Astro.url.searchParams,
+}).catch((err) => console.error("[presale] view log failed:", err));
+---
+
+<PresalePage product={product} />

@@ -1,0 +1,69 @@
+first_name,last_name,full_name,email,phone,marketing_consent,lead_type,source_page,created_at
+davi,test,davi test,daviwazlawick@gmail.com,+4985785478547,true,sales_form,/lp,2026-04-30T17:11:07.807Z
+Bekri,Zukaj,Bekri Zukaj,bekrizukaj@hotmail.com,+38349756606,true,sales_form,/lp,2026-05-01T06:25:11.694Z
+Bekri,,Bekri,bekrizkaj@hotmail.com,049756606,true,sales_form,/lp,2026-05-01T06:26:42.177Z
+yf,,yf,kuyfg@jkhg.com,987654,true,sales_form,/lp,2026-05-05T17:10:58.877Z
+Jennylou,Pelin,Jennylou Pelin,pelinjennylou@gmail.com,+32477317390,true,sales_form,/lp,2026-05-12T02:18:49.613Z
+Juha,,Juha,juha.s.ilonen@gmail.com,+358504019251,true,sales_form,/lp,2026-05-12T04:10:35.257Z
+10,,10,10@test2.com,1234567,true,sales_form,/lp,2026-05-15T09:41:58.649Z
+dfg,,dfg,1@1.lo,13456789,true,sales_form,/lp,2026-05-15T10:05:57.396Z
+sdfg,,sdfg,d@d.lo,12345678,true,sales_form,/lp,2026-05-15T10:20:21.147Z
+w3456,,w3456,www@ddb.gt,98745631,true,sales_form,/lp,2026-05-15T10:22:04.119Z
+test,,test,tes@lkjgd.com,123456789,true,sales_form,/lp,2026-05-15T11:11:50.789Z
+Leon,Weber,Leon Weber,leon.weber.de.mock@gmail.com,+49 163 22245599,true,sales_form,/lp,2026-06-26T16:55:50.449Z
+Fejzullah,Bunjaku,Fejzullah Bunjaku,fejzullahbunjaku@gmail.com,,false,free_class,/local-ads,2026-07-14T19:39:09.123Z
+Md,Anamoul,Md Anamoul,anamoulm074@gmail.com,,false,free_class,/local-ads,2026-07-16T08:56:55.370Z
+Denan,,Denan,denan233x@gmail.com,,true,free_class,/local-ads,2026-07-16T08:58:29.546Z
+Dolly,Matoane,Dolly Matoane,matoanegm@gmail.com,,true,free_class,/local-ads,2026-07-16T08:58:34.660Z
+Ripon,,Ripon,iqblahasanpppp@gmail.com,,true,free_class,/local-ads,2026-07-16T09:00:13.431Z
+Areesha,Shamas,Areesha Shamas,areeshashamas13@gmail.com,,false,free_class,/local-ads,2026-07-16T09:00:57.859Z
+Nining,Thomas,Nining Thomas,niningthomas27@gmail.com,,true,free_class,/local-ads,2026-07-16T09:01:16.133Z
+Abaas,Jutt,Abaas Jutt,juttabaas493@gmail.com,,true,free_class,/local-ads,2026-07-16T09:02:20.590Z
+tuyishime,nyota,tuyishime nyota,nyotatuyishime366@gmail.com,,true,free_class,/local-ads,2026-07-16T09:02:42.806Z
+jeanny,Ann,jeanny Ann,jeannyannanadon@gmail.com,,false,free_class,/local-ads,2026-07-16T09:04:01.494Z
+Athiaithok,Panther,Athiaithok Panther,athiaithokpanther92@gmail.com,,true,free_class,/local-ads,2026-07-16T09:04:32.028Z
+Tamanna,Chowdhury,Tamanna Chowdhury,jekjok517@gmail.com,,false,free_class,/local-ads,2026-07-16T09:05:22.043Z
+Loken,Limbu,Loken Limbu,limbuloken@gmail.com,,true,free_class,/local-ads,2026-07-16T09:07:10.026Z
+Fawad,khan,Fawad khan,fawadland@gmail.com,,true,free_class,/local-ads,2026-07-16T09:07:23.781Z
+03297567497,,03297567497,asadkhan12ak14ak@gmail.com,,true,free_class,/local-ads,2026-07-16T09:07:55.485Z
+Moreblessing,feremenga,Moreblessing feremenga,feremengamoreblessing@gmail.com,,false,free_class,/local-ads,2026-07-16T09:09:09.069Z
+Rivonirina,stella pascal,Rivonirina stella pascal,stellapascal@gmail.com,,true,free_class,/local-ads,2026-07-16T09:09:53.329Z
+Monir,,Monir,mmhhss225511@gmail.com,,false,free_class,/local-ads,2026-07-16T09:10:03.963Z
+سید,حسن اخلاصی,سید حسن اخلاصی,sydhsnakhlasy@gmail.com,,true,free_class,/local-ads,2026-07-16T09:15:24.653Z
+Tupac,,Tupac,yusuftupac66@gmail.com,,false,free_class,/local-ads,2026-07-16T10:01:45.721Z
+Sharmin,Akter,Sharmin Akter,sa2360583@gmail.com,,true,free_class,/local-ads,2026-07-16T10:43:59.578Z
+mdrohim,mollah,mdrohim mollah,mdrohimmollah59@gmail.com,,false,free_class,/local-ads,2026-07-16T10:56:35.939Z
+Mohamed,Elzaki,Mohamed Elzaki,mconan@gmail.com,,false,free_class,/local-ads,2026-07-17T07:41:54.289Z
+Fredua,Agyemang,Fredua Agyemang,kempistores@gmail.com,,true,free_class,/local-ads,2026-07-17T18:30:39.870Z
+Anders,Kjaerby Eriksen,Anders Kjaerby Eriksen,eriksenanders@yahoo.com,,true,free_class,/local-ads,2026-07-17T19:35:01.591Z
+A,B,A B,idealboxxx@gmail.com,,true,free_class,/local-ads,2026-07-18T19:06:29.722Z
+Milton,,Milton,retirewithmilton@live.com,,false,free_class,/local-ads,2026-07-19T20:12:45.679Z
+J.N,,J.N,jnbusby81@gmail.com,,true,free_class,/local-ads,2026-07-19T23:54:50.529Z
+Fabrício,Oliveira,Fabrício Oliveira,fabricio@numoraculo.com,,true,free_class,/local-ads,2026-07-20T14:19:50.315Z
+test,local ads,test local ads,german@localads.com,,true,free_class,/de/local-ads,2026-07-28T14:27:44.133Z
+local,ads 2,local ads 2,tet@localads2.com,,false,free_class,/de/local-ads-2,2026-07-28T14:32:44.411Z
+Milon,Me,Milon Me,mem806043@gmail.com,,true,free_class,/local-ads-2,2026-07-28T19:14:18.507Z
+Amewouga,Assogba,Amewouga Assogba,amewougaassogba9@gmail.com,,true,free_class,/local-ads,2026-07-28T22:45:09.321Z
+سجاد,محمد,سجاد محمد,jjhohosionnsvk@gmail.com,,true,free_class,/local-ads,2026-07-28T22:54:20.514Z
+محمد,اشرف,محمد اشرف,_@gmail.com,,true,free_class,/local-ads,2026-07-29T00:54:52.246Z
+Angel,Sandoval,Angel Sandoval,angel12margarita@gmail.com,,true,free_class,/local-ads,2026-07-29T02:44:23.300Z
+Iman,,Iman,imanechaibi9810@gmail.com,,true,free_class,/local-ads-2,2026-07-29T06:03:09.510Z
+Houcine,Bechi,Houcine Bechi,houcinebechi37@gmail.com,,true,free_class,/de/local-ads,2026-07-29T10:38:54.058Z
+Mohamad,DAHMAN,Mohamad,awsamdahman@gmail.com,,true,free_class,/local-ads,2026-07-30T07:14:13.459Z
+Sintayehu,Fikadu,Sintayehu Fikadu,fikadus588@gmail.com,,true,free_class,/local-ads,2026-07-30T07:24:15.326Z
+Ismael,,Ismael,billyramaroson@gmail.com,,true,free_class,/de/local-ads-2,2026-07-30T10:09:36.801Z
+Mamun,Khan,Mamun Khan,rjmamunkhan414@gmail.com,,true,free_class,/local-ads,2026-07-30T10:29:04.981Z
+Ammar,Tabani,Ammar Tabani,ammartabani383@gmail.com,,true,free_class,/local-ads,2026-07-30T10:34:23.822Z
+Mohameb,,Mohameb,saidiat75@gmail.com,,true,free_class,/local-ads,2026-07-30T11:54:07.770Z
+ادلمي,عبدرمن,ادلمي عبدرمن,tahherdadi@gmail.com,,true,free_class,/local-ads,2026-07-30T17:16:25.619Z
+Antor,,Antor,aray40449@gmail.com,,true,free_class,/local-ads-2,2026-07-30T18:41:49.527Z
+Chukwudi,Stanely,Chukwudi Stanely,stanelychukwudi053@gmail.com,,true,free_class,/local-ads,2026-07-30T21:23:44.725Z
+Abdul,Hamid,Abdul Hamid,loganconstructionus@gmail.com,,true,free_class,/local-ads-2,2026-07-30T21:44:28.563Z
+Ebrahim,,Ebrahim,ebrahim12444r4@gmail.com,,true,free_class,/local-ads-2,2026-07-30T23:19:03.927Z
+Kenneth,Devotion,Kenneth Devotion,kennethdevotion@gmail.com,,true,free_class,/local-ads,2026-07-31T01:33:14.254Z
+AaeMai,Tai Fixphone,AaeMai Tai Fixphone,aaefixphone113@gmail.com,,true,free_class,/local-ads,2026-07-31T08:23:19.796Z
+bagher,,bagher,baghergholami370@gmail.com,,true,free_class,/local-ads,2026-08-01T10:15:43.697Z
+Chander,,Chander,c91856706@gmail.com,,true,free_class,/local-ads,2026-08-01T15:26:43.279Z
+Santosh,Shah,Santosh Shah,sannohsantosh2027shah@gmail.com,,true,free_class,/local-ads,2026-08-02T02:15:51.755Z
+عبدالهادی,راسخ,عبدالهادی راسخ,bdalhadyraskh6@gmail.com,,true,free_class,/local-ads,2026-08-02T06:54:08.342Z
+Binod,Magar,Binod Magar,bm733635@gmail.com,,true,free_class,/local-ads,2026-08-02T09:38:15.473Z

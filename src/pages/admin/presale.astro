@@ -1,0 +1,158 @@
+---
+import { presaleList } from "../../content/presale";
+import { readViews, readLeads } from "../../lib/presale-store";
+
+const [views, leads] = await Promise.all([readViews(), readLeads()]);
+
+const rows = presaleList.map((p) => {
+  const v = views.filter((r) => r.product === p.slug);
+  const l = leads.filter((r) => r.product === p.slug);
+  const buyers = l.filter((r) => r.wouldBuyAtPrice === "true");
+  const rate = v.length ? (l.length / v.length) * 100 : 0;
+  const buyRate = l.length ? (buyers.length / l.length) * 100 : 0;
+
+  const segments = new Map<string, number>();
+  for (const lead of l) {
+    const seg = lead.segment || "—";
+    segments.set(seg, (segments.get(seg) ?? 0) + 1);
+  }
+
+  return {
+    product: p,
+    views: v.length,
+    leads: l.length,
+    buyers: buyers.length,
+    rate,
+    buyRate,
+    segments: [...segments.entries()].sort((a, b) => b[1] - a[1]),
+  };
+});
+
+const recent = [...leads]
+  .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+  .slice(0, 40);
+
+const brandOf = (slug: string) => presaleList.find((p) => p.slug === slug)?.brand ?? slug;
+const fmt = (n: number) => n.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+const shortDate = (iso: string) => (iso || "").slice(0, 16).replace("T", " ");
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Pré-vendas — resultados</title>
+    <link rel="icon" href="data:," />
+    <style is:inline>
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        margin: 0; background: #0f1115; color: #e9ecf1;
+        font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      }
+      .wrap { max-width: 62rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+      h1 { font-size: 1.7rem; margin: 0 0 .4rem; letter-spacing: -0.02em; }
+      .sub { color: #97a1b0; margin: 0 0 2rem; }
+      h2 { font-size: 1.1rem; margin: 2.5rem 0 .8rem; }
+      table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+      th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #232935; }
+      th { color: #7f8b9c; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; }
+      td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+      .scroll { overflow-x: auto; }
+      .seg { color: #97a1b0; font-size: .85rem; }
+      .empty { color: #7f8b9c; padding: 1.5rem 0; }
+      a { color: #7fb0ff; }
+      .bar { height: 6px; background: #232935; border-radius: 3px; overflow: hidden; margin-top: .35rem; }
+      .bar > span { display: block; height: 100%; background: #2b6ef2; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Pré-vendas dos cursos</h1>
+      <p class="sub">
+        Visitas contadas no servidor, sem cookie e sem IP, com bots conhecidos fora.
+        <a href="/cursos">Ver as landings</a> · <a href="/admin">Voltar ao admin</a>
+      </p>
+
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th class="num">Visitas</th>
+              <th class="num">Lista</th>
+              <th class="num">Conversão</th>
+              <th class="num">Aceitou o preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td>
+                  <a href={`/cursos/${r.product.slug}`}>{r.product.brand}</a>
+                  <div class="seg">{r.product.internal.price}</div>
+                </td>
+                <td class="num">{r.views}</td>
+                <td class="num">{r.leads}</td>
+                <td class="num">
+                  {fmt(r.rate)}%
+                  <div class="bar"><span style={`width:${Math.min(r.rate, 100)}%`}></span></div>
+                </td>
+                <td class="num">{r.buyers} <span class="seg">({fmt(r.buyRate)}%)</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Segmento de quem entrou na lista</h2>
+      {rows.every((r) => r.segments.length === 0) ? (
+        <p class="empty">Nada ainda.</p>
+      ) : (
+        rows
+          .filter((r) => r.segments.length)
+          .map((r) => (
+            <p>
+              <strong>{r.product.brand}</strong><br />
+              {r.segments.map(([seg, n]) => <span class="seg">{seg}: {n}<br /></span>)}
+            </p>
+          ))
+      )}
+
+      <h2>Últimos cadastros</h2>
+      {recent.length === 0 ? (
+        <p class="empty">Nenhum cadastro ainda.</p>
+      ) : (
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Quando</th>
+                <th>Produto</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Segmento</th>
+                <th>Preço ok</th>
+                <th>utm_source</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recent.map((l) => (
+                <tr>
+                  <td class="seg">{shortDate(l.createdAt)}</td>
+                  <td>{brandOf(l.product)}</td>
+                  <td>{l.name}</td>
+                  <td>{l.email}</td>
+                  <td class="seg">{l.segment || "—"}</td>
+                  <td>{l.wouldBuyAtPrice === "true" ? "sim" : "—"}</td>
+                  <td class="seg">{l.utmSource || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </body>
+</html>

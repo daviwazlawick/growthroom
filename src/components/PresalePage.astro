@@ -1,0 +1,560 @@
+---
+import type { PresaleProduct } from "../content/presale/types";
+
+interface Props {
+  product: PresaleProduct;
+}
+
+const { product: p } = Astro.props;
+const t = p.theme;
+
+// Corpo sempre sans, por legibilidade em texto longo. A serifa, quando o
+// produto pede, fica só nos títulos.
+const SANS =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+const SERIF =
+  '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif';
+
+const displayFont = t.font === "serif" ? SERIF : SANS;
+const radius = t.radius ?? "0.75rem";
+
+/** accent com alfa, para washes e estados sem inventar uma segunda cor. */
+function alpha(hex: string, a: number): string {
+  const h = hex.replace("#", "");
+  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+  const n = parseInt(full, 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+}
+
+// As variáveis vão num bloco próprio dentro de :root. Com `is:inline` o Astro
+// não envolve o define:vars em seletor nenhum, e o CSS inteiro quebra na
+// primeira regra.
+const themeCss = `:root{
+  --bg:${t.bg};
+  --surface:${t.surface};
+  --text:${t.text};
+  --muted:${t.muted};
+  --accent:${t.accent};
+  --accent-text:${t.accentText};
+  --accent-05:${alpha(t.accent, 0.05)};
+  --accent-10:${alpha(t.accent, 0.1)};
+  --accent-25:${alpha(t.accent, 0.25)};
+  --border:${t.border};
+  --base:${t.baseFontPx}px;
+  --sans:${SANS};
+  --display:${displayFont};
+  --radius:${radius};
+}`;
+
+const favicon =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="${t.accent}"/><text x="16" y="22.5" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="700" fill="${t.accentText}" text-anchor="middle">${p.brand.charAt(0)}</text></svg>`,
+  );
+
+// Numeração de seção como sobrancelha: âncora visual que não precisa de
+// tradução, e que mantém as quatro páginas idênticas em estrutura.
+// Calculada por índice, não por contador: o Astro não avalia o template na
+// ordem em que ele aparece, e um contador mutável sai embaralhado.
+const num = (i: number) => String(i).padStart(2, "0");
+const fixed = p.sections.length;
+const stepLessons = num(fixed + 1);
+const stepAudience = num(fixed + 2);
+const stepOffer = num(fixed + 3);
+const stepWaitlist = num(fixed + 4);
+const stepFaq = num(fixed + 5);
+---
+
+<!doctype html>
+<html lang={p.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{p.title}</title>
+    <meta name="description" content={p.description} />
+    <!-- Página de pré-venda em teste: fora do índice até a decisão de produto. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:title" content={p.title} />
+    <meta property="og:description" content={p.description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content={t.bg} />
+    <link rel="icon" href={favicon} />
+
+    <style is:inline set:html={themeCss}></style>
+
+    <style is:inline>
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: var(--base);
+        line-height: 1.62;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Sem animação, sem pop-up, sem contador e sem rolagem suave em nenhuma
+         das quatro páginas. Transição só de cor, que não é movimento. */
+      a, button, .card, input { transition: background-color .15s, border-color .15s, color .15s; }
+
+      .wrap { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+      .measure { max-width: 40rem; }
+
+      h1, h2, h3 { font-family: var(--display); }
+      h1 {
+        font-size: clamp(2rem, 1.3rem + 3.2vw, 3rem);
+        line-height: 1.13;
+        letter-spacing: -0.025em;
+        font-weight: 700;
+        margin: 0 0 1.1rem;
+        text-wrap: balance;
+      }
+      h2 {
+        font-size: clamp(1.35rem, 1.1rem + 1.1vw, 1.75rem);
+        line-height: 1.22;
+        letter-spacing: -0.018em;
+        font-weight: 700;
+        margin: 0 0 1.2rem;
+        text-wrap: balance;
+      }
+      h3 { font-size: 1.02em; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 .45rem; }
+      p { margin: 0 0 1.05rem; }
+      p:last-child { margin-bottom: 0; }
+
+      /* ── Cabeçalho ───────────────────────────────────────────── */
+      .top { border-bottom: 1px solid var(--border); background: var(--bg); }
+      .top-in {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 1rem; padding: 1.05rem 0;
+      }
+      .brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; letter-spacing: -0.01em; }
+      .mark {
+        width: 1.7em; height: 1.7em; border-radius: calc(var(--radius) * .6);
+        background: var(--accent); color: var(--accent-text);
+        display: grid; place-items: center;
+        font-family: var(--sans); font-size: .78em; font-weight: 800;
+      }
+      .badge {
+        font-size: .72em; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
+        color: var(--muted); border: 1px solid var(--border);
+        border-radius: 999px; padding: .25rem .7rem; white-space: nowrap;
+      }
+
+      /* ── Hero ────────────────────────────────────────────────── */
+      .hero {
+        background: linear-gradient(180deg, var(--accent-10), transparent 78%);
+        border-bottom: 1px solid var(--border);
+        padding: clamp(2.75rem, 6vw, 4.5rem) 0 clamp(2.25rem, 5vw, 3.5rem);
+      }
+      .hero .lede { font-size: 1.09em; color: var(--muted); margin-bottom: 1.9rem; }
+      .offer-strip {
+        display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.2rem;
+        padding-top: 1.5rem; border-top: 1px solid var(--border);
+      }
+      .price-chip {
+        font-weight: 700; font-size: 1.02em;
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 999px; padding: .5rem 1rem;
+      }
+      .hero .note { flex-basis: 100%; }
+
+      /* ── Botões ──────────────────────────────────────────────── */
+      .btn {
+        display: inline-block; width: 100%; text-align: center;
+        background: var(--accent); color: var(--accent-text);
+        border: 0; border-radius: var(--radius); cursor: pointer;
+        font: inherit; font-weight: 700; font-size: 1.02em;
+        padding: .95rem 1.75rem; text-decoration: none;
+      }
+      .btn:hover { background: color-mix(in srgb, var(--accent) 88%, black); }
+      .btn:focus-visible { outline: 3px solid var(--accent-25); outline-offset: 2px; }
+      .btn[disabled] { opacity: .55; cursor: default; }
+      @media (min-width: 34rem) { .btn { width: auto; } }
+
+      .note { font-size: .87em; line-height: 1.5; color: var(--muted); margin: 0; }
+
+      /* ── Seções ──────────────────────────────────────────────── */
+      section { padding: clamp(2.5rem, 5vw, 3.75rem) 0; border-bottom: 1px solid var(--border); }
+      .eyebrow {
+        display: block; font-family: var(--sans);
+        font-size: .7rem; font-weight: 700; letter-spacing: .16em;
+        color: var(--accent); margin-bottom: .8rem;
+      }
+
+      /* ── Blocos ──────────────────────────────────────────────── */
+      .cards { display: grid; gap: .9rem; }
+      .card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 1.15rem 1.25rem;
+      }
+      .card:hover { border-color: var(--accent-25); }
+      .card p { color: var(--muted); font-size: .95em; }
+
+      .box {
+        background: var(--accent-05); border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: var(--radius); padding: 1.3rem 1.4rem;
+      }
+
+      ul.ticks { list-style: none; margin: 0; padding: 0; }
+      ul.ticks li {
+        position: relative; padding-left: 1.9rem; margin-bottom: .75rem;
+      }
+      ul.ticks li::before {
+        content: ""; position: absolute; left: 0; top: .42em;
+        width: .78em; height: .42em;
+        border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+        transform: rotate(-45deg);
+      }
+
+      /* ── Aulas ───────────────────────────────────────────────── */
+      ol.lessons { list-style: none; margin: 0 0 1.1rem; padding: 0; }
+      ol.lessons li {
+        display: grid; grid-template-columns: 2.4rem 1fr; gap: .1rem .9rem;
+        padding: .85rem 0; border-top: 1px solid var(--border);
+      }
+      ol.lessons li:last-child { border-bottom: 1px solid var(--border); }
+      .lesson-n {
+        grid-row: span 2; align-self: start;
+        font-family: var(--sans); font-size: .78em; font-weight: 700;
+        color: var(--accent); background: var(--accent-10);
+        border-radius: calc(var(--radius) * .5);
+        width: 2.4rem; text-align: center; padding: .28rem 0; margin-top: .1rem;
+      }
+      .lesson-t { font-weight: 600; }
+      .lesson-o { color: var(--muted); font-size: .88em; }
+
+      /* ── Para quem ───────────────────────────────────────────── */
+      .two { display: grid; gap: .9rem; }
+      .verdict { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+      .icon { width: 1.15em; height: 1.15em; flex: 0 0 auto; }
+      .icon.yes { color: var(--accent); }
+      .icon.no { color: var(--muted); }
+
+      /* ── Oferta ──────────────────────────────────────────────── */
+      .offer {
+        background: var(--surface); border: 1px solid var(--border);
+        border-top: 3px solid var(--accent); border-radius: var(--radius);
+        padding: 1.6rem 1.5rem;
+      }
+      .price-big {
+        font-family: var(--display); font-size: clamp(2.1rem, 1.6rem + 2vw, 2.8rem);
+        font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 .3rem;
+      }
+      .offer .price-note { color: var(--muted); font-size: .92em; margin-bottom: 1.3rem; }
+      .offer ul.ticks { margin-bottom: 1.3rem; }
+      .offer ul.ticks li { font-size: .95em; }
+
+      /* ── Formulário ──────────────────────────────────────────── */
+      .form-card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 1.5rem 1.4rem;
+      }
+      .field { margin-bottom: 1.2rem; }
+      .field:last-of-type { margin-bottom: 1.5rem; }
+      label { display: block; font-weight: 600; margin-bottom: .45rem; }
+      .field > label { font-size: .95em; }
+      input[type="text"], input[type="email"] {
+        width: 100%; font: inherit; padding: .85rem .95rem;
+        border: 1px solid var(--border); border-radius: calc(var(--radius) * .7);
+        background: var(--bg); color: var(--text);
+      }
+      input[type="text"]:focus, input[type="email"]:focus {
+        outline: 3px solid var(--accent-25); outline-offset: 1px; border-color: var(--accent);
+      }
+      .choice {
+        display: flex; align-items: flex-start; gap: .7rem;
+        font-weight: 400; font-size: .96em; line-height: 1.45;
+        border: 1px solid var(--border); border-radius: calc(var(--radius) * .7);
+        padding: .75rem .9rem; margin-bottom: .5rem; background: var(--bg); cursor: pointer;
+      }
+      .choice:hover { border-color: var(--accent-25); }
+      .choice:has(input:checked) { border-color: var(--accent); background: var(--accent-05); }
+      .choice:has(input:focus-visible) { outline: 3px solid var(--accent-25); outline-offset: 1px; }
+      .choice input { margin: .28em 0 0; width: 1.15em; height: 1.15em; flex: 0 0 auto; accent-color: var(--accent); }
+
+      .status { margin: 1.1rem 0 0; font-weight: 600; }
+      .status.err { color: #c0392b; }
+
+      /* ── Perguntas ───────────────────────────────────────────── */
+      .faq-item { padding: 1.15rem 0; border-top: 1px solid var(--border); }
+      .faq-item:last-child { border-bottom: 1px solid var(--border); }
+      .faq-q { font-weight: 700; margin-bottom: .4rem; }
+      .faq-a { color: var(--muted); font-size: .96em; margin: 0; }
+
+      /* ── Rodapé ──────────────────────────────────────────────── */
+      footer { padding: 2.25rem 0 3.5rem; color: var(--muted); font-size: .85em; line-height: 1.55; }
+      footer p { margin-bottom: .6rem; }
+      footer a { color: var(--muted); text-underline-offset: .2em; }
+      footer a:hover { color: var(--accent); }
+
+      @media (min-width: 48rem) {
+        .cards { grid-template-columns: 1fr 1fr; }
+        .two { grid-template-columns: 1fr 1fr; }
+        ol.lessons li { grid-template-columns: 2.4rem 1fr auto; align-items: baseline; }
+        .lesson-n { grid-row: auto; }
+        .lesson-o { text-align: right; padding-left: 1.5rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="top">
+      <div class="wrap top-in">
+        <span class="brand">
+          <span class="mark" aria-hidden="true">{p.brand.charAt(0)}</span>
+          {p.brand}
+        </span>
+        <span class="badge">{p.badge}</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="wrap">
+          <h1>{p.hero.h1}</h1>
+          <p class="lede measure">{p.hero.sub}</p>
+          <div class="offer-strip">
+            <span class="price-chip">{p.hero.priceLine}</span>
+            <a class="btn" href="#warteliste">{p.hero.cta}</a>
+            <p class="note measure">{p.hero.note}</p>
+          </div>
+        </div>
+      </div>
+
+      {p.sections.map((s, i) => (
+        <section>
+          <div class="wrap">
+            {s.title && (
+              <>
+                <span class="eyebrow">{num(i + 1)}</span>
+                <h2 class="measure">{s.title}</h2>
+              </>
+            )}
+
+            {s.kind === "prose" && <div class="measure">{s.body.map((par) => <p>{par}</p>)}</div>}
+
+            {s.kind === "note" && (
+              <div class="box measure">{s.body.map((par) => <p>{par}</p>)}</div>
+            )}
+
+            {s.kind === "cards" && (
+              <>
+                {s.intro && <p class="measure">{s.intro}</p>}
+                <div class="cards">
+                  {s.items.map((item) => (
+                    <div class="card">
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {s.kind === "list" && (
+              <>
+                {s.intro && <p class="measure">{s.intro}</p>}
+                <ul class="ticks measure">{s.items.map((item) => <li>{item}</li>)}</ul>
+              </>
+            )}
+          </div>
+        </section>
+      ))}
+
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{stepLessons}</span>
+          <h2>{p.lessons.title}</h2>
+          <ol class="lessons">
+            {p.lessons.rows.map((row) => (
+              <li>
+                <span class="lesson-n">{row[0]}</span>
+                <span class="lesson-t">{row[1]}</span>
+                <span class="lesson-o">{row[2]}</span>
+              </li>
+            ))}
+          </ol>
+          <p class="note measure">{p.lessons.note}</p>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{stepAudience}</span>
+          <h2>{p.audience.title}</h2>
+          <div class="two">
+            <div class="card">
+              <div class="verdict">
+                <svg class="icon yes" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 10.5l4 4 8-9" />
+                </svg>
+                <h3 style="margin:0">{p.audience.fitTitle}</h3>
+              </div>
+              <p>{p.audience.fit}</p>
+            </div>
+            <div class="card">
+              <div class="verdict">
+                <svg class="icon no" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M5 5l10 10M15 5L5 15" />
+                </svg>
+                <h3 style="margin:0">{p.audience.unfitTitle}</h3>
+              </div>
+              <p>{p.audience.unfit}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{stepOffer}</span>
+          <h2>{p.offer.title}</h2>
+          <div class="offer measure">
+            <p class="price-big">{p.offer.price}</p>
+            <p class="price-note">{p.offer.priceNote}</p>
+            <ul class="ticks">{p.offer.includes.map((item) => <li>{item}</li>)}</ul>
+            <p class="note">{p.offer.status}</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="warteliste">
+        <div class="wrap">
+          <span class="eyebrow">{stepWaitlist}</span>
+          <h2>{p.waitlist.title}</h2>
+          <p class="measure">{p.waitlist.text}</p>
+
+          <form id="presale-form" class="form-card measure" novalidate>
+            <div class="field">
+              <label for="ps-name">{p.waitlist.nameLabel}</label>
+              <input id="ps-name" name="name" type="text" autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="ps-email">{p.waitlist.emailLabel}</label>
+              <input id="ps-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label>{p.waitlist.segmentLabel}</label>
+              {p.waitlist.segments.map((seg) => (
+                <label class="choice">
+                  <input type="radio" name="segment" value={seg} />
+                  <span>{seg}</span>
+                </label>
+              ))}
+            </div>
+
+            <div class="field">
+              <label class="choice">
+                <input type="checkbox" name="wouldBuy" />
+                <span>{p.waitlist.wouldBuyLabel}</span>
+              </label>
+              <label class="choice">
+                <input type="checkbox" name="consent" required />
+                <span>{p.waitlist.consentLabel}</span>
+              </label>
+            </div>
+
+            <button class="btn" type="submit">{p.waitlist.submit}</button>
+            <p class="status" id="ps-status" hidden></p>
+          </form>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{stepFaq}</span>
+          <h2>{p.lang === "de" ? "Häufige Fragen" : "Perguntas"}</h2>
+          <div class="measure">
+            {p.faq.map((item) => (
+              <div class="faq-item">
+                <p class="faq-q">{item.q}</p>
+                <p class="faq-a">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap measure">
+        <p>{p.footer.selfStudyNote}</p>
+        {p.footer.impressum && <p>{p.footer.impressum}</p>}
+        <p>
+          <a href={p.footer.privacyHref}>{p.footer.privacyLabel}</a>
+          {" · "}
+          <a href={p.footer.termsHref}>{p.footer.termsLabel}</a>
+        </p>
+      </div>
+    </footer>
+
+    <script is:inline define:vars={{
+      slug: p.slug,
+      sending: p.waitlist.sending,
+      submitLabel: p.waitlist.submit,
+      successMsg: p.waitlist.success,
+      errorMsg: p.waitlist.error,
+    }}>
+      (function () {
+        var form = document.getElementById("presale-form");
+        var status = document.getElementById("ps-status");
+        if (!form) return;
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var data = new FormData(form);
+          var button = form.querySelector("button[type=submit]");
+
+          var name = String(data.get("name") || "").trim();
+          var email = String(data.get("email") || "").trim();
+          if (!name || !email || email.indexOf("@") === -1 || !data.get("consent")) {
+            status.hidden = false;
+            status.className = "status err";
+            status.textContent = errorMsg;
+            return;
+          }
+
+          button.disabled = true;
+          button.textContent = sending;
+          status.hidden = true;
+
+          fetch("/api/presale", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              product: slug,
+              name: name,
+              email: email,
+              segment: data.get("segment") || "",
+              wouldBuyAtPrice: !!data.get("wouldBuy"),
+              marketingConsent: !!data.get("consent"),
+              sourceUrl: window.location.href,
+            }),
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (body) {
+              if (!body || !body.ok) throw new Error("failed");
+              form.innerHTML = "";
+              status.hidden = false;
+              status.className = "status";
+              status.textContent = successMsg;
+              form.appendChild(status);
+            })
+            .catch(function () {
+              button.disabled = false;
+              button.textContent = submitLabel;
+              status.hidden = false;
+              status.className = "status err";
+              status.textContent = errorMsg;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

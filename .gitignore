@@ -25,3 +25,5 @@ pnpm-debug.log*
 data/leads.csv
 exports/
 cursos-online
+data/presale-views.csv
+data/presale-leads.csv
